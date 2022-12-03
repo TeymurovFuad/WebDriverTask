@@ -15,7 +15,7 @@ namespace WebDriverTask
         private const string _createAccountButtonXPath = "//span[@jsname and text()='Create account']";
         private const string _createPersonalUseAccountButtonXPath = "//span[@jsname and text()='For my personal use']";
         private const string _languageChooserDropdownId = "lang-chooser";
-        private const string _languageFromDropDownXPath = "//ul[@aria-label='Change language']/li//span[@jsname]/../..";
+        private const string _languageFromDropDownXPath = "//div[@id='lang-chooser']/div/div/ul/li//span[@jsname]/../..";
 
         [OneTimeSetUp]
         public void InitializeDriver()
@@ -23,12 +23,13 @@ namespace WebDriverTask
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.AddArgument("--incognito");
             _driver = new ChromeDriver();
+            _driver!.Manage().Window.Maximize();
         }
 
         [SetUp]
         public void TestSetup()
         {
-            _driver!.Manage().Window.Maximize();
+            //Thread.Sleep(2000);
         }
 
         [Test, Order(1)]
@@ -46,8 +47,8 @@ namespace WebDriverTask
             {
                 ChangePageLanguage(language: "english");
             }
-            var x = GetPageLanguage().ToLower();
-            Assert.IsTrue(GetPageLanguage().ToLower().Contains("english"));
+            Regex pattern = new Regex("english.+", RegexOptions.IgnoreCase);
+            Assert.That(GetPageLanguage().ToLower(), Does.Match(pattern));
         }
 
         [Test, Order(3)]
@@ -63,20 +64,20 @@ namespace WebDriverTask
             Assert.True(isElementDisplayed(By.XPath("//ul[@aria-label='Create account']")));
         }
 
-        [Test, Order(4)]
+        [Test, Order(5)]
         public void DD_ClickOptionToCreateAccountForPersonalUseAndVerifyThatPageChanged()
         {
             string initialUrl = _driver!.Url.ToString();
-            ClickElement(By.XPath(_createPersonalUseAccountButtonXPath+"/../.."));
+            ClickElement(By.XPath(_createPersonalUseAccountButtonXPath+"/.."));
             WaitPageLoad();
             Assert.That(initialUrl != _driver!.Url.ToString());
         }
 
 
 
-        public void ClickElement(By locator, bool? condition=true)
+        public void ClickElement(By locator, bool condition=true)
         {
-            if (condition.HasValue && (bool)condition)
+            if (condition)
             {
                 _driver!.FindElement(locator).Click();
             }
@@ -120,8 +121,10 @@ namespace WebDriverTask
                 if (lan.GetAttribute("aria-selected") == "true")
                 {
                     language = lan.Text;
+                    break;
                 }
             }
+            ClickElement(By.Id(_languageChooserDropdownId), _driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "true");
             return language;
         }
 
@@ -139,12 +142,11 @@ namespace WebDriverTask
                 if (lan.Text.ToLower().Contains(language))
                 {
                     lan.Click();
-                }
-                else
-                {
-                    throw new NoSuchElementException($"No element found with text {language}");
+                    WaitPageLoad();
+                    break;
                 }
             }
+            ClickElement(By.Id(_languageChooserDropdownId), _driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "true");
         }
 
         [OneTimeTearDown]
