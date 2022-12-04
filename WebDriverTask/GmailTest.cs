@@ -13,23 +13,39 @@ namespace WebDriverTask
     public class GmailTest
     {
         private IWebDriver? _driver;
-        private PageInteractions _interaction;
+        private Dictionary<string, dynamic> _variables;
+        private PageInteractions? _interaction;
         private bool _isFailed;
         private const string _createAccountButtonXPath = "//span[@jsname and text()='Create account']";
         private const string _createPersonalUseAccountButtonXPath = "//span[@jsname and text()='For my personal use']";
         private const string _languageChooserDropdownId = "lang-chooser";
         private const string _languageFromDropDownXPath = "//div[@id='lang-chooser']/div/div/ul/li//span[@jsname]/../..";
         private const string _errorForExistingUsernameXPath = "//div[text()='You can use letters, numbers & periods']/../div[@aria-live='assertive' and @aria-atomic='true' ]/div[text()='That username is taken. Try another.']";
-        private const string _nextButtonXPath = "//button//span[text()='Next']";
+        private const string _nextButtonXPath = "//button//span[text()='Next']/..";
         private const string _phoneNumberVerificationPageHeaderXPath = "//h1/span[text()='Verifying your phone number']";
+        private const string _emailFieldId = "identifierId";
+        private const string _passwordFieldXPath = "//input[@type='password' and @name='Passwd']";
+        private const string _greetingTextOnPasswordEnteringPageXPath = "//h1[@id='headingText']";
+        private const string _buttonToComposeMail = "//div[text()='Compose']";
+        private const string _newMessageDialogBoxXPath = "//div[@aria-label='New Message']";
+        private const string _toXPath = "//div[@name='to']//input";
+        private const string _subjectXPath = "//input[@name='subjectbox']";
+        private const string _mailBodyXPath = "//div[@aria-label='Message Body']";
+        private const string _newMailDialogBoxSendButtonXPath = "//div[@role='button' and text()='Send']";
+        private const string _closeNewMailComposeModalXPath = "//img[@aria-label='Save & close']";
+        private const string _draftsXPath = "//div[@data-tooltip='Drafts']//a/../..";
+        private const string _messageInDraft_InjecableXPath = "//table/tbody/tr/td//span[contains(text(), '$var')]";
+        private const string _sentXPath = "//div[@data-tooltip='Sent']//a";
+        private const string _messageInSent_InjecableXPath = "//table/tbody/tr/td//div[@title='Inbox']//ancestor-or-self::td//span[contains(text(), '$var')]";
+        private const string _mailHomePageFoldersXPath_Injectable = "//div[@data-tooltip='$folderName']";
 
         [OneTimeSetUp]
         public void InitializeTestClass()
         {
+            _variables = new Dictionary<string, object>();
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.AddArgument("--incognito");
-            _driver = new ChromeDriver();
-            _driver!.Manage().Window.Maximize();
+            _driver = DriverManager.Instance();
             _interaction = new PageInteractions();
         }
 
@@ -41,64 +57,95 @@ namespace WebDriverTask
             {
                 Assert.Inconclusive("Previos test failed. Given that all tests are chained, so failure of one may result in failure of all, thereby flow stopped.");
             }
+            long epochTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+            SetVariable("epochTime", epochTime);
         }
 
         [Test, Order(1)]
         public void AA_OpenBrowser()
         {
-            _driver!.Navigate().GoToUrl("https://accounts.google.com/");
+            _driver!.Navigate().GoToUrl("https://mail.google.com/");
             _interaction.WaitPageLoad();
-            Assert.IsTrue(_driver.Title.StartsWith("Sign in"));
+            Assert.That(_driver.Title, Does.Match("Gmail"));
         }
 
         [Test, Order(2)]
-        public void AAB_VerifyPageLanguageIsInEnglishOrChangeToEnglishIfLanguageIsOther()
+        public void BB_VerifyPageLanguageIsInEnglishOrChangeToEnglishIfLanguageIsOther()
         {
             if (!GetPageLanguage().ToLower().Contains("english"))
             {
                 ChangePageLanguage(language: "english");
             }
-            Regex pattern = new Regex("english.+", RegexOptions.IgnoreCase);
+            Regex pattern = new Regex("english.+");
             Assert.That(GetPageLanguage().ToLower(), Does.Match(pattern));
         }
 
         [Test, Order(3)]
-        public void BB_VerifyCreateAccountButtonIsVisible()
+        [TestCase("qy54313@gmail.com", "Aa123456____", "qwerty")]
+        public void CC_FillUsernameAndPasswordAndClickLogin(string mail, string password, string firstName)
         {
-            Assert.IsTrue(_interaction.isElementDisplayed(By.XPath(_createAccountButtonXPath)));
+            _interaction.SendValuesToElement(By.Id(_emailFieldId), mail);
+            _interaction.ClickElement(By.XPath(_nextButtonXPath));
+            DriverManager.WaitPageToLoad(10);
+            //Assert.That(_driver!.FindElement(By.XPath(_greetingTextOnPasswordEnteringPageXPath)).Text, Is.EqualTo($"Welcome"));
+            _interaction.SendValuesToElement(By.XPath(_passwordFieldXPath), password);
+            Thread.Sleep(3000);
+            _interaction.ClickElement(By.XPath(_nextButtonXPath));
+            //DriverManager.WaitPageToLoad();
         }
 
         [Test, Order(4)]
-        public void CC_ClickCreateAccountButtonAndVerifyThatNewAccountCreationOptionsAreDisplayed()
+        public void DD_OpenDialogToComposeNewMail()
         {
-            _interaction.ClickElement(By.XPath(_createAccountButtonXPath));
-            Assert.True(_interaction.isElementDisplayed(By.XPath("//ul[@aria-label='Create account']")));
+            DriverManager.WaintUntilElementDisplayed(By.XPath(_mailHomePageFoldersXPath_Injectable.Replace("$folderName", "Inbox")));
+            _interaction.ClickElement(By.XPath(_buttonToComposeMail));
+            Assert.IsTrue(_interaction.isElementDisplayed(By.XPath(_newMessageDialogBoxXPath)));
         }
 
         [Test, Order(5)]
-        public void DD_ClickOptionToCreateAccountForPersonalUseAndVerifyThatPageChanged()
+        [TestCase("someFakeMail@noSuchAddress.pl", "someTestTitle", $"SomeTestBody")]
+        public void EE_FillFields_To_Subject_BodyAndCloseDialogBox(string randomMailAddress, string randomSubject, string randomBody)
         {
-            string initialUrl = _driver!.Url.ToString();
-            _interaction.ClickElement(By.XPath(_createPersonalUseAccountButtonXPath+"/.."));
-            _interaction.WaitPageLoad();
-            Assert.That(initialUrl != _driver!.Url.ToString());
-            Assert.That(_driver!.FindElement(By.Id("headingText")).Text, Is.EqualTo("Create your Google Account"));
+            randomBody +=  GetVariable<long>("epochTime").ToString();
+            _interaction.SendValuesToElement(By.XPath(_toXPath), randomMailAddress);
+            _interaction.SendValuesToElement(By.XPath(_subjectXPath), randomSubject);
+            _interaction.SendValuesToElement(By.XPath(_mailBodyXPath), randomBody);
+            _interaction.ClickElement(By.XPath(_closeNewMailComposeModalXPath));
+            Assert.That(_interaction.isElementDisplayed(By.XPath(_closeNewMailComposeModalXPath)), Is.False);
+
+            SetVariable("to", randomMailAddress);
+            SetVariable("subject", randomSubject);
+            SetVariable("body", randomBody);
         }
 
         [Test, Order(6)]
-        [TestCase("atmuserName999", "atmsurname888", "Aa1234567__")]
-        public void EE_FillUserDetailsForRegistration(string name, string surname, string password)
+        public void FF_VerifyCreatedMessageExistsInDrafts()
         {
-            _interaction.SendValuesToElement(By.Id("firstName"), name);
-            _interaction.SendValuesToElement(By.Id("lastName"), surname);
-            _interaction.SendValuesToElement(By.Id("username"), $"{name}.{surname}");
-            Assert.That(_interaction.isElementDisplayed(By.XPath(_errorForExistingUsernameXPath)), Is.False);
-            _interaction.SendValuesToElement(By.Name("Password"), password);
-            _interaction.SendValuesToElement(By.Name("ConfirmPasswd"), password);
-            _interaction.ClickElement(By.XPath(_nextButtonXPath));
-            Assert.IsTrue(_interaction.isElementDisplayed(By.XPath(_phoneNumberVerificationPageHeaderXPath)));
+            _interaction.ClickElement(By.XPath(_draftsXPath));
+            DriverManager.WaitPageToLoad();
+            Regex pattern = new Regex(".+#draft");
+            Assert.That(_driver.Url, Does.Match(pattern));
+            Assert.IsTrue(_interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("subject")))) &&
+                _interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("body")))));
         }
 
+        [Test, Order(7)]
+        public void GG_SendMailFromDraftAndVerifyMailDissapearedFromDraftFolder()
+        {
+            _interaction.ClickElement(By.XPath($"{_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("body"))}//ancestor-or-self::td"));
+            _interaction.ClickElement(By.XPath(_newMailDialogBoxSendButtonXPath));
+            Assert.IsFalse(_interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("to")))) || 
+                (_interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("subject")))) && 
+                _interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("body"))))));
+        }
+
+        [Test, Order(8)]
+        public void HH_GoToSentMailsFolderAndVerifyThatMailIsThere()
+        {
+            _interaction.ClickElement(By.XPath(_sentXPath));
+            DriverManager.WaitPageToLoad();
+            _interaction.isElementDisplayed(By.XPath(_messageInSent_InjecableXPath.Replace("$var", GetVariable<string>("body"))));
+        }
 
         #region Methods to interact with elements
         public string GetPageLanguage()
@@ -128,7 +175,7 @@ namespace WebDriverTask
             ICollection<IWebElement> languages;
             if (!_interaction.isElementDisplayed(By.Id(_languageChooserDropdownId)))
             {
-                throw new ElementNotVisibleException();
+                DriverManager.WaintUntilElementDisplayed(By.Id(_languageChooserDropdownId));
             }
             languages = _driver!.FindElements(By.XPath(_languageFromDropDownXPath));
             _interaction.ClickElement(By.Id(_languageChooserDropdownId), _driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "false");
@@ -144,6 +191,23 @@ namespace WebDriverTask
             _interaction.ClickElement(By.Id(_languageChooserDropdownId), _driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "true");
         }
         #endregion
+
+        public void SetVariable<T>(string key, T value)
+        {
+            if (!_variables.ContainsKey(key))
+            {
+                _variables.Add(key, value!);
+            }
+            _variables[key] = value!;
+        }
+
+        public T GetVariable<T>(string key)
+        {
+            if( _variables.ContainsKey(key))
+                return _variables[key];
+            else
+                throw new KeyNotFoundException(key);
+        }
 
         [TearDown]
         public void TearDown()
@@ -162,48 +226,3 @@ namespace WebDriverTask
         }
     }
 }
-
-
-
-/*namespace UIAutomation2.Base
-{
-    public class DriverManager
-    {
-        private static IWebDriver? driver;
-
-        public static IWebDriver Instance()
-        {
-            if (driver == null)
-            {
-                driver = new ChromeDriver();
-                driver.Manage().Timeouts().ImplicitWait.Add(TimeSpan.FromSeconds(5));
-                driver.Manage().Window.Maximize();
-            }
-            return driver;
-        }
-
-        public static void QuitDriver()
-        {
-            driver!.Quit();
-            driver = null;
-        }
-        public static void CloseDriver()
-        {
-            if (driver != null)
-                driver!.Close();
-        }
-
-        public static void ClearAllCookies()
-        {
-            if (driver != null)
-                driver!.Manage().Cookies.DeleteAllCookies();
-        }
-
-        public static void WaitPageToLoad(int secondsToWait = 5)
-        {
-            if (secondsToWait > 0 && driver != null)
-                driver!.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(secondsToWait);
-        }
-    }
-}
-*/
