@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,6 +62,27 @@ namespace WebDriverTask
             catch (NoSuchElementException)
             {
                 return false;
+            }
+        }
+
+        public void HandleAlert(bool accept = true)
+        {
+            try
+            {
+                IAlert alert = _driver.SwitchTo().Alert();
+                if (accept)
+                {
+                    alert.Accept();
+                }
+                else
+                {
+                    alert.Dismiss();
+                }
+                _driver.SwitchTo().DefaultContent();
+            }
+            catch(NoAlertPresentException e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
     }
