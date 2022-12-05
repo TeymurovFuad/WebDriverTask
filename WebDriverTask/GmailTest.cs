@@ -25,7 +25,7 @@ namespace WebDriverTask
         private const string _phoneNumberVerificationPageHeaderXPath = "//h1/span[text()='Verifying your phone number']";
         private const string _emailFieldId = "identifierId";
         private const string _passwordFieldXPath = "//input[@type='password' and @name='Passwd']";
-        private const string _greetingTextOnPasswordEnteringPageXPath = "//h1[@id='headingText']";
+        private const string _headingTextOfLoginLogoutPageXPath = "//h1[@id='headingText']/span";
         private const string _buttonToComposeMail = "//div[text()='Compose']";
         private const string _newMessageDialogBoxXPath = "//div[@aria-label='New Message']";
         private const string _toXPath = "//div[@name='to']//input";
@@ -38,6 +38,9 @@ namespace WebDriverTask
         private const string _sentXPath = "//div[@data-tooltip='Sent']//a";
         private const string _messageInSent_InjecableXPath = "//table/tbody/tr/td//div[@title='Inbox']//ancestor-or-self::td//span[contains(text(), '$var')]";
         private const string _mailHomePageFoldersXPath_Injectable = "//div[@data-tooltip='$folderName']";
+        private const string _dialogBoxContainingSignOutButtonXPath_Injectable = "//a[contains(@aria-label, '($email)') and contains(@href, 'SignOut')]";
+        private const string _iframeContainingDialogBoxForSignOutXPath = "//iframe[@name='account']";
+        private const string _signOutButtonXPath = "//a[contains(@href, 'Logout')]/div[text()='Sign out']";
 
         [OneTimeSetUp]
         public void InitializeTestClass()
@@ -85,11 +88,13 @@ namespace WebDriverTask
         {
             _interaction.SendValuesToElement(By.Id(_emailFieldId), mail);
             _interaction.ClickElement(By.XPath(_nextButtonXPath));
-            //Assert.That(_driver!.FindElement(By.XPath(_greetingTextOnPasswordEnteringPageXPath)).Text, Is.EqualTo($"Welcome"));
+            //Assert.That(_driver!.FindElement(By.XPath(_headingTextOfLoginLogoutPageXPath)).Text, Is.EqualTo($"Welcome"));
             _interaction.SendValuesToElement(By.XPath(_passwordFieldXPath), password);
             DriverManager.WaitPageToLoad(10);
             _interaction.ClickElement(By.XPath(_nextButtonXPath));
             //DriverManager.WaitPageToLoad();
+
+            SetVariable("mail", mail);
         }
 
         [Test, Order(4)]
@@ -144,6 +149,19 @@ namespace WebDriverTask
             _interaction.ClickElement(By.XPath(_sentXPath));
             DriverManager.WaitPageToLoad();
             _interaction.isElementDisplayed(By.XPath(_messageInSent_InjecableXPath.Replace("$var", GetVariable<string>("body"))));
+        }
+
+        [Test, Order(9)]
+        public void II_SignOutAndVerifyUserSignedOutSuccessfully()
+        {
+            string previousUrl = _driver.Url;
+            string x = _dialogBoxContainingSignOutButtonXPath_Injectable.Replace("$email", GetVariable<string>("mail"));
+            _interaction!.ClickElement(By.XPath(x));
+            _driver!.SwitchTo().Frame(_driver.FindElement(By.XPath(_iframeContainingDialogBoxForSignOutXPath)));
+            _interaction.ClickElement(By.XPath(_signOutButtonXPath));
+            _interaction.HandleAlert();
+            DriverManager.WaintUntilElementDisplayed(By.XPath(_headingTextOfLoginLogoutPageXPath));
+            Assert.That(_driver.FindElement(By.XPath(_headingTextOfLoginLogoutPageXPath)).Text, Is.EqualTo("Choose an account"));
         }
 
         #region Methods to interact with elements
@@ -222,7 +240,7 @@ namespace WebDriverTask
         public void ClassClean()
         {
             _driver!.Close();
-                _driver.Quit();
+            _driver.Quit();
         }
     }
 }
