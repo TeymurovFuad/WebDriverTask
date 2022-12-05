@@ -52,5 +52,11 @@ namespace WebDriverTask
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitTimeInSeconds));
             wait.Until(c => c.FindElement(locator));
         }
+
+        public static void WaintUntilUrlChanged(string previousUrl, int waitTimeInSeconds = 5)
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitTimeInSeconds));
+            wait.Until(c => c.Url != previousUrl);
+        }
     }
 }
