@@ -119,8 +119,9 @@ namespace WebDriverTask
         [Test, Order(6)]
         public void FF_VerifyCreatedMessageExistsInDrafts()
         {
-            _interaction.ClickElement(By.XPath(_draftsXPath));
-            DriverManager.WaitPageToLoad();
+            string previousUrl = _driver!.Url;
+            _interaction!.ClickElement(By.XPath(_draftsXPath));
+            DriverManager.WaintUntilUrlChanged(previousUrl);
             Regex pattern = new Regex("#drafts$");
             Assert.That(_driver.Url, Does.Match(pattern));
             Assert.IsTrue(_interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("subject")))) &&
