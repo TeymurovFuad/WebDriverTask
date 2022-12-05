@@ -52,10 +52,9 @@ namespace WebDriverTask
         [SetUp]
         public void TestSetup()
         {
-            //Thread.Sleep(2000);
             if (_isFailed)
             {
-                Assert.Inconclusive("Previos test failed. Given that all tests are chained, so failure of one may result in failure of all, thereby flow stopped.");
+                Assert.Inconclusive("One of the tests is failed. Given that all tests are chained, so failure of one may result in failure of all, thereby flow stopped.");
             }
             long epochTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
             SetVariable("epochTime", epochTime);
@@ -76,7 +75,7 @@ namespace WebDriverTask
             {
                 ChangePageLanguage(language: "english");
             }
-            Regex pattern = new Regex("english.+");
+            Regex pattern = new Regex("^english");
             Assert.That(GetPageLanguage().ToLower(), Does.Match(pattern));
         }
 
@@ -86,10 +85,9 @@ namespace WebDriverTask
         {
             _interaction.SendValuesToElement(By.Id(_emailFieldId), mail);
             _interaction.ClickElement(By.XPath(_nextButtonXPath));
-            DriverManager.WaitPageToLoad(10);
             //Assert.That(_driver!.FindElement(By.XPath(_greetingTextOnPasswordEnteringPageXPath)).Text, Is.EqualTo($"Welcome"));
             _interaction.SendValuesToElement(By.XPath(_passwordFieldXPath), password);
-            Thread.Sleep(3000);
+            DriverManager.WaitPageToLoad(10);
             _interaction.ClickElement(By.XPath(_nextButtonXPath));
             //DriverManager.WaitPageToLoad();
         }
@@ -123,7 +121,7 @@ namespace WebDriverTask
         {
             _interaction.ClickElement(By.XPath(_draftsXPath));
             DriverManager.WaitPageToLoad();
-            Regex pattern = new Regex(".+#draft");
+            Regex pattern = new Regex("#drafts$");
             Assert.That(_driver.Url, Does.Match(pattern));
             Assert.IsTrue(_interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("subject")))) &&
                 _interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("body")))));
@@ -154,7 +152,7 @@ namespace WebDriverTask
             string language = string.Empty;
             if (!_interaction.isElementDisplayed(By.Id(_languageChooserDropdownId)))
             {
-                throw new ElementNotVisibleException();
+                DriverManager.WaintUntilElementDisplayed(By.Id(_languageChooserDropdownId));
             }
             _interaction.ClickElement(By.Id(_languageChooserDropdownId), _driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "false");
             languages = _driver!.FindElements(By.XPath(_languageFromDropDownXPath));
@@ -162,7 +160,8 @@ namespace WebDriverTask
             {
                 if (lan.GetAttribute("aria-selected") == "true")
                 {
-                    language = lan.Text;
+                    var x = lan.GetAttribute("outerHTML");
+                    language = lan.FindElement(By.XPath("//span/span[@jsname]")).Text;
                     break;
                 }
             }
@@ -221,7 +220,7 @@ namespace WebDriverTask
         [OneTimeTearDown]
         public void ClassClean()
         {
-                _driver!.Close();
+            _driver!.Close();
                 _driver.Quit();
         }
     }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,7 +21,22 @@ namespace WebDriverTask
         {
             if (condition && isElementDisplayed(locator))
             {
-                _driver.FindElement(locator).Click();
+                bool success;
+                int retry = 5;
+                do
+                {
+                    try
+                    {
+                        DriverManager.WaintUntilElementDisplayed(locator);
+                        _driver.FindElement(locator).Click();
+                        success = true;
+                    }
+                    catch(StaleElementReferenceException e)
+                    {
+                        success = false;
+                    }
+                    retry--;
+                }while(!success && retry > 0);
             }
         }
 
