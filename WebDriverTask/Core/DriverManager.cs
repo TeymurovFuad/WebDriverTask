@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium.Support.UI;
 
-namespace WebDriverTask
+namespace WebDriverTask.Core
 {
     internal class DriverManager
     {
@@ -47,7 +47,7 @@ namespace WebDriverTask
                 driver!.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(secondsToWait);
         }
 
-        public static void WaintUntilElementDisplayed(By locator, int waitTimeInSeconds=5)
+        public static void WaintUntilElementDisplayed(By locator, int waitTimeInSeconds = 5)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitTimeInSeconds));
             wait.Until(c => c.FindElement(locator));

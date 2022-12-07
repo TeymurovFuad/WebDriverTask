@@ -6,8 +6,9 @@ using OpenQA.Selenium.Support.UI;
 using System.Collections;
 using System.Text.RegularExpressions;
 using NUnit.Framework.Interfaces;
+using WebDriverTask.Core;
 
-namespace WebDriverTask
+namespace WebDriverTask.Tests
 {
     [TestFixture]
     public class GmailTest
@@ -109,7 +110,7 @@ namespace WebDriverTask
         [TestCase("someFakeMail@noSuchAddress.pl", "someTestTitle", $"SomeTestBody")]
         public void EE_FillFields_To_Subject_BodyAndCloseDialogBox(string randomMailAddress, string randomSubject, string randomBody)
         {
-            randomBody +=  GetVariable<long>("epochTime").ToString();
+            randomBody += GetVariable<long>("epochTime").ToString();
             _interaction.SendValuesToElement(By.XPath(_toXPath), randomMailAddress);
             _interaction.SendValuesToElement(By.XPath(_subjectXPath), randomSubject);
             _interaction.SendValuesToElement(By.XPath(_mailBodyXPath), randomBody);
@@ -138,9 +139,9 @@ namespace WebDriverTask
         {
             _interaction.ClickElement(By.XPath($"{_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("body"))}//ancestor-or-self::td"));
             _interaction.ClickElement(By.XPath(_newMailDialogBoxSendButtonXPath));
-            Assert.IsFalse(_interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("to")))) || 
-                (_interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("subject")))) && 
-                _interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("body"))))));
+            Assert.IsFalse(_interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("to")))) ||
+                _interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("subject")))) &&
+                _interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("body")))));
         }
 
         [Test, Order(8)]
@@ -221,7 +222,7 @@ namespace WebDriverTask
 
         public T GetVariable<T>(string key)
         {
-            if( _variables.ContainsKey(key))
+            if (_variables.ContainsKey(key))
                 return _variables[key];
             else
                 throw new KeyNotFoundException(key);
