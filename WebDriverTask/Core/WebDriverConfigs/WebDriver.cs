@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebDriverTask.WebDriverConfigs
+namespace WebDriverTask.Core.WebDriverConfigs
 {
     public static class WebDriver
     {

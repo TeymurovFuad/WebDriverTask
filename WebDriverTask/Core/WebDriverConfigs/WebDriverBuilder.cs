@@ -5,21 +5,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebDriverTask.Core;
+using WebDriverTask.Core.BrowserConfigs;
 
-namespace WebDriverTask.WebDriverConfigs
+namespace WebDriverTask.Core.WebDriverConfigs
 {
-    public sealed class WebDriverBuilder
+    public sealed class WebDriverBuilder: WebDriverFactory
     {
-        private Browser _browser;
+        private BrowserType _browser;
         private bool _isBuilt;
 
-        public WebDriverBuilder() { }
-
-        public WebDriverBuilder Build(Browser browser)
+        public WebDriverBuilder(BrowserType browserType): base(browserType)
         {
-            _browser = browser;
-            WebDriverFactory.CreateDriver(browser);
+            _browser = browserType;
+        }
+
+        public WebDriverBuilder Build()
+        {
+            CreateDriver();
             _isBuilt = true;
             return this;
         }
@@ -30,14 +32,14 @@ namespace WebDriverTask.WebDriverConfigs
             {
                 switch (_browser)
                 {
-                    case Browser.Chrome:
+                    case BrowserType.Chrome:
                         ChromeOptions chromeOptions = new ChromeOptions();
                         foreach (string argument in arguments)
                         {
                             chromeOptions.AddArgument(argument);
                         }
                         break;
-                    case Browser.Firefox:
+                    case BrowserType.Firefox:
                         FirefoxOptions firefoxOptions = new FirefoxOptions();
                         foreach (string argument in arguments)
                         {

@@ -6,15 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium.Support.UI;
-using WebDriverTask.Core;
+using WebDriverTask.Core.BrowserConfigs;
 
-namespace WebDriverTask.WebDriverConfigs
+namespace WebDriverTask.Core.WebDriverConfigs
 {
     public abstract class WebDriverManager
     {
-        private static IWebDriver? driver;
+        private static IWebDriver? driver = null;
 
-        public static IWebDriver Instance(Browser browser)
+        public static IWebDriver Instance(BrowserType browser)
         {
             if (driver == null)
             {
