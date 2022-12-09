@@ -6,18 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium.Support.UI;
+using WebDriverTask.Core;
 
-namespace WebDriverTask.Core
+namespace WebDriverTask.WebDriverConfigs
 {
-    internal class DriverManager
+    public abstract class WebDriverManager
     {
         private static IWebDriver? driver;
 
-        public static IWebDriver Instance()
+        public static IWebDriver Instance(Browser browser)
         {
             if (driver == null)
             {
-                driver = new ChromeDriver();
+                driver = WebDriver.GetDriver();
                 driver.Manage().Timeouts().ImplicitWait.Add(TimeSpan.FromSeconds(5));
                 driver.Manage().Window.Maximize();
             }

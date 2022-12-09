@@ -7,6 +7,7 @@ using System.Collections;
 using System.Text.RegularExpressions;
 using NUnit.Framework.Interfaces;
 using WebDriverTask.Core;
+using WebDriverTask.WebDriverConfigs;
 
 namespace WebDriverTask.Tests
 {
@@ -15,7 +16,7 @@ namespace WebDriverTask.Tests
     {
         private IWebDriver? _driver;
         private Dictionary<string, dynamic> _variables;
-        private PageInteractions? _interaction;
+        private BaseInteractions? _interaction;
         private bool _isFailed;
         private const string _createAccountButtonXPath = "//span[@jsname and text()='Create account']";
         private const string _createPersonalUseAccountButtonXPath = "//span[@jsname and text()='For my personal use']";
@@ -49,8 +50,8 @@ namespace WebDriverTask.Tests
             _variables = new Dictionary<string, object>();
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.AddArgument("--incognito");
-            _driver = DriverManager.Instance();
-            _interaction = new PageInteractions();
+            _driver = WebDriverManager.Instance();
+            _interaction = new BaseInteractions();
         }
 
         [SetUp]
@@ -89,9 +90,9 @@ namespace WebDriverTask.Tests
         {
             _interaction.SendValuesToElement(By.Id(_emailFieldId), mail);
             _interaction.ClickElement(By.XPath(_nextButtonXPath));
-            //Assert.That(_driver!.FindElement(By.XPath(_headingTextOfLoginLogoutPageXPath)).Text, Is.EqualTo($"Welcome"));
+            //Assert.That(driver!.FindElement(By.XPath(_headingTextOfLoginLogoutPageXPath)).Text, Is.EqualTo($"Welcome"));
             _interaction.SendValuesToElement(By.XPath(_passwordFieldXPath), password);
-            DriverManager.WaitPageToLoad(10);
+            WebDriverManager.WaitPageToLoad(10);
             _interaction.ClickElement(By.XPath(_nextButtonXPath));
             //DriverManager.WaitPageToLoad();
 
@@ -101,7 +102,7 @@ namespace WebDriverTask.Tests
         [Test, Order(4)]
         public void DD_OpenDialogToComposeNewMail()
         {
-            DriverManager.WaintUntilElementDisplayed(By.XPath(_mailHomePageFoldersXPath_Injectable.Replace("$folderName", "Inbox")));
+            WebDriverManager.WaintUntilElementDisplayed(By.XPath(_mailHomePageFoldersXPath_Injectable.Replace("$folderName", "Inbox")));
             _interaction.ClickElement(By.XPath(_buttonToComposeMail));
             Assert.IsTrue(_interaction.isElementDisplayed(By.XPath(_newMessageDialogBoxXPath)));
         }
@@ -127,7 +128,7 @@ namespace WebDriverTask.Tests
         {
             string previousUrl = _driver!.Url;
             _interaction!.ClickElement(By.XPath(_draftsXPath));
-            DriverManager.WaintUntilUrlChanged(previousUrl);
+            WebDriverManager.WaintUntilUrlChanged(previousUrl);
             Regex pattern = new Regex("#drafts$");
             Assert.That(_driver.Url, Does.Match(pattern));
             Assert.IsTrue(_interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("subject")))) &&
@@ -148,7 +149,7 @@ namespace WebDriverTask.Tests
         public void HH_GoToSentMailsFolderAndVerifyThatMailIsThere()
         {
             _interaction.ClickElement(By.XPath(_sentXPath));
-            DriverManager.WaitPageToLoad();
+            WebDriverManager.WaitPageToLoad();
             _interaction.isElementDisplayed(By.XPath(_messageInSent_InjecableXPath.Replace("$var", GetVariable<string>("body"))));
         }
 
@@ -161,7 +162,7 @@ namespace WebDriverTask.Tests
             _driver!.SwitchTo().Frame(_driver.FindElement(By.XPath(_iframeContainingDialogBoxForSignOutXPath)));
             _interaction.ClickElement(By.XPath(_signOutButtonXPath));
             _interaction.HandleAlert();
-            DriverManager.WaintUntilElementDisplayed(By.XPath(_headingTextOfLoginLogoutPageXPath));
+            WebDriverManager.WaintUntilElementDisplayed(By.XPath(_headingTextOfLoginLogoutPageXPath));
             Assert.That(_driver.FindElement(By.XPath(_headingTextOfLoginLogoutPageXPath)).Text, Is.EqualTo("Choose an account"));
         }
 
@@ -172,7 +173,7 @@ namespace WebDriverTask.Tests
             string language = string.Empty;
             if (!_interaction.isElementDisplayed(By.Id(_languageChooserDropdownId)))
             {
-                DriverManager.WaintUntilElementDisplayed(By.Id(_languageChooserDropdownId));
+                WebDriverManager.WaintUntilElementDisplayed(By.Id(_languageChooserDropdownId));
             }
             _interaction.ClickElement(By.Id(_languageChooserDropdownId), _driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "false");
             languages = _driver!.FindElements(By.XPath(_languageFromDropDownXPath));
@@ -194,7 +195,7 @@ namespace WebDriverTask.Tests
             ICollection<IWebElement> languages;
             if (!_interaction.isElementDisplayed(By.Id(_languageChooserDropdownId)))
             {
-                DriverManager.WaintUntilElementDisplayed(By.Id(_languageChooserDropdownId));
+                WebDriverManager.WaintUntilElementDisplayed(By.Id(_languageChooserDropdownId));
             }
             languages = _driver!.FindElements(By.XPath(_languageFromDropDownXPath));
             _interaction.ClickElement(By.Id(_languageChooserDropdownId), _driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "false");

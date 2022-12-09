@@ -6,17 +6,17 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using WebDriverTask.Core;
+using WebDriverTask.WebDriverConfigs;
 
-namespace WebDriverTask
+namespace WebDriverTask.Core
 {
-    public class PageInteractions
+    public class BaseInteractions: WebDriverManager
     {
-        private IWebDriver _driver;
+        public IWebDriver driver { get; set; }
 
-        public PageInteractions()
+        public BaseInteractions(IWebDriver driver)
         {
-            _driver = DriverManager.Instance();
+            this.driver = driver;
         }
 
         public void ClickElement(By locator, bool condition = true)
@@ -29,35 +29,35 @@ namespace WebDriverTask
                 {
                     try
                     {
-                        DriverManager.WaintUntilElementDisplayed(locator);
-                        _driver.FindElement(locator).Click();
+                        WebDriverManager.WaintUntilElementDisplayed(locator);
+                        driver.FindElement(locator).Click();
                         success = true;
                     }
-                    catch(StaleElementReferenceException e)
+                    catch (StaleElementReferenceException e)
                     {
                         success = false;
                     }
                     retry--;
-                }while(!success && retry > 0);
+                } while (!success && retry > 0);
             }
         }
 
         public void SendValuesToElement(By locator, string value)
         {
             if (isElementDisplayed(locator))
-                _driver!.FindElement(locator).SendKeys(value);
+                driver!.FindElement(locator).SendKeys(value);
         }
 
         public void WaitPageLoad(int seconds = 5)
         {
-            _driver!.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
+            driver!.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
         }
 
         public bool isElementDisplayed(By locator)
         {
             try
             {
-                _driver!.FindElement(locator);
+                driver!.FindElement(locator);
                 return true;
             }
             catch (NoSuchElementException)
@@ -70,7 +70,7 @@ namespace WebDriverTask
         {
             try
             {
-                IAlert alert = _driver.SwitchTo().Alert();
+                IAlert alert = driver.SwitchTo().Alert();
                 if (accept)
                 {
                     alert.Accept();
@@ -79,9 +79,9 @@ namespace WebDriverTask
                 {
                     alert.Dismiss();
                 }
-                _driver.SwitchTo().DefaultContent();
+                driver.SwitchTo().DefaultContent();
             }
-            catch(NoAlertPresentException e)
+            catch (NoAlertPresentException e)
             {
                 Console.WriteLine(e.Message);
             }

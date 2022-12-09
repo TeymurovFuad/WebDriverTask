@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebDriverTask.PageObjects
+namespace WebDriverTask.Core
 {
-    internal class LoginPage
+    public enum Browser
     {
+        Firefox,
+        Chrome
     }
 }
