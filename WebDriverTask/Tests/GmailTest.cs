@@ -6,8 +6,8 @@ using OpenQA.Selenium.Support.UI;
 using System.Collections;
 using System.Text.RegularExpressions;
 using NUnit.Framework.Interfaces;
-using WebDriverTask.Core;
-using WebDriverTask.WebDriverConfigs;
+using WebDriverTask.Pages;
+using WebDriverTask.Core.WebDriverConfigs;
 
 namespace WebDriverTask.Tests
 {
@@ -16,7 +16,7 @@ namespace WebDriverTask.Tests
     {
         private IWebDriver? _driver;
         private Dictionary<string, dynamic> _variables;
-        private BaseInteractions? _interaction;
+        private BasePage? _interaction;
         private bool _isFailed;
         private const string _createAccountButtonXPath = "//span[@jsname and text()='Create account']";
         private const string _createPersonalUseAccountButtonXPath = "//span[@jsname and text()='For my personal use']";
