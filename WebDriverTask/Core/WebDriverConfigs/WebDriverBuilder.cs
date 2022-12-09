@@ -9,28 +9,24 @@ using WebDriverTask.Core.BrowserConfigs;
 
 namespace WebDriverTask.Core.WebDriverConfigs
 {
-    public sealed class WebDriverBuilder: WebDriverFactory
+    public class WebDriverBuilder: WebDriverFactory
     {
-        private BrowserType _browser;
         private bool _isBuilt;
 
-        public WebDriverBuilder(BrowserType browserType): base(browserType)
-        {
-            _browser = browserType;
-        }
+        public WebDriverBuilder(BrowserType browserType) : base(browserType) { }
 
-        public WebDriverBuilder Build()
+        protected WebDriverBuilder Build()
         {
             CreateDriver();
             _isBuilt = true;
             return this;
         }
 
-        public WebDriverBuilder SetupDriver(string[] arguments)
+        public WebDriverBuilder AddArguments(string[] arguments)
         {
             if (_isBuilt && arguments != null && arguments.Length > 0)
             {
-                switch (_browser)
+                switch (_browserType)
                 {
                     case BrowserType.Chrome:
                         ChromeOptions chromeOptions = new ChromeOptions();
@@ -47,7 +43,7 @@ namespace WebDriverTask.Core.WebDriverConfigs
                         }
                         break;
                     default:
-                        throw new ArgumentException($"Wrong browser was passed: {_browser}");
+                        throw new ArgumentException($"Wrong browser was passed: {_browserType}");
                 }
             }
             return this;

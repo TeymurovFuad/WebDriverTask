@@ -7,7 +7,7 @@ namespace WebDriverTask.Core.WebDriverConfigs
 {
     public abstract class WebDriverFactory
     {
-        public static BrowserType _browserType;
+        public static BrowserType _browserType { get; set; }
         protected WebDriverFactory(BrowserType browserType)
         {
             _browserType = browserType;

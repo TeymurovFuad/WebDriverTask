@@ -1,23 +1,20 @@
-﻿using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using WebDriverTask.Core.BrowserConfigs;
 
 namespace WebDriverTask.Core.WebDriverConfigs
 {
-    public abstract class WebDriverManager
+    public abstract class WebDriverManager: WebDriverBuilder
     {
         private static IWebDriver? driver = null;
 
-        public static IWebDriver Instance(BrowserType browser)
+        protected WebDriverManager(BrowserType browserType): base(browserType) { }
+
+        public IWebDriver Instance()
         {
             if (driver == null)
             {
+                Build();
                 driver = WebDriver.GetDriver();
                 driver.Manage().Timeouts().ImplicitWait.Add(TimeSpan.FromSeconds(5));
                 driver.Manage().Window.Maximize();
