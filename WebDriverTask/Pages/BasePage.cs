@@ -12,30 +12,27 @@ using WebDriverTask.Core.WebDriverConfigs;
 
 namespace WebDriverTask.Pages
 {
-    public class BasePage : WebDriverManager
+    public class BasePage : DriverManager
     {
-        private IWebDriver driver { get; set; }
-
-        public BasePage(BrowserType browser)
+        public BasePage(BrowserType browser): base(browser)
         {
-            driver = Instance(browser);
         }
 
-        public void ClickElement(By locator, bool condition = true)
+        public void ClickElement(IWebElement element, bool condition = true)
         {
-            if (condition && isElementDisplayed(locator))
+            if (condition && isElementDisplayed(element))
             {
-                bool success;
+                bool success=false;
                 int retry = 5;
                 do
                 {
                     try
                     {
-                        WaintUntilElementDisplayed(locator);
-                        driver.FindElement(locator).Click();
+                        WaitUntilElementIsInteractable(element);
+                        element.Click();
                         success = true;
                     }
-                    catch (StaleElementReferenceException e)
+                    catch (StaleElementReferenceException)
                     {
                         success = false;
                     }
@@ -44,23 +41,22 @@ namespace WebDriverTask.Pages
             }
         }
 
-        public void SendValuesToElement(By locator, string value)
+        public void SendValuesToElement(IWebElement element, string value)
         {
-            if (isElementDisplayed(locator))
-                driver!.FindElement(locator).SendKeys(value);
+            if (isElementDisplayed(element))
+                element.SendKeys(value);
         }
 
         public void WaitPageLoad(int seconds = 5)
         {
-            driver!.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
+            Driver.GetDriver().Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
         }
 
-        public bool isElementDisplayed(By locator)
+        public bool isElementDisplayed(IWebElement element)
         {
             try
             {
-                driver!.FindElement(locator);
-                return true;
+                return element.Displayed;
             }
             catch (NoSuchElementException)
             {
@@ -68,11 +64,11 @@ namespace WebDriverTask.Pages
             }
         }
 
-        public void HandleAlert(bool accept = true)
+        public void HandleAlert(bool accept)
         {
             try
             {
-                IAlert alert = driver.SwitchTo().Alert();
+                IAlert alert = Driver.GetDriver().SwitchTo().Alert();
                 if (accept)
                 {
                     alert.Accept();
@@ -81,7 +77,7 @@ namespace WebDriverTask.Pages
                 {
                     alert.Dismiss();
                 }
-                driver.SwitchTo().DefaultContent();
+                Driver.GetDriver().SwitchTo().DefaultContent();
             }
             catch (NoAlertPresentException e)
             {

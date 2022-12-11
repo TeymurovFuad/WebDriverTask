@@ -5,8 +5,10 @@ namespace WebDriverTask.Pages.Login
 {
     public class LoginPage: BasePage
     {
-        IWebDriver _driver;
-        public LoginPage() : base(BrowserType.Chrome) { }
+        public LoginPage() : base(BrowserType.Chrome)
+        {
+            AddArguments("--incognito", "--somesetting");
+        }
 
         public void xxx()
         {
