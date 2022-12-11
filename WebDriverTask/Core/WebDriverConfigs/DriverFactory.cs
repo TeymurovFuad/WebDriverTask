@@ -5,10 +5,10 @@ using WebDriverTask.Core.BrowserConfigs;
 
 namespace WebDriverTask.Core.WebDriverConfigs
 {
-    public abstract class WebDriverFactory
+    public abstract class DriverFactory
     {
         public static BrowserType _browserType { get; set; }
-        protected WebDriverFactory(BrowserType browserType)
+        protected DriverFactory(BrowserType browserType)
         {
             _browserType = browserType;
         }
@@ -27,7 +27,7 @@ namespace WebDriverTask.Core.WebDriverConfigs
                 default:
                     throw new ArgumentException($"Wrong browser was passed: {nameof(_browserType)}");
             }
-            WebDriver.SetWebDriver(driver);
+            Driver.SetWebDriver(driver);
         }
     }
 }

@@ -9,20 +9,20 @@ using WebDriverTask.Core.BrowserConfigs;
 
 namespace WebDriverTask.Core.WebDriverConfigs
 {
-    public class WebDriverBuilder: WebDriverFactory
+    public class DriverBuilder: DriverFactory
     {
         private bool _isBuilt;
 
-        public WebDriverBuilder(BrowserType browserType) : base(browserType) { }
+        public DriverBuilder(BrowserType browserType) : base(browserType) { }
 
-        protected WebDriverBuilder Build()
+        protected DriverBuilder Build()
         {
             CreateDriver();
             _isBuilt = true;
             return this;
         }
 
-        public WebDriverBuilder AddArguments(string[] arguments)
+        public DriverBuilder AddArguments(params string[] arguments)
         {
             if (_isBuilt && arguments != null && arguments.Length > 0)
             {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WebDriverTask.Core.WebDriverConfigs
 {
-    public static class WebDriver
+    public static class Driver
     {
         private static IWebDriver? _webDriver = null;
 
