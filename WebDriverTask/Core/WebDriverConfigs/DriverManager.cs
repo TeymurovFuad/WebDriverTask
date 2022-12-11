@@ -4,13 +4,11 @@ using WebDriverTask.Core.BrowserConfigs;
 
 namespace WebDriverTask.Core.WebDriverConfigs
 {
-    public abstract class DriverManager: DriverBuilder
+    public class DriverManager: DriverBuilder
     {
         private static IWebDriver? driver = null;
 
-        protected DriverManager(BrowserType browserType): base(browserType) { }
-
-        public DriverBuilder Instance()
+        public static void Instance(BrowserType browser)
         {
             try
             {
@@ -18,7 +16,7 @@ namespace WebDriverTask.Core.WebDriverConfigs
             }
             catch (NullReferenceException)
             {
-                Build();
+                Build(browser);
             }
             catch(ObjectDisposedException)
             {
@@ -30,7 +28,6 @@ namespace WebDriverTask.Core.WebDriverConfigs
                 driver.Manage().Timeouts().ImplicitWait.Add(TimeSpan.FromSeconds(5));
                 driver.Manage().Window.Maximize();
             }
-            return this;
         }
 
         public static void QuitDriver()
@@ -41,8 +38,7 @@ namespace WebDriverTask.Core.WebDriverConfigs
         }
         public static void CloseDriver()
         {
-            if (driver != null)
-                driver!.Close();
+            Driver.Close();
         }
 
         public static void ClearAllCookies()

@@ -1,27 +1,26 @@
 ﻿using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using WebDriverTask.Core.BrowserConfigs;
+using WebDriverTask.Core.CustomExceptions;
 
 namespace WebDriverTask.Core.WebDriverConfigs
 {
-    public class DriverBuilder: DriverFactory
+    public abstract class DriverBuilder: DriverFactory
     {
-        private bool _isBuilt;
+        private static bool _isBuilt;
 
-        public DriverBuilder(BrowserType browserType) : base(browserType) { }
-
-        protected DriverBuilder Build()
+        protected static void Build(BrowserType browserType)
         {
-            CreateDriver();
+            CreateDriver(browserType);
             _isBuilt = true;
-            return this;
         }
 
-        public DriverBuilder AddArguments(params string[] arguments)
+        protected static void AddArguments(params string[] arguments)
         {
+            BrowserType browserType = GetBrowserType();
             if (_isBuilt && arguments != null && arguments.Length > 0)
             {
-                switch (_browserType)
+                switch (browserType)
                 {
                     case BrowserType.Chrome:
                         ChromeOptions chromeOptions = new ChromeOptions();
@@ -38,10 +37,9 @@ namespace WebDriverTask.Core.WebDriverConfigs
                         }
                         break;
                     default:
-                        throw new ArgumentException($"Wrong browser was passed: {_browserType}");
+                        throw new BrowserTypeException($"Wrong browser was passed: {browserType}");
                 }
             }
-            return this;
         }
     }
 }

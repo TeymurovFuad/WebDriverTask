@@ -2,21 +2,31 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using WebDriverTask.Core.BrowserConfigs;
+using WebDriverTask.Core.CustomExceptions;
 
 namespace WebDriverTask.Core.WebDriverConfigs
 {
     public abstract class DriverFactory
     {
-        public static BrowserType _browserType { get; set; }
-        protected DriverFactory(BrowserType browserType)
+        private static BrowserType _browserType { get; set; }
+
+        public static BrowserType GetBrowserType()
         {
-            _browserType = browserType;
+            try
+            {
+                return _browserType;
+            }
+            catch (Exception)
+            {
+                throw new BrowserTypeException("Browser type is not set. It is expected to be set when create driver");
+            }
         }
 
-        public static void CreateDriver()
+        protected static void CreateDriver(BrowserType browserType)
         {
             IWebDriver? driver = null;
-            switch (_browserType)
+            _browserType = browserType;
+            switch (browserType)
             {
                 case BrowserType.Chrome:
                     driver = new ChromeDriver();
@@ -25,9 +35,9 @@ namespace WebDriverTask.Core.WebDriverConfigs
                     driver = new FirefoxDriver();
                     break;
                 default:
-                    throw new ArgumentException($"Wrong browser was passed: {nameof(_browserType)}");
+                    throw new BrowserTypeException($"Wrong browser was passed: {browserType.ToString()}");
             }
-            Driver.SetWebDriver(driver);
+            Driver.SetDriver(driver);
         }
     }
 }
