@@ -1,9 +1,6 @@
 ﻿using OpenQA.Selenium;
 using NUnit.Framework;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Remote;
-using OpenQA.Selenium.Support.UI;
-using System.Collections;
 using System.Text.RegularExpressions;
 using NUnit.Framework.Interfaces;
 using WebDriverTask.Pages;
@@ -50,7 +47,7 @@ namespace WebDriverTask.Tests
             _variables = new Dictionary<string, object>();
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.AddArgument("--incognito");
-            _driver = WebDriverManager.Instance();
+            _driver = DriverManager.Instance();
             _interaction = new BaseInteractions();
         }
 
@@ -92,7 +89,7 @@ namespace WebDriverTask.Tests
             _interaction.ClickElement(By.XPath(_nextButtonXPath));
             //Assert.That(driver!.FindElement(By.XPath(_headingTextOfLoginLogoutPageXPath)).Text, Is.EqualTo($"Welcome"));
             _interaction.SendValuesToElement(By.XPath(_passwordFieldXPath), password);
-            WebDriverManager.WaitPageToLoad(10);
+            DriverManager.WaitPageToLoad(10);
             _interaction.ClickElement(By.XPath(_nextButtonXPath));
             //DriverManager.WaitPageToLoad();
 
@@ -102,7 +99,7 @@ namespace WebDriverTask.Tests
         [Test, Order(4)]
         public void DD_OpenDialogToComposeNewMail()
         {
-            WebDriverManager.WaintUntilElementDisplayed(By.XPath(_mailHomePageFoldersXPath_Injectable.Replace("$folderName", "Inbox")));
+            DriverManager.WaitUntilElementDisplayed(By.XPath(_mailHomePageFoldersXPath_Injectable.Replace("$folderName", "Inbox")));
             _interaction.ClickElement(By.XPath(_buttonToComposeMail));
             Assert.IsTrue(_interaction.isElementDisplayed(By.XPath(_newMessageDialogBoxXPath)));
         }
@@ -128,7 +125,7 @@ namespace WebDriverTask.Tests
         {
             string previousUrl = _driver!.Url;
             _interaction!.ClickElement(By.XPath(_draftsXPath));
-            WebDriverManager.WaintUntilUrlChanged(previousUrl);
+            DriverManager.WaintUntilUrlChanged(previousUrl);
             Regex pattern = new Regex("#drafts$");
             Assert.That(_driver.Url, Does.Match(pattern));
             Assert.IsTrue(_interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("subject")))) &&
@@ -149,7 +146,7 @@ namespace WebDriverTask.Tests
         public void HH_GoToSentMailsFolderAndVerifyThatMailIsThere()
         {
             _interaction.ClickElement(By.XPath(_sentXPath));
-            WebDriverManager.WaitPageToLoad();
+            DriverManager.WaitPageToLoad();
             _interaction.isElementDisplayed(By.XPath(_messageInSent_InjecableXPath.Replace("$var", GetVariable<string>("body"))));
         }
 
@@ -161,8 +158,8 @@ namespace WebDriverTask.Tests
             _interaction!.ClickElement(By.XPath(x));
             _driver!.SwitchTo().Frame(_driver.FindElement(By.XPath(_iframeContainingDialogBoxForSignOutXPath)));
             _interaction.ClickElement(By.XPath(_signOutButtonXPath));
-            _interaction.HandleAlert();
-            WebDriverManager.WaintUntilElementDisplayed(By.XPath(_headingTextOfLoginLogoutPageXPath));
+            _interaction.HandleAlert(accept: true);
+            DriverManager.WaitUntilElementDisplayed(By.XPath(_headingTextOfLoginLogoutPageXPath));
             Assert.That(_driver.FindElement(By.XPath(_headingTextOfLoginLogoutPageXPath)).Text, Is.EqualTo("Choose an account"));
         }
 
@@ -173,7 +170,7 @@ namespace WebDriverTask.Tests
             string language = string.Empty;
             if (!_interaction.isElementDisplayed(By.Id(_languageChooserDropdownId)))
             {
-                WebDriverManager.WaintUntilElementDisplayed(By.Id(_languageChooserDropdownId));
+                DriverManager.WaitUntilElementDisplayed(By.Id(_languageChooserDropdownId));
             }
             _interaction.ClickElement(By.Id(_languageChooserDropdownId), _driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "false");
             languages = _driver!.FindElements(By.XPath(_languageFromDropDownXPath));
@@ -195,7 +192,7 @@ namespace WebDriverTask.Tests
             ICollection<IWebElement> languages;
             if (!_interaction.isElementDisplayed(By.Id(_languageChooserDropdownId)))
             {
-                WebDriverManager.WaintUntilElementDisplayed(By.Id(_languageChooserDropdownId));
+                DriverManager.WaitUntilElementDisplayed(By.Id(_languageChooserDropdownId));
             }
             languages = _driver!.FindElements(By.XPath(_languageFromDropDownXPath));
             _interaction.ClickElement(By.Id(_languageChooserDropdownId), _driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "false");

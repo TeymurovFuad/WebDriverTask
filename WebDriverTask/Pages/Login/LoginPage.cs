@@ -1,5 +1,4 @@
-﻿using OpenQA.Selenium;
-using WebDriverTask.Core.BrowserConfigs;
+﻿using WebDriverTask.Core.BrowserConfigs;
 
 namespace WebDriverTask.Pages.Login
 {
