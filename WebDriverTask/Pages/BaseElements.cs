@@ -3,7 +3,7 @@ using SeleniumExtras.PageObjects;
 
 namespace WebDriverTask.Pages
 {
-    public abstract class BaseElements
+    public abstract class BaseElements: BasePage
     {
         [FindsBy(How = How.Id, Using = "lang-chooser")]
         public IWebElement DropDownToChooseLanguage { get; set; }

@@ -18,7 +18,7 @@ namespace WebDriverTask.Pages.Login
         public IWebElement HelpWorkBetterText { get; set; }
 
         [FindsBy(How = How.XPath, Using = $"//*[text()='Not Now']")]
-        public IWebElement NotNowButtonOnHelpWorkBetterView { get; set; }
+        public IWebElement NotNowButtonOnHelpWorkBetterPage { get; set; }
 
         public void SkipHelpToWorkBetterPage()
         {
@@ -28,7 +28,7 @@ namespace WebDriverTask.Pages.Login
             {
                 try
                 {
-                    NotNowButtonOnHelpWorkBetterView.Click();
+                    NotNowButtonOnHelpWorkBetterPage.Click();
                 }
                 catch (Exception)
                 {

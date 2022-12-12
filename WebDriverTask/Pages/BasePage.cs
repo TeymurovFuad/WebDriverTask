@@ -1,15 +1,10 @@
 ﻿using OpenQA.Selenium;
-using WebDriverTask.Core.BrowserConfigs;
 using WebDriverTask.Core.WebDriverConfigs;
 
 namespace WebDriverTask.Pages
 {
-    public class BasePage : DriverManager
+    public class BasePage
     {
-        public BasePage(BrowserType browser): base(browser)
-        {
-        }
-
         public void ClickElement(IWebElement element, bool condition = true)
         {
             if (condition && isElementDisplayed(element))
@@ -20,7 +15,7 @@ namespace WebDriverTask.Pages
                 {
                     try
                     {
-                        WaitUntilElementIsInteractable(element);
+                        DriverManager.WaitUntilElementIsInteractable(element);
                         element.Click();
                         success = true;
                     }
@@ -75,6 +70,16 @@ namespace WebDriverTask.Pages
             {
                 Console.WriteLine(e.Message);
             }
+        }
+
+        public string IgnoreCaseInXPath(string partOrXpathToBeIgnored, string? property="text()")
+        {
+            return $"contains(translate({property}, {partOrXpathToBeIgnored.ToLower()}, {partOrXpathToBeIgnored.ToUpper()}), {partOrXpathToBeIgnored})";
+        }
+
+        public void SendEmail(string email)
+        {
+            Console.WriteLine();
         }
     }
 }

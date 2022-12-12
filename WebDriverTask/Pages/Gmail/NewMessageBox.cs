@@ -1,71 +1,57 @@
 ﻿using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using WebDriverTask.Core.WebDriverConfigs;
 
 namespace WebDriverTask.Pages.Gmail
 {
-    public class NewMessageBox: GmailBaseElements
+    public static class NewMessageBox
     {
+        [FindsBy(How = How.XPath, Using = "//div[@aria-label='New Message']")]
+        public static IWebElement NewMessageDialogBox { get; private set; }
+
         [FindsBy(How = How.XPath, Using = "//div[@name='to']//input")]
-        private IWebElement To { get; set; }
+        public static IWebElement To { get; private set; }
 
         [FindsBy(How = How.XPath, Using = "//input[@name='subjectbox']")]
-        private IWebElement Subject { get; set; }
+        public static IWebElement Subject { get; private set; }
 
         [FindsBy(How = How.XPath, Using = "//div[@aria-label='Message Body']")]
-        private IWebElement Body { get; set; }
+        public static IWebElement Body { get; private set; }
 
         [FindsBy(How = How.XPath, Using = "//div[@role='button' and text()='Send']")]
-        private IWebElement SendButton { get; set; }
+        public static IWebElement SendButton { get; private set; }
 
-        public NewMessageBox ComposeNewMail()
-        {
-            string style = NewMessageDialogBox.GetAttribute("style");
-            string pattern = @".*height(.){1,3}\d+";
-            if (!Regex.IsMatch(style, pattern))
-                ComposeButton.Click();
-            DriverManager.WaitUntilElementIsInteractable(SendButton);
-            return this;
-        }
-        public NewMessageBox AddReceiver(params string[] addressTo)
+        [FindsBy(How = How.XPath, Using = "//img[@aria-label='Save & close']")]
+        public static IWebElement SaveAndCloseButton_KnownAsX { get; private set; }
+
+        public static void AddReceiver(params string[] addressTo)
         {
             string receivers = String.Join(",", addressTo);
             To.SendKeys(receivers);
-            return this;
         }
 
-        public NewMessageBox AddSubject(string addressTo)
+        public static void AddSubject(string addressTo)
         {
 
             Subject.SendKeys(addressTo);
-            return this;
         }
 
-        public NewMessageBox AddBody(string addressTo)
+        public static void AddBody(string addressTo)
         {
 
             Body.SendKeys(addressTo);
-            return this;
         }
 
-        public void SendMail()
+        public static void SendMail()
         {
             SendButton.Click();
             CloseNewMailBox();
         }
 
-        private void CloseNewMailBox()
+        private static void CloseNewMailBox()
         {
-            string style = NewMessageDialogBox.GetAttribute("style");
-            string pattern = @".*height(.){1,3}\d+";
-            if (Regex.IsMatch(style, pattern))
-                ComposeButton.Click();
+            if (DriverManager.WaitUntilElementIsInteractable(SaveAndCloseButton_KnownAsX))
+                SaveAndCloseButton_KnownAsX.Click();
         }
     }
 }
