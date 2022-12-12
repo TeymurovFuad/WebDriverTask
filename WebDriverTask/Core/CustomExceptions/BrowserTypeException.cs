@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WebDriverTask.Core.CustomExceptions
+﻿namespace WebDriverTask.Core.CustomExceptions
 {
     public class BrowserTypeException : Exception
     {
