@@ -1,7 +1,5 @@
 ﻿using OpenQA.Selenium;
 using NUnit.Framework;
-using OpenQA.Selenium.Chrome;
-using System.Text.RegularExpressions;
 using NUnit.Framework.Interfaces;
 using WebDriverTask.Pages;
 using WebDriverTask.Core.WebDriverConfigs;
@@ -41,172 +39,172 @@ namespace WebDriverTask.Tests
         private const string _iframeContainingDialogBoxForSignOutXPath = "//iframe[@name='account']";
         private const string _signOutButtonXPath = "//a[contains(@href, 'Logout')]/div[text()='Sign out']";
 
-        [OneTimeSetUp]
-        public void InitializeTestClass()
-        {
-            _variables = new Dictionary<string, object>();
-            ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.AddArgument("--incognito");
-            _driver = DriverManager.Instance();
-            _interaction = new BaseInteractions();
-        }
+        //[OneTimeSetUp]
+        //public void InitializeTestClass()
+        //{
+        //    _variables = new Dictionary<string, object>();
+        //    ChromeOptions chromeOptions = new ChromeOptions();
+        //    chromeOptions.AddArgument("--incognito");
+        //    _driver = DriverManager.Instance();
+        //    _interaction = new BaseInteractions();
+        //}
 
-        [SetUp]
-        public void TestSetup()
-        {
-            if (_isFailed)
-            {
-                Assert.Inconclusive("One of the tests is failed. Given that all tests are chained, so failure of one may result in failure of all, thereby flow stopped.");
-            }
-            long epochTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-            SetVariable("epochTime", epochTime);
-        }
+        //[SetUp]
+        //public void TestSetup()
+        //{
+        //    if (_isFailed)
+        //    {
+        //        Assert.Inconclusive("One of the tests is failed. Given that all tests are chained, so failure of one may result in failure of all, thereby flow stopped.");
+        //    }
+        //    long epochTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+        //    SetVariable("epochTime", epochTime);
+        //}
 
-        [Test, Order(1)]
-        public void AA_OpenBrowser()
-        {
-            _driver!.Navigate().GoToUrl("https://mail.google.com/");
-            _interaction.WaitPageLoad();
-            Assert.That(_driver.Title, Does.Match("Gmail"));
-        }
+        //[Test, Order(1)]
+        //public void AA_OpenBrowser()
+        //{
+        //    _driver!.Navigate().GoToUrl("https://mail.google.com/");
+        //    _interaction.WaitPageLoad();
+        //    Assert.That(_driver.Title, Does.Match("Gmail"));
+        //}
 
-        [Test, Order(2)]
-        public void BB_VerifyPageLanguageIsInEnglishOrChangeToEnglishIfLanguageIsOther()
-        {
-            if (!GetPageLanguage().ToLower().Contains("english"))
-            {
-                ChangePageLanguage(language: "english");
-            }
-            Regex pattern = new Regex("^english");
-            Assert.That(GetPageLanguage().ToLower(), Does.Match(pattern));
-        }
+        //[Test, Order(2)]
+        //public void BB_VerifyPageLanguageIsInEnglishOrChangeToEnglishIfLanguageIsOther()
+        //{
+        //    if (!GetPageLanguage().ToLower().Contains("english"))
+        //    {
+        //        ChangePageLanguage(language: "english");
+        //    }
+        //    Regex pattern = new Regex("^english");
+        //    Assert.That(GetPageLanguage().ToLower(), Does.Match(pattern));
+        //}
 
-        [Test, Order(3)]
-        [TestCase("qy54313@gmail.com", "Aa123456____", "qwerty")]
-        public void CC_FillUsernameAndPasswordAndClickLogin(string mail, string password, string firstName)
-        {
-            _interaction.SendValuesToElement(By.Id(_emailFieldId), mail);
-            _interaction.ClickElement(By.XPath(_nextButtonXPath));
-            //Assert.That(driver!.FindElement(By.XPath(_headingTextOfLoginLogoutPageXPath)).Text, Is.EqualTo($"Welcome"));
-            _interaction.SendValuesToElement(By.XPath(_passwordFieldXPath), password);
-            DriverManager.WaitPageToLoad(10);
-            _interaction.ClickElement(By.XPath(_nextButtonXPath));
-            //DriverManager.WaitPageToLoad();
+        //[Test, Order(3)]
+        //[TestCase("qy54313@gmail.com", "Aa123456____", "qwerty")]
+        //public void CC_FillUsernameAndPasswordAndClickLogin(string mail, string password, string firstName)
+        //{
+        //    _interaction.SendValuesToElement(By.Id(_emailFieldId), mail);
+        //    _interaction.ClickElement(By.XPath(_nextButtonXPath));
+        //    //Assert.That(driver!.FindElement(By.XPath(_headingTextOfLoginLogoutPageXPath)).Text, Is.EqualTo($"Welcome"));
+        //    _interaction.SendValuesToElement(By.XPath(_passwordFieldXPath), password);
+        //    DriverManager.WaitPageToLoad(10);
+        //    _interaction.ClickElement(By.XPath(_nextButtonXPath));
+        //    //DriverManager.WaitPageToLoad();
 
-            SetVariable("mail", mail);
-        }
+        //    SetVariable("mail", mail);
+        //}
 
-        [Test, Order(4)]
-        public void DD_OpenDialogToComposeNewMail()
-        {
-            DriverManager.WaitUntilElementDisplayed(By.XPath(_mailHomePageFoldersXPath_Injectable.Replace("$folderName", "Inbox")));
-            _interaction.ClickElement(By.XPath(_buttonToComposeMail));
-            Assert.IsTrue(_interaction.isElementDisplayed(By.XPath(_newMessageDialogBoxXPath)));
-        }
+        //[Test, Order(4)]
+        //public void DD_OpenDialogToComposeNewMail()
+        //{
+        //    DriverManager.WaitUntilElementDisplayed(By.XPath(_mailHomePageFoldersXPath_Injectable.Replace("$folderName", "Inbox")));
+        //    _interaction.ClickElement(By.XPath(_buttonToComposeMail));
+        //    Assert.IsTrue(_interaction.isElementDisplayed(By.XPath(_newMessageDialogBoxXPath)));
+        //}
 
-        [Test, Order(5)]
-        [TestCase("someFakeMail@noSuchAddress.pl", "someTestTitle", $"SomeTestBody")]
-        public void EE_FillFields_To_Subject_BodyAndCloseDialogBox(string randomMailAddress, string randomSubject, string randomBody)
-        {
-            randomBody += GetVariable<long>("epochTime").ToString();
-            _interaction.SendValuesToElement(By.XPath(_toXPath), randomMailAddress);
-            _interaction.SendValuesToElement(By.XPath(_subjectXPath), randomSubject);
-            _interaction.SendValuesToElement(By.XPath(_mailBodyXPath), randomBody);
-            _interaction.ClickElement(By.XPath(_closeNewMailComposeModalXPath));
-            Assert.That(_interaction.isElementDisplayed(By.XPath(_closeNewMailComposeModalXPath)), Is.False);
+        //[Test, Order(5)]
+        //[TestCase("someFakeMail@noSuchAddress.pl", "someTestTitle", $"SomeTestBody")]
+        //public void EE_FillFields_To_Subject_BodyAndCloseDialogBox(string randomMailAddress, string randomSubject, string randomBody)
+        //{
+        //    randomBody += GetVariable<long>("epochTime").ToString();
+        //    _interaction.SendValuesToElement(By.XPath(_toXPath), randomMailAddress);
+        //    _interaction.SendValuesToElement(By.XPath(_subjectXPath), randomSubject);
+        //    _interaction.SendValuesToElement(By.XPath(_mailBodyXPath), randomBody);
+        //    _interaction.ClickElement(By.XPath(_closeNewMailComposeModalXPath));
+        //    Assert.That(_interaction.isElementDisplayed(By.XPath(_closeNewMailComposeModalXPath)), Is.False);
 
-            SetVariable("to", randomMailAddress);
-            SetVariable("subject", randomSubject);
-            SetVariable("body", randomBody);
-        }
+        //    SetVariable("to", randomMailAddress);
+        //    SetVariable("subject", randomSubject);
+        //    SetVariable("body", randomBody);
+        //}
 
-        [Test, Order(6)]
-        public void FF_VerifyCreatedMessageExistsInDrafts()
-        {
-            string previousUrl = _driver!.Url;
-            _interaction!.ClickElement(By.XPath(_draftsXPath));
-            DriverManager.WaintUntilUrlChanged(previousUrl);
-            Regex pattern = new Regex("#drafts$");
-            Assert.That(_driver.Url, Does.Match(pattern));
-            Assert.IsTrue(_interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("subject")))) &&
-                _interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("body")))));
-        }
+        //[Test, Order(6)]
+        //public void FF_VerifyCreatedMessageExistsInDrafts()
+        //{
+        //    string previousUrl = _driver!.Url;
+        //    _interaction!.ClickElement(By.XPath(_draftsXPath));
+        //    DriverManager.WaintUntilUrlChanged(previousUrl);
+        //    Regex pattern = new Regex("#drafts$");
+        //    Assert.That(_driver.Url, Does.Match(pattern));
+        //    Assert.IsTrue(_interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("subject")))) &&
+        //        _interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("body")))));
+        //}
 
-        [Test, Order(7)]
-        public void GG_SendMailFromDraftAndVerifyMailDissapearedFromDraftFolder()
-        {
-            _interaction.ClickElement(By.XPath($"{_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("body"))}//ancestor-or-self::td"));
-            _interaction.ClickElement(By.XPath(_newMailDialogBoxSendButtonXPath));
-            Assert.IsFalse(_interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("to")))) ||
-                _interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("subject")))) &&
-                _interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("body")))));
-        }
+        //[Test, Order(7)]
+        //public void GG_SendMailFromDraftAndVerifyMailDissapearedFromDraftFolder()
+        //{
+        //    _interaction.ClickElement(By.XPath($"{_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("body"))}//ancestor-or-self::td"));
+        //    _interaction.ClickElement(By.XPath(_newMailDialogBoxSendButtonXPath));
+        //    Assert.IsFalse(_interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("to")))) ||
+        //        _interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("subject")))) &&
+        //        _interaction.isElementDisplayed(By.XPath(_messageInDraft_InjecableXPath.Replace("$var", GetVariable<string>("body")))));
+        //}
 
-        [Test, Order(8)]
-        public void HH_GoToSentMailsFolderAndVerifyThatMailIsThere()
-        {
-            _interaction.ClickElement(By.XPath(_sentXPath));
-            DriverManager.WaitPageToLoad();
-            _interaction.isElementDisplayed(By.XPath(_messageInSent_InjecableXPath.Replace("$var", GetVariable<string>("body"))));
-        }
+        //[Test, Order(8)]
+        //public void HH_GoToSentMailsFolderAndVerifyThatMailIsThere()
+        //{
+        //    _interaction.ClickElement(By.XPath(_sentXPath));
+        //    DriverManager.WaitPageToLoad();
+        //    _interaction.isElementDisplayed(By.XPath(_messageInSent_InjecableXPath.Replace("$var", GetVariable<string>("body"))));
+        //}
 
-        [Test, Order(9)]
-        public void II_SignOutAndVerifyUserSignedOutSuccessfully()
-        {
-            string previousUrl = _driver.Url;
-            string x = _dialogBoxContainingSignOutButtonXPath_Injectable.Replace("$email", GetVariable<string>("mail"));
-            _interaction!.ClickElement(By.XPath(x));
-            _driver!.SwitchTo().Frame(_driver.FindElement(By.XPath(_iframeContainingDialogBoxForSignOutXPath)));
-            _interaction.ClickElement(By.XPath(_signOutButtonXPath));
-            _interaction.HandleAlert(accept: true);
-            DriverManager.WaitUntilElementDisplayed(By.XPath(_headingTextOfLoginLogoutPageXPath));
-            Assert.That(_driver.FindElement(By.XPath(_headingTextOfLoginLogoutPageXPath)).Text, Is.EqualTo("Choose an account"));
-        }
+        //[Test, Order(9)]
+        //public void II_SignOutAndVerifyUserSignedOutSuccessfully()
+        //{
+        //    string previousUrl = _driver.Url;
+        //    string x = _dialogBoxContainingSignOutButtonXPath_Injectable.Replace("$email", GetVariable<string>("mail"));
+        //    _interaction!.ClickElement(By.XPath(x));
+        //    _driver!.SwitchTo().Frame(_driver.FindElement(By.XPath(_iframeContainingDialogBoxForSignOutXPath)));
+        //    _interaction.ClickElement(By.XPath(_signOutButtonXPath));
+        //    _interaction.HandleAlert(accept: true);
+        //    DriverManager.WaitUntilElementDisplayed(By.XPath(_headingTextOfLoginLogoutPageXPath));
+        //    Assert.That(_driver.FindElement(By.XPath(_headingTextOfLoginLogoutPageXPath)).Text, Is.EqualTo("Choose an account"));
+        //}
 
         #region Methods to interact with elements
-        public string GetPageLanguage()
-        {
-            ICollection<IWebElement> languages;
-            string language = string.Empty;
-            if (!_interaction.isElementDisplayed(By.Id(_languageChooserDropdownId)))
-            {
-                DriverManager.WaitUntilElementDisplayed(By.Id(_languageChooserDropdownId));
-            }
-            _interaction.ClickElement(By.Id(_languageChooserDropdownId), _driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "false");
-            languages = _driver!.FindElements(By.XPath(_languageFromDropDownXPath));
-            foreach (IWebElement lan in languages)
-            {
-                if (lan.GetAttribute("aria-selected") == "true")
-                {
-                    var x = lan.GetAttribute("outerHTML");
-                    language = lan.FindElement(By.XPath("//span/span[@jsname]")).Text;
-                    break;
-                }
-            }
-            _interaction.ClickElement(By.Id(_languageChooserDropdownId), _driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "true");
-            return language;
-        }
+        //public string GetPageLanguage()
+        //{
+        //    ICollection<IWebElement> languages;
+        //    string language = string.Empty;
+        //    if (!_interaction.isElementDisplayed(By.Id(_languageChooserDropdownId)))
+        //    {
+        //        DriverManager.WaitUntilElementDisplayed(By.Id(_languageChooserDropdownId));
+        //    }
+        //    _interaction.ClickElement(By.Id(_languageChooserDropdownId), _driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "false");
+        //    languages = _driver!.FindElements(By.XPath(_languageFromDropDownXPath));
+        //    foreach (IWebElement lan in languages)
+        //    {
+        //        if (lan.GetAttribute("aria-selected") == "true")
+        //        {
+        //            var x = lan.GetAttribute("outerHTML");
+        //            language = lan.FindElement(By.XPath("//span/span[@jsname]")).Text;
+        //            break;
+        //        }
+        //    }
+        //    _interaction.ClickElement(By.Id(_languageChooserDropdownId), _driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "true");
+        //    return language;
+        //}
 
-        public void ChangePageLanguage(string language)
-        {
-            ICollection<IWebElement> languages;
-            if (!_interaction.isElementDisplayed(By.Id(_languageChooserDropdownId)))
-            {
-                DriverManager.WaitUntilElementDisplayed(By.Id(_languageChooserDropdownId));
-            }
-            languages = _driver!.FindElements(By.XPath(_languageFromDropDownXPath));
-            _interaction.ClickElement(By.Id(_languageChooserDropdownId), _driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "false");
-            foreach (IWebElement lan in languages)
-            {
-                if (lan.Text.ToLower().Contains(language))
-                {
-                    lan.Click();
-                    _interaction.WaitPageLoad();
-                    break;
-                }
-            }
-            _interaction.ClickElement(By.Id(_languageChooserDropdownId), _driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "true");
-        }
+        //public void ChangePageLanguage(string language)
+        //{
+        //    ICollection<IWebElement> languages;
+        //    if (!_interaction.isElementDisplayed(By.Id(_languageChooserDropdownId)))
+        //    {
+        //        DriverManager.WaitUntilElementDisplayed(By.Id(_languageChooserDropdownId));
+        //    }
+        //    languages = _driver!.FindElements(By.XPath(_languageFromDropDownXPath));
+        //    _interaction.ClickElement(By.Id(_languageChooserDropdownId), _driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "false");
+        //    foreach (IWebElement lan in languages)
+        //    {
+        //        if (lan.Text.ToLower().Contains(language))
+        //        {
+        //            lan.Click();
+        //            _interaction.WaitPageLoad();
+        //            break;
+        //        }
+        //    }
+        //    _interaction.ClickElement(By.Id(_languageChooserDropdownId), _driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "true");
+        //}
         #endregion
 
         public void SetVariable<T>(string key, T value)
