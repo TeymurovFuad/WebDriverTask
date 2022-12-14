@@ -1,7 +1,4 @@
-﻿using NUnit.Framework;
-using OpenQA.Selenium;
-using SeleniumExtras.PageObjects;
-using System.Drawing.Text;
+﻿using OpenQA.Selenium;
 using WebDriverTask.Core.WebDriverConfigs;
 
 namespace WebDriverTask.Pages.Gmail.Folders

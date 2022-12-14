@@ -1,7 +1,4 @@
-﻿using OpenQA.Selenium;
-using SeleniumExtras.PageObjects;
-
-namespace WebDriverTask.Pages
+﻿namespace WebDriverTask.Pages
 {
     public abstract class BaseElements
     {

@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using WebDriverTask.Core.WebDriverConfigs;
 using WebDriverTask.Pages.Gmail.Folders;
 using WebDriverTask.Pages.Gmail.MailDialog;
 

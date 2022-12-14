@@ -1,4 +1,4 @@
-﻿namespace WebDriverTask.Pages.Login
+﻿namespace WebDriverTask.Pages.Gmail.Login
 {
     public class LoginPage: BasePage
     {

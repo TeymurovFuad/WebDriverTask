@@ -1,8 +1,6 @@
-﻿using OpenQA.Selenium;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using WebDriverTask.Pages;
-using WebDriverTask.Core.WebDriverConfigs;
 using WebDriverTask.Tests.TestConfig;
 using WebDriverTask.Core.BrowserConfigs;
 using WebDriverTask.Pages.Gmail;
@@ -13,9 +11,10 @@ namespace WebDriverTask.Tests
     public class GmailTest: Hooks
     {
         private MainPage _mainPage;
+
         public GmailTest() : base(browserType: BrowserType.Chrome)
         {
-            _mainPage.GoToDrafts().GoToDrafts
+            _mainPage = new MainPage();
         }
 
         private Dictionary<string, dynamic> _variables;

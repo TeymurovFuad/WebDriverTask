@@ -2,7 +2,7 @@
 using SeleniumExtras.PageObjects;
 using WebDriverTask.Core.WebDriverConfigs;
 
-namespace WebDriverTask.Pages.Login
+namespace WebDriverTask.Pages.Gmail.Login
 {
     public abstract class LoginPageElements: BaseElements
     {

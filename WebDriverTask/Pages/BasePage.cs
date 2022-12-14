@@ -5,7 +5,7 @@ using WebDriverTask.Core.WebDriverConfigs;
 
 namespace WebDriverTask.Pages
 {
-    public class BasePage
+    public class BasePage: DriverManager
     {
         protected BasePage() { }
 

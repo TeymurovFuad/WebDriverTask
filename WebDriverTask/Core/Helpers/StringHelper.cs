@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-
-namespace WebDriverTask.Core.Helpers
+﻿namespace WebDriverTask.Core.Helpers
 {
     public static class StringHelper
     {public static string GenerateUUID()
