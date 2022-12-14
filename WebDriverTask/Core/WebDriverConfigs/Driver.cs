@@ -33,6 +33,16 @@ namespace WebDriverTask.Core.WebDriverConfigs
             return _webDriver!.Url;
         }
 
+        public static void SwitchToFrame(IWebElement frame)
+        {
+            _webDriver.SwitchTo().Frame(frame);
+        }
+
+        public static void SwitchToMain()
+        {
+            _webDriver.SwitchTo().DefaultContent();
+        }
+
         public static void GoToUrl(string url)
         {
             _webDriver.Navigate().GoToUrl(url);
