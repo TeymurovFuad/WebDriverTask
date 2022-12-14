@@ -33,6 +33,11 @@ namespace WebDriverTask.Core.WebDriverConfigs
             return _webDriver!.Url;
         }
 
+        public static void GoToUrl(string url)
+        {
+            _webDriver.Navigate().GoToUrl(url);
+        }
+
         public static void Close()
         {
             if (_webDriver != null)

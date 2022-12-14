@@ -9,6 +9,8 @@ namespace WebDriverTask.Core.WebDriverConfigs
     {
         private static bool _isBuilt;
 
+        protected DriverBuilder() { }
+
         protected static void Build(BrowserType browserType)
         {
             CreateDriver(browserType);

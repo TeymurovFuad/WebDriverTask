@@ -8,6 +8,8 @@ namespace WebDriverTask.Core.WebDriverConfigs
     {
         private static IWebDriver? driver = null;
 
+        public DriverManager() : base() { }
+
         public static void Instance(BrowserType browser)
         {
             try
@@ -28,6 +30,11 @@ namespace WebDriverTask.Core.WebDriverConfigs
                 driver.Manage().Timeouts().ImplicitWait.Add(TimeSpan.FromSeconds(5));
                 driver.Manage().Window.Maximize();
             }
+        }
+
+        public void AddArgumentsToDriver(params string[] arguments)
+        {
+            AddArguments(arguments);
         }
 
         public static void QuitDriver()
