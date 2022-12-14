@@ -1,10 +1,14 @@
 ﻿using OpenQA.Selenium;
+using SeleniumExtras.PageObjects;
+using System.Reflection;
 using WebDriverTask.Core.WebDriverConfigs;
 
 namespace WebDriverTask.Pages
 {
     public class BasePage
     {
+        protected BasePage() { }
+
         public void ClickElement(IWebElement element, bool condition = true)
         {
             if (condition && isElementDisplayed(element))
@@ -51,6 +55,30 @@ namespace WebDriverTask.Pages
             }
         }
 
+        public bool isElementDisplayed(By locator)
+        {
+            try
+            {
+                return Driver.GetDriver().FindElements(locator).Count > 0;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
+
+        public bool isElementDisplayed(By locator, IWebElement parent)
+        {
+            try
+            {
+                return parent.FindElements(locator).Count > 0;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
+
         public void HandleAlert(bool accept)
         {
             try
@@ -77,9 +105,15 @@ namespace WebDriverTask.Pages
             return $"contains(translate({property}, {partOrXpathToBeIgnored.ToLower()}, {partOrXpathToBeIgnored.ToUpper()}), {partOrXpathToBeIgnored})";
         }
 
-        public void SendEmail(string email)
+        public string GetLocatorFromFindsByAttribute<T>(IWebElement element) where T : class
         {
-            Console.WriteLine();
+            string locator = string.Empty;
+            MemberInfo memberInfo = typeof(T).GetMember(element.GetType().Name)[0];
+            if (memberInfo.GetCustomAttribute(typeof(FindsByAttribute)) is FindsByAttribute findsByAttribute)
+            {
+                locator = findsByAttribute.Using;
+            }
+            return locator;
         }
     }
 }
