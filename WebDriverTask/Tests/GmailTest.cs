@@ -3,13 +3,21 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using WebDriverTask.Pages;
 using WebDriverTask.Core.WebDriverConfigs;
+using WebDriverTask.Tests.TestConfig;
+using WebDriverTask.Core.BrowserConfigs;
+using WebDriverTask.Pages.Gmail;
 
 namespace WebDriverTask.Tests
 {
     [TestFixture]
-    public class GmailTest
+    public class GmailTest: Hooks
     {
-        private IWebDriver? _driver;
+        private MainPage _mainPage;
+        public GmailTest() : base(browserType: BrowserType.Chrome)
+        {
+            _mainPage.GoToDrafts().GoToDrafts
+        }
+
         private Dictionary<string, dynamic> _variables;
         private BasePage? _interaction;
         private bool _isFailed;
@@ -38,27 +46,6 @@ namespace WebDriverTask.Tests
         private const string _dialogBoxContainingSignOutButtonXPath_Injectable = "//a[contains(@aria-label, '($email)') and contains(@href, 'SignOut')]";
         private const string _iframeContainingDialogBoxForSignOutXPath = "//iframe[@name='account']";
         private const string _signOutButtonXPath = "//a[contains(@href, 'Logout')]/div[text()='Sign out']";
-
-        //[OneTimeSetUp]
-        //public void InitializeTestClass()
-        //{
-        //    _variables = new Dictionary<string, object>();
-        //    ChromeOptions chromeOptions = new ChromeOptions();
-        //    chromeOptions.AddArgument("--incognito");
-        //    _driver = DriverManager.Instance();
-        //    _interaction = new BaseInteractions();
-        //}
-
-        //[SetUp]
-        //public void TestSetup()
-        //{
-        //    if (_isFailed)
-        //    {
-        //        Assert.Inconclusive("One of the tests is failed. Given that all tests are chained, so failure of one may result in failure of all, thereby flow stopped.");
-        //    }
-        //    long epochTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-        //    SetVariable("epochTime", epochTime);
-        //}
 
         //[Test, Order(1)]
         //public void AA_OpenBrowser()
