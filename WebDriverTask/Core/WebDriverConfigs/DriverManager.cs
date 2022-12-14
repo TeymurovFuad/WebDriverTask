@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using WebDriverTask.Core.BrowserConfigs;
 
@@ -8,26 +9,29 @@ namespace WebDriverTask.Core.WebDriverConfigs
     {
         private static IWebDriver? driver = null;
 
-        public static void Instance(BrowserType browser)
+        public DriverManager() : base() { }
+
+        public IWebDriver Instance()
         {
-            try
-            {
-                Driver.GetDriver();
-            }
-            catch (NullReferenceException)
+            driver = Driver.GetDriver();
+            return driver;
+        }
+
+        public DriverManager BuildDriver(BrowserType browser)
+        {
+            if(driver == null)
             {
                 Build(browser);
-            }
-            catch(ObjectDisposedException)
-            {
-                throw;
-            }
-            finally
-            {
                 driver = Driver.GetDriver();
                 driver.Manage().Timeouts().ImplicitWait.Add(TimeSpan.FromSeconds(5));
                 driver.Manage().Window.Maximize();
             }
+            return this;
+        }
+
+        public void AddArgumentsToDriver(params string[] arguments)
+        {
+            AddArguments(arguments);
         }
 
         public static void QuitDriver()

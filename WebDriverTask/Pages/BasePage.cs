@@ -1,14 +1,13 @@
 ﻿using OpenQA.Selenium;
-using WebDriverTask.Core.BrowserConfigs;
+using SeleniumExtras.PageObjects;
+using System.Reflection;
 using WebDriverTask.Core.WebDriverConfigs;
 
 namespace WebDriverTask.Pages
 {
-    public class BasePage : DriverManager
+    public class BasePage: DriverManager
     {
-        public BasePage(BrowserType browser): base(browser)
-        {
-        }
+        protected BasePage() { }
 
         public void ClickElement(IWebElement element, bool condition = true)
         {
@@ -20,7 +19,7 @@ namespace WebDriverTask.Pages
                 {
                     try
                     {
-                        WaitUntilElementIsInteractable(element);
+                        DriverManager.WaitUntilElementIsInteractable(element);
                         element.Click();
                         success = true;
                     }
@@ -56,6 +55,30 @@ namespace WebDriverTask.Pages
             }
         }
 
+        public bool isElementDisplayed(By locator)
+        {
+            try
+            {
+                return Driver.GetDriver().FindElements(locator).Count > 0;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
+
+        public bool isElementDisplayed(By locator, IWebElement parent)
+        {
+            try
+            {
+                return parent.FindElements(locator).Count > 0;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
+
         public void HandleAlert(bool accept)
         {
             try
@@ -75,6 +98,22 @@ namespace WebDriverTask.Pages
             {
                 Console.WriteLine(e.Message);
             }
+        }
+
+        public string IgnoreCaseInXPath(string partOrXpathToBeIgnored, string? property="text()")
+        {
+            return $"contains(translate({property}, {partOrXpathToBeIgnored.ToLower()}, {partOrXpathToBeIgnored.ToUpper()}), {partOrXpathToBeIgnored})";
+        }
+
+        public string GetLocatorFromFindsByAttribute<T>(IWebElement element) where T : class
+        {
+            string locator = string.Empty;
+            MemberInfo memberInfo = typeof(T).GetMember(element.GetType().Name)[0];
+            if (memberInfo.GetCustomAttribute(typeof(FindsByAttribute)) is FindsByAttribute findsByAttribute)
+            {
+                locator = findsByAttribute.Using;
+            }
+            return locator;
         }
     }
 }
