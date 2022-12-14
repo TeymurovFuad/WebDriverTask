@@ -30,9 +30,8 @@ namespace WebDriverTask.Tests.TestConfig
         [OneTimeSetUp]
         public void ClassSetUp()
         {
-            DriverManager.Instance(_browserType);
-            _driver = Driver.GetDriver();
             _driverManager = new DriverManager();
+            _driver = _driverManager.BuildDriver(_browserType).Instance();
             _driverManager.AddArgumentsToDriver();
             if(_url != null && _url != string.Empty)
             {

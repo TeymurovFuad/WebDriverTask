@@ -11,26 +11,22 @@ namespace WebDriverTask.Core.WebDriverConfigs
 
         public DriverManager() : base() { }
 
-        public static void Instance(BrowserType browser)
+        public IWebDriver Instance()
         {
-            try
-            {
-                Driver.GetDriver();
-            }
-            catch (NullReferenceException)
+            driver = Driver.GetDriver();
+            return driver;
+        }
+
+        public DriverManager BuildDriver(BrowserType browser)
+        {
+            if(driver == null)
             {
                 Build(browser);
-            }
-            catch(ObjectDisposedException)
-            {
-                throw;
-            }
-            finally
-            {
                 driver = Driver.GetDriver();
                 driver.Manage().Timeouts().ImplicitWait.Add(TimeSpan.FromSeconds(5));
                 driver.Manage().Window.Maximize();
             }
+            return this;
         }
 
         public void AddArgumentsToDriver(params string[] arguments)
