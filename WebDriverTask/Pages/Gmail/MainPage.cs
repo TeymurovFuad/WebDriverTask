@@ -10,6 +10,7 @@ namespace WebDriverTask.Pages.Gmail
         private Drafts _drafts;
         private Inbox _inbox;
         private Sent _sent;
+        private BasePage _basePage;
 
         public MainPage()
         {
@@ -30,7 +31,7 @@ namespace WebDriverTask.Pages.Gmail
             ClickElement(folder);
         }
 
-        public bool isMailboxEmpty(By locator)
+        protected bool isMailboxEmpty(By locator)
         {
             return isElementDisplayed(locator);
         }
