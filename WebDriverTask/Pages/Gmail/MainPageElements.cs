@@ -10,7 +10,16 @@ namespace WebDriverTask.Pages.Gmail
         public IWebElement FoldersButtonContainer { get; private set; }
 
         [FindsBy(How = How.XPath, Using = "//div[text()='Compose']")]
-        public static IWebElement ComposeButton { get; private set; }
+        public IWebElement ComposeButton { get; private set; }
+
+        [FindsBy(How = How.XPath, Using = "//div[@data-tooltip='Inbox']")]
+        public IWebElement InboxFolder { get; private set; }
+
+        [FindsBy(How = How.XPath, Using = "//div[@data-tooltip='Drafts']")]
+        public IWebElement DraftsFolder { get; private set; }
+
+        [FindsBy(How = How.XPath, Using = "//div[@data-tooltip='Sent']")]
+        public IWebElement SentFolder { get; private set; }
 
         public IWebElement GetFolderByFolderName(string folderName)
         {
@@ -24,6 +33,17 @@ namespace WebDriverTask.Pages.Gmail
                 throw;
             }
             return folder;
+        }
+
+        public IWebElement GetTableContainingMails(string folderSpecificIdentifier)
+        {
+            IWebElement tableOfMails = Driver.GetDriver().FindElement(By.XPath($"//table[tbody[position()=1]//{folderSpecificIdentifier}]"));
+            return tableOfMails;
+        }
+
+        public string GetXPathToTableContainingMails(string folderSpecificIdentifier)
+        {
+            return $"//table[tbody[position()=1]//{folderSpecificIdentifier}]";
         }
     }
 }
