@@ -1,24 +1,29 @@
 ﻿using OpenQA.Selenium;
+using System.Xml.Linq;
+using WebDriverTask.Core.Helpers;
 using WebDriverTask.Core.WebDriverConfigs;
 
 namespace WebDriverTask.Pages.Gmail.Folders
 {
-    public class Drafts: MainPage, IMailFolder
+    public class Drafts : MainPage, IMailFolder
     {
-        public string _folderSpecificIdendifierForRetreivingMails { get; private set; } = "span[text()='Draft]";
-        public string _folderSpecificIdendifierIfNoMailExists { get; private set; } = "td[text()=\"You don't have any saved drafts.\"]";
-        public List<IWebElement> _draftMails { get; private set; }
+        public static string PathToDraftMails { get; private set; } = "//span[text()='Draft']/ancestor::tr";
+        public static string FolderSpecificIdendifierIfNoMailExists { get; private set; } = "td[text()=\"You don't have any saved drafts.\"]";
+        private static string _pathToSpecificDraftMails = "//span[text()='{0}']";
+        public static List<IWebElement> DraftMails { get; private set; }
+        public static string FolderName { get; private set; }
 
-        public void Open()
+        public static void Open()
         {
-            IWebElement draftsFolder = _mainPageElements.DraftsFolder;
+            IWebElement draftsFolder = MainPageElements.DraftsFolder;
+            SetFolderName(draftsFolder);
             try
             {
                 draftsFolder.Click();
             }
             catch (Exception e)when(e is ElementNotVisibleException || e is ElementNotInteractableException)
             {
-                DriverManager.WaitUntilElementIsInteractable(draftsFolder);
+                WaitUntilElementIsInteractable(draftsFolder);
                 draftsFolder.Click();
             }
             catch(Exception)
@@ -27,34 +32,39 @@ namespace WebDriverTask.Pages.Gmail.Folders
             }
         }
 
-        public List<IWebElement> GetDraftMails()
+        public static List<IWebElement> GetMails()
         {
-            string pathToMails = _mainPageElements.GetXPathToTableContainingMails(_folderSpecificIdendifierForRetreivingMails);
-            string emptyFolder = _mainPageElements.GetXPathToTableContainingMails(_folderSpecificIdendifierIfNoMailExists);
-            if (isMailboxEmpty(By.XPath(emptyFolder)) && isElementDisplayed(By.XPath(pathToMails)))
-            {
-                _draftMails = Driver.GetDriver().FindElements(By.XPath(pathToMails)).ToList();
-            }
-            return _draftMails;
+            DraftMails = Driver.GetDriver().FindElements(By.XPath(PathToDraftMails)).ToList();
+            return DraftMails;
         }
 
-        public IWebElement? GetMailFromTable(string? bySubject, string? byBody)
+        public static IWebElement? GetMailFromTable(string bySubjectOrBody)
         {
-            GetDraftMails();
-            if (bySubject == null && byBody == null)
+            GetMails();
+            string path = StringHelper.FormatString(_pathToSpecificDraftMails, bySubjectOrBody)!;
+            foreach (IWebElement draftMail in DraftMails)
             {
-                throw new ArgumentNullException("Either the subject or the body must be provided");
-            }
-            string pathToSpecificMail = $"//tr//div/span[text()='{bySubject ?? byBody}']//ancestor::tr";
-
-            foreach(IWebElement draftMail in _draftMails)
-            {
-                if(isElementDisplayed(By.XPath(pathToSpecificMail), draftMail))
+                if(isElementDisplayed(By.XPath(path), draftMail))
                 {
                     return draftMail;
                 }
             }
             return null;
+        }
+
+        public static bool isMailBoxEmpty()
+        {
+            return isElementDisplayed(By.XPath(FolderSpecificIdendifierIfNoMailExists));
+        }
+
+        private static void SetFolderName(IWebElement element)
+        {
+            FolderName = element.FindElement(By.XPath("//a")).Text;
+        }
+
+        public static bool VerifyPageOpened()
+        {
+            return GetPageTitle().Contains(FolderName, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

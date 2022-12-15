@@ -1,33 +1,31 @@
 ﻿using OpenQA.Selenium;
+using System.Drawing;
+using WebDriverTask.Core.Helpers;
 using WebDriverTask.Core.WebDriverConfigs;
 
 namespace WebDriverTask.Pages.Gmail.Folders
 {
     public class Sent : MainPage, IMailFolder
     {
-        public string _folderSpecificIdendifierForRetreivingMails { get; private set; } = "div[text()='To: ']";
-        public string _folderSpecificIdendifierIfNoMailExists { get; set; } = "td[text()='No sent messages! ']";
-        public List<IWebElement> _sentMails { get; private set; }
+        public static string FolderSpecificIdendifierIfNoMailExists { get; set; } = "td[text()='No sent messages! ']";
+        public static string FolderName { get; private set; }
+        public static string PathToMails = "//div[text()='To: ']/ancestor::tr";
+        private static string _pathToSpecificMail = "//span[text()='{byBodyOrSubject}']";
 
-        public List<IWebElement> GetDraftMails()
+        public static List<IWebElement> GetMails()
         {
-            string pathToMails = _mainPageElements.GetXPathToTableContainingMails(_folderSpecificIdendifierForRetreivingMails);
-            string emptyFolder = _mainPageElements.GetXPathToTableContainingMails(_folderSpecificIdendifierIfNoMailExists);
-            if (isMailboxEmpty(By.XPath(emptyFolder)) && isElementDisplayed(By.XPath(pathToMails)))
-            {
-                _sentMails = Driver.GetDriver().FindElements(By.XPath(pathToMails)).ToList();
-            }
-            return _sentMails;
+            WaitUntilElementIsInteractable(Driver.GetDriver().FindElement(By.XPath(PathToMails)));
+            List<IWebElement> sentMails = Driver.GetDriver().FindElements(By.XPath(PathToMails)).ToList();
+            return sentMails;
         }
 
-        public IWebElement? GetMailFromTable(string byBody)
+        public static IWebElement? GetMailFromTable(string byBodyOrSubject)
         {
-            GetDraftMails();
-            string pathToSpecificMail = $"//tr//div/span[text()='{byBody}']//ancestor::tr";
-
-            foreach (IWebElement sentMail in _sentMails)
+            GetMails();
+            string path = StringHelper.FormatString(_pathToSpecificMail, byBodyOrSubject)!;
+            foreach (IWebElement sentMail in GetMails())
             {
-                if (isElementDisplayed(By.XPath(pathToSpecificMail), sentMail))
+                if (isElementDisplayed(By.XPath(path), sentMail))
                 {
                     return sentMail;
                 }
@@ -35,22 +33,38 @@ namespace WebDriverTask.Pages.Gmail.Folders
             return null;
         }
 
-        public void Open()
+        public static void Open()
         {
-            IWebElement draftsFolder = _mainPageElements.SentFolder;
+            IWebElement sentFolder = MainPageElements.SentFolder;
+            SetFolderName(sentFolder);
             try
             {
-                draftsFolder.Click();
+                sentFolder.Click();
             }
             catch (Exception e) when (e is ElementNotVisibleException || e is ElementNotInteractableException)
             {
-                DriverManager.WaitUntilElementIsInteractable(draftsFolder);
-                draftsFolder.Click();
+                DriverManager.WaitUntilElementIsInteractable(sentFolder);
+                sentFolder.Click();
             }
             catch (Exception)
             {
                 throw;
             }
+        }
+
+        public static bool isMailBoxEmpty()
+        {
+            return isElementDisplayed(By.XPath(FolderSpecificIdendifierIfNoMailExists));
+        }
+
+        private static void SetFolderName(IWebElement element)
+        {
+            FolderName = element.FindElement(By.XPath("//a")).Text;
+        }
+
+        public static bool VerifyPageOpened()
+        {
+            return GetPageTitle().Contains(FolderName, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

@@ -5,7 +5,7 @@ using WebDriverTask.Core.WebDriverConfigs;
 
 namespace WebDriverTask.Pages
 {
-    public class BasePage: DriverManager
+    public class BasePage : DriverManager
     {
         protected BasePage() { }
 
@@ -13,13 +13,13 @@ namespace WebDriverTask.Pages
         {
             if (condition && isElementDisplayed(element))
             {
-                bool success=false;
+                bool success = false;
                 int retry = 5;
                 do
                 {
                     try
                     {
-                        DriverManager.WaitUntilElementIsInteractable(element);
+                        WaitUntilElementIsInteractable(element);
                         element.Click();
                         success = true;
                     }
@@ -43,10 +43,11 @@ namespace WebDriverTask.Pages
             Driver.GetDriver().Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
         }
 
-        public bool isElementDisplayed(IWebElement element)
+        public static bool isElementDisplayed(IWebElement element)
         {
             try
             {
+                WaitUntilElementDisplayed(element);
                 return element.Displayed;
             }
             catch (NoSuchElementException)
@@ -55,7 +56,7 @@ namespace WebDriverTask.Pages
             }
         }
 
-        public bool isElementDisplayed(By locator)
+        public static bool isElementDisplayed(By locator)
         {
             try
             {
@@ -67,7 +68,7 @@ namespace WebDriverTask.Pages
             }
         }
 
-        public bool isElementDisplayed(By locator, IWebElement parent)
+        public static bool isElementDisplayed(By locator, IWebElement parent)
         {
             try
             {
@@ -100,7 +101,7 @@ namespace WebDriverTask.Pages
             }
         }
 
-        public string IgnoreCaseInXPath(string partOrXpathToBeIgnored, string? property="text()")
+        public string IgnoreCaseInXPath(string partOrXpathToBeIgnored, string? property = "text()")
         {
             return $"contains(translate({property}, {partOrXpathToBeIgnored.ToLower()}, {partOrXpathToBeIgnored.ToUpper()}), {partOrXpathToBeIgnored})";
         }
@@ -114,6 +115,11 @@ namespace WebDriverTask.Pages
                 locator = findsByAttribute.Using;
             }
             return locator;
+        }
+
+        public static string GetPageTitle()
+        {
+            return Driver.GetDriver().Title;
         }
     }
 }

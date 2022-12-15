@@ -1,71 +1,54 @@
 ﻿using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
+using WebDriverTask.Core.Helpers;
 using WebDriverTask.Core.WebDriverConfigs;
 
 namespace WebDriverTask.Pages.Gmail.Login
 {
-    public abstract class LoginPageElements: BaseElements
+    public class LoginPageElements
     {
         private const string HelpToWorkBetterText = "If you’d like, take a few moments to help Google work better for you";
 
         [FindsBy(How = How.Id, Using = "identifierId")]
-        public List<IWebElement> EmailField { get; set; }
+        public static IWebElement EmailField { get; private set; }
 
         [FindsBy(How = How.XPath, Using = "//input[@type='password' and @name='Passwd']")]
-        public List<IWebElement> PasswordField { get; set; }
+        public static IWebElement PasswordField { get; private set; }
 
         [FindsBy(How = How.XPath, Using = $"//div[text()={HelpToWorkBetterText}]")]
-        public IWebElement HelpWorkBetterText { get; set; }
+        public static IWebElement HelpWorkBetterText { get; private set; }
 
         [FindsBy(How = How.XPath, Using = $"//*[text()='Not Now']")]
-        public IWebElement NotNowButtonOnHelpWorkBetterPage { get; set; }
+        public static IWebElement NotNowButtonOnHelpWorkBetterPage { get; private set; }
 
         [FindsBy(How = How.Id, Using = "lang-chooser")]
-        public IWebElement DropDownToChooseLanguage { get; set; }
+        public static IWebElement DropDownToChooseLanguage { get; private set; }
 
-        [FindsBy(How = How.XPath, Using = "//div[@id='lang-chooser']//ul/li]")]
-        public List<IWebElement> AllLanguagesFromDropDown { get; set; }
+        [FindsBy(How = How.XPath, Using = "//ul[@aria-label='Change language']/li")]
+        public static List<IWebElement> AllLanguagesFromDropDown { get; private set; }
+
+        [FindsBy(How = How.XPath, Using = "//button[span[contains(text(), 'Next')]]")]
+        public static IWebElement NextButton { get; private set; }
 
         private IWebElement LanguageFromDropDown { get; set; }
 
-        [FindsBy(How = How.XPath, Using = "//button[span[contains(text(), 'Next')]]")]
-        public List<IWebElement> NextButton { get; set; }
+        public const string pathToSpecificLanguageFromDropdown = "//span[contains(text(), {0})]";
+        public const string subPathToRetreiveLanguageText = "/span/span";
+        public const string subPathToCheckDropDownStatus = "//div[@aria-expanded]";
 
         public IWebElement FindSpecificLanguageFromDropDown(string language)
         {
-            foreach (IWebElement element in AllLanguagesFromDropDown)
+            string xpathToLanguage = StringHelper.FormatString(LoginPageElements.pathToSpecificLanguageFromDropdown, language)!;
+
+            foreach (IWebElement element in LoginPageElements.AllLanguagesFromDropDown)
             {
-                try
+                if (element.FindElement(By.XPath(xpathToLanguage)).Displayed)
                 {
-                    if (element.FindElement(By.XPath($"//span[contains(text(), {language})]")).Displayed)
-                    {
-                        LanguageFromDropDown = element;
-                        break;
-                    }
-                }
-                catch (NoSuchElementException)
-                {
-                    throw;
+                    LanguageFromDropDown = element;
+                    break;
                 }
             }
             return LanguageFromDropDown;
-        }
-
-        public void SkipHelpToWorkBetterPage()
-        {
-            //Temporary workaround
-            DriverManager.WaitUntilElementDisplayed(HelpWorkBetterText);
-            if (DriverManager.WaitUntilElementIsInteractable(HelpWorkBetterText))
-            {
-                try
-                {
-                    NotNowButtonOnHelpWorkBetterPage.Click();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
         }
     }
 }
