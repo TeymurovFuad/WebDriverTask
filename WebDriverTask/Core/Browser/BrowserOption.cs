@@ -1,4 +1,4 @@
-﻿namespace WebDriverTask.Core.BrowserConfigs
+﻿namespace WebDriverTask.Core.Browser
 {
     public enum BrowserOption
     {

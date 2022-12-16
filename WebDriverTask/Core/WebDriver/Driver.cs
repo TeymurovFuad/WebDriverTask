@@ -1,9 +1,9 @@
 ﻿using OpenQA.Selenium;
 using WebDriverTask.Core.CustomExceptions;
 
-namespace WebDriverTask.Core.WebDriverConfigs
+namespace WebDriverTask.Core.WebDriver
 {
-    public static class Driver
+    public abstract class Driver
     {
         private static IWebDriver? _webDriver = null;
 
@@ -23,7 +23,7 @@ namespace WebDriverTask.Core.WebDriverConfigs
             }
         }
 
-        public static void SetDriver(IWebDriver driver)
+        protected static void SetDriver(IWebDriver driver)
         {
             _webDriver = driver;
         }
@@ -53,8 +53,6 @@ namespace WebDriverTask.Core.WebDriverConfigs
             if (_webDriver != null)
             {
                 _webDriver.Close();
-                _webDriver.Dispose();
-                _webDriver = null;
             }
         }
     }

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebDriverTask.Core.Helpers;
-using WebDriverTask.Core.WebDriverConfigs;
+using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail.MailDialog
 {
@@ -34,13 +34,13 @@ namespace WebDriverTask.Pages.Gmail.MailDialog
         public static List<IWebElement> MailDialogs(string dialogHeader)
         {
             string pathToDialog = StringHelper.FormatString(_mailDialogXPath, dialogHeader)!;
-            return Driver.GetDriver().FindElements(By.XPath(pathToDialog)).ToList();
+            return WebDriver.GetDriver().FindElements(By.XPath(pathToDialog)).ToList();
         }
 
         public static List<IWebElement> MailDialogs()
         {
             string pathToDialog = StringHelper.FormatString(_mailDialogXPath, _newMailDialogHeader)!;
-            return Driver.GetDriver().FindElements(By.XPath(pathToDialog)).ToList();
+            return WebDriver.GetDriver().FindElements(By.XPath(pathToDialog)).ToList();
         }
 
         public static string PathToMailDialog(string mailSubject)

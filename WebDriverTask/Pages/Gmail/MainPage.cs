@@ -6,16 +6,7 @@ namespace WebDriverTask.Pages.Gmail
 {
     public class MainPage: BasePage
     {
-        private Drafts _drafts;
-        private Inbox _inbox;
-        private Sent _sent;
-
-        public MainPage() : base()
-        {
-            _drafts = new Drafts();
-            _inbox = new Inbox();
-            _sent = new Sent();
-        }
+        public MainPage() : base() { }
 
         public static void ComposeNewMail()
         {

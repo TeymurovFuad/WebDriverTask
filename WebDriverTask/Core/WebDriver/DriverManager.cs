@@ -1,11 +1,12 @@
 ﻿
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using WebDriverTask.Core.BrowserConfigs;
+using WebDriverTask.Core.Browser;
+using WebDriverTask.Core.Browser.Configuration;
 
-namespace WebDriverTask.Core.WebDriverConfigs
+namespace WebDriverTask.Core.WebDriver
 {
-    public class DriverManager: DriverBuilder
+    public class DriverManager: BrowserBuilder
     {
         private static IWebDriver? driver = null;
 
