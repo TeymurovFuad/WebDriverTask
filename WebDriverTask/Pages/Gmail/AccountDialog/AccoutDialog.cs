@@ -15,7 +15,7 @@ namespace WebDriverTask.Pages.Gmail.Logout.AccountDialog
 
         public static void SwitchToAccountFrame()
         {
-            Core.WebDriver.Driver.SwitchToFrame(AccountDialogElements.AccountIFrame);
+            SwitchToFrame(AccountDialogElements.AccountIFrame);
         }
 
         public static void ClickSignoutButton()

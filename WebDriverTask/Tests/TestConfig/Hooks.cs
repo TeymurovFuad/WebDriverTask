@@ -37,7 +37,7 @@ namespace WebDriverTask.Tests.TestConfig
             driverManager.AddArgumentsToDriver();
             if(_url != null && _url != string.Empty)
             {
-                Core.WebDriver.Driver.GoToUrl(_url);
+                Driver.GoToUrl(_url);
             }
             testData = new TestData();
         }

@@ -35,7 +35,7 @@ namespace WebDriverTask.Pages.Gmail.MailDialog
 
         public static bool isMailDialogDisplayed(string? mailSubject=null)
         {
-            return MainPage.isElementDisplayed(By.XPath(MessageDialogElements.PathToMailDialog(mailSubject)));
+            return BasePage.isElementDisplayed(By.XPath(MessageDialogElements.PathToMailDialog(mailSubject)));
         }
     }
 }

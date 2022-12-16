@@ -37,9 +37,9 @@ namespace WebDriverTask.Pages.Gmail.Login
 
         public IWebElement FindSpecificLanguageFromDropDown(string language)
         {
-            string xpathToLanguage = StringHelper.FormatString(LoginPageElements.pathToSpecificLanguageFromDropdown, language)!;
+            string xpathToLanguage = StringHelper.FormatString(pathToSpecificLanguageFromDropdown, language)!;
 
-            foreach (IWebElement element in LoginPageElements.AllLanguagesFromDropDown)
+            foreach (IWebElement element in AllLanguagesFromDropDown)
             {
                 if (element.FindElement(By.XPath(xpathToLanguage)).Displayed)
                 {

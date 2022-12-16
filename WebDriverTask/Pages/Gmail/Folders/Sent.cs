@@ -42,7 +42,7 @@ namespace WebDriverTask.Pages.Gmail.Folders
             }
             catch (Exception e) when (e is ElementNotVisibleException || e is ElementNotInteractableException)
             {
-                DriverManager.WaitUntilElementIsInteractable(sentFolder);
+                WaitUntilElementIsInteractable(sentFolder);
                 sentFolder.Click();
             }
             catch (Exception)

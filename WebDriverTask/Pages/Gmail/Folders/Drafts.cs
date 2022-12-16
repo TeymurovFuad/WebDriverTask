@@ -33,7 +33,7 @@ namespace WebDriverTask.Pages.Gmail.Folders
 
         public static List<IWebElement> GetMails()
         {
-            DraftMails = Driver.GetDriver().FindElements(By.XPath(PathToDraftMails)).ToList();
+            DraftMails = GetDriver().FindElements(By.XPath(PathToDraftMails)).ToList();
             return DraftMails;
         }
 

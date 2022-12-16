@@ -14,7 +14,7 @@ namespace WebDriverTask.Core.WebDriver
 
         public IWebDriver Instance()
         {
-            driver = Driver.GetDriver();
+            driver = GetDriver();
             return driver;
         }
 
@@ -23,7 +23,7 @@ namespace WebDriverTask.Core.WebDriver
             if(driver == null)
             {
                 Build(browser);
-                driver = Driver.GetDriver();
+                driver = GetDriver();
                 driver.Manage().Timeouts().ImplicitWait.Add(TimeSpan.FromSeconds(5));
                 driver.Manage().Window.Maximize();
             }
@@ -43,7 +43,7 @@ namespace WebDriverTask.Core.WebDriver
         }
         public static void CloseDriver()
         {
-            Driver.Close();
+            Close();
         }
 
         public static void ClearAllCookies()

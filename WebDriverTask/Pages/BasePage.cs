@@ -40,7 +40,7 @@ namespace WebDriverTask.Pages
 
         public void WaitPageLoad(int seconds = 5)
         {
-            Core.WebDriver.Driver.GetDriver().Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
+            GetDriver().Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
         }
 
         public static bool isElementDisplayed(IWebElement element)
@@ -60,7 +60,7 @@ namespace WebDriverTask.Pages
         {
             try
             {
-                return Core.WebDriver.Driver.GetDriver().FindElements(locator).Count > 0;
+                return GetDriver().FindElements(locator).Count > 0;
             }
             catch (NoSuchElementException)
             {
@@ -84,7 +84,7 @@ namespace WebDriverTask.Pages
         {
             try
             {
-                IAlert alert = Core.WebDriver.Driver.GetDriver().SwitchTo().Alert();
+                IAlert alert = GetDriver().SwitchTo().Alert();
                 if (accept)
                 {
                     alert.Accept();
@@ -93,7 +93,7 @@ namespace WebDriverTask.Pages
                 {
                     alert.Dismiss();
                 }
-                Core.WebDriver.Driver.GetDriver().SwitchTo().DefaultContent();
+                GetDriver().SwitchTo().DefaultContent();
             }
             catch (NoAlertPresentException e)
             {
@@ -119,7 +119,7 @@ namespace WebDriverTask.Pages
 
         public static string GetPageTitle()
         {
-            return Core.WebDriver.Driver.GetDriver().Title;
+            return GetDriver().Title;
         }
     }
 }

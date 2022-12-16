@@ -27,7 +27,7 @@ namespace WebDriverTask.Pages.Gmail
 
         public static IWebElement GetTableContainingMails(string folderSpecificIdentifier)
         {
-            IWebElement tableOfMails = Core.WebDriver.Driver.GetDriver().FindElement(By.XPath($"//table[tbody[position()=1]//{folderSpecificIdentifier}]"));
+            IWebElement tableOfMails = Driver.GetDriver().FindElement(By.XPath($"//table[tbody[position()=1]//{folderSpecificIdentifier}]"));
             return tableOfMails;
         }
 
@@ -44,7 +44,7 @@ namespace WebDriverTask.Pages.Gmail
         public static IWebElement SpecificMailFromTable(string subjectOrBody)
         {
             string pathToMail = PathToSpecificMail(subjectOrBody);
-            IWebElement mail = Core.WebDriver.Driver.GetDriver().FindElement(By.XPath(pathToMail));
+            IWebElement mail = Driver.GetDriver().FindElement(By.XPath(pathToMail));
             DriverManager.WaitUntilElementIsInteractable(mail);
             return mail;
         }
