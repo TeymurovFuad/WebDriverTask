@@ -9,8 +9,8 @@ namespace WebDriverTask.Tests.TestConfig
 {
     public abstract class Hooks
     {
-        private readonly BrowserType _browserType;
-        private readonly string? _url;
+        private BrowserType _browserType;
+        private string? _url;
         protected IWebDriver driver;
         protected TestData testData;
         protected DriverManager driverManager;
