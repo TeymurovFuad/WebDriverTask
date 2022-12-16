@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using WebDriverTask.Core.WebDriverConfigs;
 
 namespace WebDriverTask.Pages.Gmail.Logout.AccountDialog
 {
@@ -16,7 +15,7 @@ namespace WebDriverTask.Pages.Gmail.Logout.AccountDialog
 
         public static void SwitchToAccountFrame()
         {
-            Driver.SwitchToFrame(AccountDialogElements.AccountIFrame);
+            Core.WebDriver.Driver.SwitchToFrame(AccountDialogElements.AccountIFrame);
         }
 
         public static void ClickSignoutButton()

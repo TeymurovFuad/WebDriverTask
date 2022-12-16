@@ -1,18 +1,20 @@
 ﻿using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
-using WebDriverTask.Core.BrowserConfigs;
-using WebDriverTask.Core.WebDriverConfigs;
+using WebDriverTask.Core.Browser;
+using WebDriverTask.Core.Browser.Configuration;
+using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Tests.TestConfig
 {
     public abstract class Hooks
     {
-        private BrowserType _browserType;
-        private string? _url;
-        protected IWebDriver _driver;
+        private readonly BrowserType _browserType;
+        private readonly string? _url;
+        protected IWebDriver driver;
         protected TestData testData;
-        protected DriverManager _driverManager;
+        protected DriverManager driverManager;
+        protected BrowserSetting browserSetting;
         private bool _isFailed;
         public bool SropOnFail { private get; set; } = true;
 
@@ -30,12 +32,12 @@ namespace WebDriverTask.Tests.TestConfig
         [OneTimeSetUp]
         public void ClassSetUp()
         {
-            _driverManager = new DriverManager();
-            _driver = _driverManager.BuildDriver(_browserType).Instance();
-            _driverManager.AddArgumentsToDriver();
+            driverManager = new DriverManager();
+            driver = driverManager.BuildDriver(_browserType).Instance();
+            driverManager.AddArgumentsToDriver();
             if(_url != null && _url != string.Empty)
             {
-                Driver.GoToUrl(_url);
+                Core.WebDriver.Driver.GoToUrl(_url);
             }
             testData = new TestData();
         }
@@ -61,7 +63,6 @@ namespace WebDriverTask.Tests.TestConfig
         [OneTimeTearDown]
         public void ClassTearDown()
         {
-            DriverManager.CloseDriver();
             DriverManager.QuitDriver();
         }
     }

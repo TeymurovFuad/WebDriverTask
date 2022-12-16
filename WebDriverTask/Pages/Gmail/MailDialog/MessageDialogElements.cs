@@ -1,12 +1,7 @@
 ﻿using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebDriverTask.Core.Helpers;
-using WebDriverTask.Core.WebDriverConfigs;
+using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail.MailDialog
 {

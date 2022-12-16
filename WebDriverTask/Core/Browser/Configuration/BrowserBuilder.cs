@@ -1,19 +1,18 @@
 ﻿using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
-using WebDriverTask.Core.BrowserConfigs;
 using WebDriverTask.Core.CustomExceptions;
 
-namespace WebDriverTask.Core.WebDriverConfigs
+namespace WebDriverTask.Core.Browser.Configuration
 {
-    public abstract class DriverBuilder: DriverFactory
+    public abstract class BrowserBuilder : BrowserFactory
     {
         private static bool _isBuilt;
 
-        protected DriverBuilder() { }
+        protected BrowserBuilder() { }
 
         protected static void Build(BrowserType browserType)
         {
-            CreateDriver(browserType);
+            CreateBrowser(browserType);
             _isBuilt = true;
         }
 

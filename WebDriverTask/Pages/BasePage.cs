@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
 using System.Reflection;
-using WebDriverTask.Core.WebDriverConfigs;
+using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages
 {
@@ -40,7 +40,7 @@ namespace WebDriverTask.Pages
 
         public void WaitPageLoad(int seconds = 5)
         {
-            Driver.GetDriver().Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
+            Core.WebDriver.Driver.GetDriver().Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
         }
 
         public static bool isElementDisplayed(IWebElement element)
@@ -60,7 +60,7 @@ namespace WebDriverTask.Pages
         {
             try
             {
-                return Driver.GetDriver().FindElements(locator).Count > 0;
+                return Core.WebDriver.Driver.GetDriver().FindElements(locator).Count > 0;
             }
             catch (NoSuchElementException)
             {
@@ -84,7 +84,7 @@ namespace WebDriverTask.Pages
         {
             try
             {
-                IAlert alert = Driver.GetDriver().SwitchTo().Alert();
+                IAlert alert = Core.WebDriver.Driver.GetDriver().SwitchTo().Alert();
                 if (accept)
                 {
                     alert.Accept();
@@ -93,7 +93,7 @@ namespace WebDriverTask.Pages
                 {
                     alert.Dismiss();
                 }
-                Driver.GetDriver().SwitchTo().DefaultContent();
+                Core.WebDriver.Driver.GetDriver().SwitchTo().DefaultContent();
             }
             catch (NoAlertPresentException e)
             {
@@ -119,7 +119,7 @@ namespace WebDriverTask.Pages
 
         public static string GetPageTitle()
         {
-            return Driver.GetDriver().Title;
+            return Core.WebDriver.Driver.GetDriver().Title;
         }
     }
 }

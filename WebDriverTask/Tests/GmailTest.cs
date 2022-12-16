@@ -1,10 +1,8 @@
 ﻿using NUnit.Framework;
-using NUnit.Framework.Interfaces;
-using WebDriverTask.Pages;
 using WebDriverTask.Tests.TestConfig;
-using WebDriverTask.Core.BrowserConfigs;
+using WebDriverTask.Core.Browser;
 using WebDriverTask.Pages.Gmail;
-using WebDriverTask.Core.WebDriverConfigs;
+using WebDriverTask.Core.WebDriver;
 using WebDriverTask.Pages.Gmail.Login;
 using WebDriverTask.Pages.Gmail.MailDialog;
 using WebDriverTask.Core.Helpers;
@@ -25,43 +23,43 @@ namespace WebDriverTask.Tests
             _mainPage = new MainPage();
         }
 
-        private bool _isFailed;
-        private const string _createAccountButtonXPath = "//span[@jsname and text()='Create account']";
-        private const string _createPersonalUseAccountButtonXPath = "//span[@jsname and text()='For my personal use']";
-        private const string _languageChooserDropdownId = "lang-chooser";
-        private const string _languageFromDropDownXPath = "//div[@id='lang-chooser']/div/div/ul/li//span[@jsname]/../..";
-        private const string _errorForExistingUsernameXPath = "//div[text()='You can use letters, numbers & periods']/../div[@aria-live='assertive' and @aria-atomic='true' ]/div[text()='That username is taken. Try another.']";
-        private const string _nextButtonXPath = "//button//span[text()='Next']/..";
-        private const string _phoneNumberVerificationPageHeaderXPath = "//h1/span[text()='Verifying your phone number']";
-        private const string _emailFieldId = "identifierId";
-        private const string _passwordFieldXPath = "//input[@type='password' and @name='Passwd']";
-        private const string _headingTextOfLoginLogoutPageXPath = "//h1[@id='headingText']/span";
-        private const string _buttonToComposeMail = "//div[text()='Compose']";
-        private const string _newMessageDialogBoxXPath = "//div[@aria-label='New Message']";
-        private const string _toXPath = "//div[@name='to']//input";
-        private const string _subjectXPath = "//input[@name='subjectbox']";
-        private const string _mailBodyXPath = "//div[@aria-label='Message Body']";
-        private const string _newMailDialogBoxSendButtonXPath = "//div[@role='button' and text()='Send']";
-        private const string _closeNewMailComposeModalXPath = "//img[@aria-label='Save & close']";
-        private const string _draftsXPath = "//div[@data-tooltip='Drafts']//a/../..";
-        private const string _messageInDraft_InjecableXPath = "//table/tbody/tr/td//span[contains(text(), '$var')]";
-        private const string _sentXPath = "//div[@data-tooltip='Sent']//a";
-        private const string _messageInSent_InjecableXPath = "//table/tbody/tr/td//div[@title='Inbox']//ancestor-or-self::td//span[contains(text(), '$var')]";
-        private const string _mailHomePageFoldersXPath_Injectable = "//div[@data-tooltip='$folderName']";
-        private const string _dialogBoxContainingSignOutButtonXPath_Injectable = "//a[contains(@aria-label, '($email)') and contains(@href, 'SignOut')]";
-        private const string _iframeContainingDialogBoxForSignOutXPath = "//iframe[@name='account']";
-        private const string _signOutButtonXPath = "//a[contains(@href, 'Logout')]/div[text()='Sign out']";
+        //private bool _isFailed;
+        //private const string _createAccountButtonXPath = "//span[@jsname and text()='Create account']";
+        //private const string _createPersonalUseAccountButtonXPath = "//span[@jsname and text()='For my personal use']";
+        //private const string _languageChooserDropdownId = "lang-chooser";
+        //private const string _languageFromDropDownXPath = "//div[@id='lang-chooser']/div/div/ul/li//span[@jsname]/../..";
+        //private const string _errorForExistingUsernameXPath = "//div[text()='You can use letters, numbers & periods']/../div[@aria-live='assertive' and @aria-atomic='true' ]/div[text()='That username is taken. Try another.']";
+        //private const string _nextButtonXPath = "//button//span[text()='Next']/..";
+        //private const string _phoneNumberVerificationPageHeaderXPath = "//h1/span[text()='Verifying your phone number']";
+        //private const string _emailFieldId = "identifierId";
+        //private const string _passwordFieldXPath = "//input[@type='password' and @name='Passwd']";
+        //private const string _headingTextOfLoginLogoutPageXPath = "//h1[@id='headingText']/span";
+        //private const string _buttonToComposeMail = "//div[text()='Compose']";
+        //private const string _newMessageDialogBoxXPath = "//div[@aria-label='New Message']";
+        //private const string _toXPath = "//div[@name='to']//input";
+        //private const string _subjectXPath = "//input[@name='subjectbox']";
+        //private const string _mailBodyXPath = "//div[@aria-label='Message Body']";
+        //private const string _newMailDialogBoxSendButtonXPath = "//div[@role='button' and text()='Send']";
+        //private const string _closeNewMailComposeModalXPath = "//img[@aria-label='Save & close']";
+        //private const string _draftsXPath = "//div[@data-tooltip='Drafts']//a/../..";
+        //private const string _messageInDraft_InjecableXPath = "//table/tbody/tr/td//span[contains(text(), '$var')]";
+        //private const string _sentXPath = "//div[@data-tooltip='Sent']//a";
+        //private const string _messageInSent_InjecableXPath = "//table/tbody/tr/td//div[@title='Inbox']//ancestor-or-self::td//span[contains(text(), '$var')]";
+        //private const string _mailHomePageFoldersXPath_Injectable = "//div[@data-tooltip='$folderName']";
+        //private const string _dialogBoxContainingSignOutButtonXPath_Injectable = "//a[contains(@aria-label, '($email)') and contains(@href, 'SignOut')]";
+        //private const string _iframeContainingDialogBoxForSignOutXPath = "//iframe[@name='account']";
+        //private const string _signOutButtonXPath = "//a[contains(@href, 'Logout')]/div[text()='Sign out']";
 
         [Test, Order(1)]
-        public void OpenBrowser()
+        public void A_OpenBrowser()
         {
             DriverManager.WaitPageToLoad();
-            Assert.IsTrue(_driver.Title.Contains("gmail", StringComparison.CurrentCultureIgnoreCase));
+            Assert.IsTrue(driver.Title.Contains("gmail", StringComparison.CurrentCultureIgnoreCase));
         }
 
         [Test, Order(2)]
         [TestCase("english")]
-        public void ChangePageLanguageToEnglishAndVerifyItChanged(string expectedLanguage)
+        public void B_ChangePageLanguageToEnglishAndVerifyItChanged(string expectedLanguage)
         {
             LoginPage.ToggleLanguageChooserDropDown();
             LoginPage.ChangeLanguage(expectedLanguage);
@@ -71,7 +69,7 @@ namespace WebDriverTask.Tests
 
         [Test, Order(3)]
         [TestCase("qy54313@gmail.com", "Aa123456____")]
-        public void FillUsernameAndPasswordAndLogin(string email, string password)
+        public void C_FillUsernameAndPasswordAndLogin(string email, string password)
         {
             LoginPage.FillEmail(email);
             LoginPage.ClickNext();
@@ -81,7 +79,7 @@ namespace WebDriverTask.Tests
         }
 
         [Test, Order(4)]
-        public void OpenDialogToComposeNewMail()
+        public void D_OpenDialogToComposeNewMail()
         {
             MainPage.ComposeNewMail();
             Assert.IsTrue(MessageDialog.isMailDialogDisplayed());
@@ -89,7 +87,7 @@ namespace WebDriverTask.Tests
 
         [Test, Order(5)]
         [TestCase("someFakeMail@noSuchAddress.pl", "", "SomeTestBody ")]
-        public void FillFieldsInMessageDialogAndCloseDialog(string someMailAddress, string someSubject, string someBody)
+        public void E_FillFieldsInMessageDialogAndCloseDialog(string someMailAddress, string someSubject, string someBody)
         {
             someSubject += StringHelper.GenerateUUID();
             MessageDialog.To(someMailAddress);
@@ -105,14 +103,14 @@ namespace WebDriverTask.Tests
         }
 
         [Test, Order(6)]
-        public void VerifyCreatedMessageExistsInDrafts()
+        public void F_VerifyCreatedMessageExistsInDrafts()
         {
             MainPage.GoToDrafts();
             Assert.IsNotNull(Drafts.GetMailFromTable(testData.GetVariable<string>("subject")));
         }
 
         [Test, Order(7)]
-        public void SendMailFromDraftAndVerifyMailDissapearedFromDraftFolder()
+        public void G_SendMailFromDraftAndVerifyMailDissapearedFromDraftFolder()
         {
             MessageDialog.CloseAllMailDialogs();
             Drafts.GetMailFromTable(testData.GetVariable<string>("subject"))!.Click();
@@ -121,14 +119,14 @@ namespace WebDriverTask.Tests
         }
 
         [Test, Order(8)]
-        public void GoToSentMailsFolderAndVerifyThatMailIsThere()
+        public void H_GoToSentMailsFolderAndVerifyThatMailIsThere()
         {
             MainPage.GoToSent();
             Assert.IsNotNull(Sent.GetMailFromTable(testData.GetVariable<string>("subject")));
         }
 
         [Test, Order(9)]
-        public void SignOutAndVerifyUserSignedOutSuccessfully()
+        public void I_SignOutAndVerifyUserSignedOutSuccessfully()
         {
             AccoutDialog.OpenAccountDialog(testData.GetVariable<string>("email"));
             AccoutDialog.SwitchToAccountFrame();
@@ -146,8 +144,8 @@ namespace WebDriverTask.Tests
         //    {
         //        DriverManager.WaitUntilElementDisplayed(By.Id(_languageChooserDropdownId));
         //    }
-        //    _interaction.ClickElement(By.Id(_languageChooserDropdownId), _driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "false");
-        //    languages = _driver!.FindElements(By.XPath(_languageFromDropDownXPath));
+        //    _interaction.ClickElement(By.Id(_languageChooserDropdownId), driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "false");
+        //    languages = driver!.FindElements(By.XPath(_languageFromDropDownXPath));
         //    foreach (IWebElement lan in languages)
         //    {
         //        if (lan.GetAttribute("aria-selected") == "true")
@@ -157,7 +155,7 @@ namespace WebDriverTask.Tests
         //            break;
         //        }
         //    }
-        //    _interaction.ClickElement(By.Id(_languageChooserDropdownId), _driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "true");
+        //    _interaction.ClickElement(By.Id(_languageChooserDropdownId), driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "true");
         //    return language;
         //}
 
@@ -168,8 +166,8 @@ namespace WebDriverTask.Tests
         //    {
         //        DriverManager.WaitUntilElementDisplayed(By.Id(_languageChooserDropdownId));
         //    }
-        //    languages = _driver!.FindElements(By.XPath(_languageFromDropDownXPath));
-        //    _interaction.ClickElement(By.Id(_languageChooserDropdownId), _driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "false");
+        //    languages = driver!.FindElements(By.XPath(_languageFromDropDownXPath));
+        //    _interaction.ClickElement(By.Id(_languageChooserDropdownId), driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "false");
         //    foreach (IWebElement lan in languages)
         //    {
         //        if (lan.Text.ToLower().Contains(language))
@@ -179,7 +177,7 @@ namespace WebDriverTask.Tests
         //            break;
         //        }
         //    }
-        //    _interaction.ClickElement(By.Id(_languageChooserDropdownId), _driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "true");
+        //    _interaction.ClickElement(By.Id(_languageChooserDropdownId), driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "true");
         //}
         #endregion
 
@@ -196,8 +194,8 @@ namespace WebDriverTask.Tests
         //[OneTimeTearDown]
         //public void ClassClean()
         //{
-        //    _driver!.Close();
-        //    _driver.Quit();
+        //    driver!.Close();
+        //    driver.Quit();
         //}
     }
 }

@@ -1,9 +1,7 @@
 ﻿using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
-using System.Security.Cryptography.X509Certificates;
-using WebDriverTask.Core.Extensions;
 using WebDriverTask.Core.Helpers;
-using WebDriverTask.Core.WebDriverConfigs;
+using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail
 {
@@ -29,7 +27,7 @@ namespace WebDriverTask.Pages.Gmail
 
         public static IWebElement GetTableContainingMails(string folderSpecificIdentifier)
         {
-            IWebElement tableOfMails = Driver.GetDriver().FindElement(By.XPath($"//table[tbody[position()=1]//{folderSpecificIdentifier}]"));
+            IWebElement tableOfMails = Core.WebDriver.Driver.GetDriver().FindElement(By.XPath($"//table[tbody[position()=1]//{folderSpecificIdentifier}]"));
             return tableOfMails;
         }
 
@@ -46,7 +44,7 @@ namespace WebDriverTask.Pages.Gmail
         public static IWebElement SpecificMailFromTable(string subjectOrBody)
         {
             string pathToMail = PathToSpecificMail(subjectOrBody);
-            IWebElement mail = Driver.GetDriver().FindElement(By.XPath(pathToMail));
+            IWebElement mail = Core.WebDriver.Driver.GetDriver().FindElement(By.XPath(pathToMail));
             DriverManager.WaitUntilElementIsInteractable(mail);
             return mail;
         }

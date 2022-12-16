@@ -1,7 +1,4 @@
 ﻿using OpenQA.Selenium;
-using SeleniumExtras.PageObjects;
-using System.Text.RegularExpressions;
-using WebDriverTask.Core.WebDriverConfigs;
 
 namespace WebDriverTask.Pages.Gmail.MailDialog
 {

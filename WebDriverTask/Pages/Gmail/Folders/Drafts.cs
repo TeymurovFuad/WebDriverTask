@@ -1,7 +1,5 @@
 ﻿using OpenQA.Selenium;
-using System.Xml.Linq;
 using WebDriverTask.Core.Helpers;
-using WebDriverTask.Core.WebDriverConfigs;
 
 namespace WebDriverTask.Pages.Gmail.Folders
 {
@@ -34,7 +32,7 @@ namespace WebDriverTask.Pages.Gmail.Folders
 
         public static List<IWebElement> GetMails()
         {
-            DraftMails = Driver.GetDriver().FindElements(By.XPath(PathToDraftMails)).ToList();
+            DraftMails = GetDriver().FindElements(By.XPath(PathToDraftMails)).ToList();
             return DraftMails;
         }
 

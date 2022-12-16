@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
 using WebDriverTask.Core.Helpers;
-using WebDriverTask.Core.WebDriverConfigs;
 
 namespace WebDriverTask.Pages.Gmail.Logout.AccountDialog
 {
@@ -18,7 +17,7 @@ namespace WebDriverTask.Pages.Gmail.Logout.AccountDialog
         public static IWebElement OpenAccountDialogButton(string email)
         {
             string formattedPath = StringHelper.FormatString(_openAccountDialogButton, email)!;
-            return Driver.GetDriver().FindElement(By.XPath(formattedPath));
+            return Core.WebDriver.Driver.GetDriver().FindElement(By.XPath(formattedPath));
         }
     }
 }

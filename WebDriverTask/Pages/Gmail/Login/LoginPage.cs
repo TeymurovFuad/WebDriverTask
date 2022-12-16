@@ -1,6 +1,4 @@
 ﻿using OpenQA.Selenium;
-using WebDriverTask.Core.Helpers;
-using WebDriverTask.Core.WebDriverConfigs;
 
 namespace WebDriverTask.Pages.Gmail.Login
 {
