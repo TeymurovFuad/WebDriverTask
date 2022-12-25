@@ -6,24 +6,12 @@ namespace WebDriverTask.Pages.Gmail
 {
     public class MainPage: BasePage
     {
-        public MainPageElements _mainPageElements { get; private set; }
-        private Drafts _drafts;
-        private Inbox _inbox;
-        private Sent _sent;
-        private BasePage _basePage;
+        public MainPage() : base() { }
 
-        public MainPage()
+        public static void ComposeNewMail()
         {
-            _mainPageElements = new MainPageElements();
-            _drafts = new Drafts();
-            _inbox = new Inbox();
-            _sent = new Sent();
-        }
-
-        public void ComposeNewMail()
-        {
-            MessageDialog.CloseMailDialog();
-            _mainPageElements.ComposeButton.Click();
+            MessageDialog.CloseAllMailDialogs();
+            MainPageElements.ComposeButton.Click();
         }
 
         public void OpenFolder(IWebElement folder)
@@ -36,19 +24,19 @@ namespace WebDriverTask.Pages.Gmail
             return isElementDisplayed(locator);
         }
 
-        public void GoToDrafts()
+        public static void GoToDrafts()
         {
-            _drafts.Open();
+            DraftsFolder.Open();
         }
 
-        public void GoToSent()
+        public static void GoToSent()
         {
-            _sent.Open(); 
+            SentFolder.Open(); 
         }
 
-        public void GoToInbox()
+        public static void GoToInbox()
         {
-            _inbox.Open();
+            InboxFolder.Open();
         }
     }
 }

@@ -2,13 +2,13 @@
 
 namespace WebDriverTask.Pages.Gmail.Folders
 {
-    public class Inbox : MainPage, IMailFolder
+    public class InboxFolder : MainPage, IMailFolder
     {
-        public string _folderSpecificIdendifierForRetreivingMails => throw new NotImplementedException();
+        public string PathToDraftMails => throw new NotImplementedException();
 
-        public string _folderSpecificIdendifierIfNoMailExists => throw new NotImplementedException();
+        public string FolderSpecificIdendifierIfNoMailExists => throw new NotImplementedException();
 
-        public List<IWebElement> GetDraftMails()
+        public List<IWebElement> GetMails()
         {
             throw new NotImplementedException();
         }
@@ -18,7 +18,7 @@ namespace WebDriverTask.Pages.Gmail.Folders
             throw new NotImplementedException();
         }
 
-        public void Open()
+        public static void Open()
         {
             throw new NotImplementedException();
         }

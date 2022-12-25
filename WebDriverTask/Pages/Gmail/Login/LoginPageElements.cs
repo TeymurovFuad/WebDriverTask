@@ -1,71 +1,56 @@
 ﻿using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
-using WebDriverTask.Core.WebDriverConfigs;
+using WebDriverTask.Core.Extensions;
+using WebDriverTask.Core.Helpers;
+using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail.Login
 {
-    public abstract class LoginPageElements: BaseElements
+    public class LoginPageElements: BaseElements
     {
         private const string HelpToWorkBetterText = "If you’d like, take a few moments to help Google work better for you";
 
-        [FindsBy(How = How.Id, Using = "identifierId")]
-        public List<IWebElement> EmailField { get; set; }
+        public const string EmailFieldId = "identifierId";
+        public static IWebElement EmailField => GetDriver().FindElements(By.Id(EmailFieldId)).First();
 
-        [FindsBy(How = How.XPath, Using = "//input[@type='password' and @name='Passwd']")]
-        public List<IWebElement> PasswordField { get; set; }
+        public const string PasswordFieldXPath = "//input[@type='password' and @name='Passwd']";
+        public static IWebElement PasswordField => GetDriver().FindElements(By.XPath(PasswordFieldXPath)).First();
 
-        [FindsBy(How = How.XPath, Using = $"//div[text()={HelpToWorkBetterText}]")]
-        public IWebElement HelpWorkBetterText { get; set; }
+        public const string HelpWorkBetterTextXPath = $"//div[text()={HelpToWorkBetterText}]";
+        public static IWebElement HelpWorkBetterText => GetDriver().FindElements(By.XPath(HelpWorkBetterTextXPath)).First();
 
-        [FindsBy(How = How.XPath, Using = $"//*[text()='Not Now']")]
-        public IWebElement NotNowButtonOnHelpWorkBetterPage { get; set; }
+        public const string NotNowButtonOnHelpWorkBetterPageXPath = $"//*[text()='Not Now']";
+        public static IWebElement NotNowButtonOnHelpWorkBetterPage => GetDriver().FindElements(By.XPath(NotNowButtonOnHelpWorkBetterPageXPath)).First();
 
-        [FindsBy(How = How.Id, Using = "lang-chooser")]
-        public IWebElement DropDownToChooseLanguage { get; set; }
+        public const string DropDownToChooseLanguageId = "lang-chooser";
+        public static IWebElement DropDownToChooseLanguage => GetDriver().FindElements(By.Id(DropDownToChooseLanguageId)).First();
 
-        [FindsBy(How = How.XPath, Using = "//div[@id='lang-chooser']//ul/li]")]
-        public List<IWebElement> AllLanguagesFromDropDown { get; set; }
+        public const string AllLanguagesFromDropDownXPath = "//ul[@role='listbox']/li";
+        public static List<IWebElement> AllLanguagesFromDropDown => GetDriver().FindElements(By.XPath(AllLanguagesFromDropDownXPath)).ToList();
+        public static IWebElement CurrentLanguage => GetDriver().FindElements(By.XPath($"{AllLanguagesFromDropDownXPath}[@aria-selected='true']")).First();
 
-        private IWebElement LanguageFromDropDown { get; set; }
+        public const string NextButtonXPath = "//button[span[contains(text(), 'Next')]]";
+        public static IWebElement NextButton => GetDriver().FindElements(By.XPath(NextButtonXPath)).First();
 
-        [FindsBy(How = How.XPath, Using = "//button[span[contains(text(), 'Next')]]")]
-        public List<IWebElement> NextButton { get; set; }
+        private static IWebElement LanguageFromDropDown { get; set; }
 
-        public IWebElement FindSpecificLanguageFromDropDown(string language)
+        public const string pathToSpecificLanguageFromDropdown = "//span[contains(text(), {0})]";
+        public const string subPathToRetreiveLanguageText = "./span/span";
+        public const string subPathToCheckDropDownStatus = "//div[@aria-expanded]";
+
+        public static IWebElement FindSpecificLanguageFromDropDown(string language)
         {
+            string xpathToLanguage = StringHelper.FormatString(pathToSpecificLanguageFromDropdown, language.Capitalise())!;
+
             foreach (IWebElement element in AllLanguagesFromDropDown)
             {
-                try
+                if (element.FindElement(By.XPath(xpathToLanguage)).Displayed)
                 {
-                    if (element.FindElement(By.XPath($"//span[contains(text(), {language})]")).Displayed)
-                    {
-                        LanguageFromDropDown = element;
-                        break;
-                    }
-                }
-                catch (NoSuchElementException)
-                {
-                    throw;
+                    LanguageFromDropDown = element;
+                    break;
                 }
             }
             return LanguageFromDropDown;
-        }
-
-        public void SkipHelpToWorkBetterPage()
-        {
-            //Temporary workaround
-            DriverManager.WaitUntilElementDisplayed(HelpWorkBetterText);
-            if (DriverManager.WaitUntilElementIsInteractable(HelpWorkBetterText))
-            {
-                try
-                {
-                    NotNowButtonOnHelpWorkBetterPage.Click();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
         }
     }
 }

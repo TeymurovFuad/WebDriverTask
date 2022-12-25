@@ -1,13 +1,10 @@
 ﻿using OpenQA.Selenium;
-using WebDriverTask.Core.WebDriverConfigs;
 
-namespace WebDriverTask.Pages.Gmail.Logout
+namespace WebDriverTask.Pages.Gmail.Logout.AccountDialog
 {
-    public class AccoutDialog: MainPage
+    public class AccoutDialog : MainPage
     {
-        public AccoutDialog() : base() { }
-
-        public void OpenAccountDialog(string email)
+        public static void OpenAccountDialog(string email)
         {
             IWebElement openAccountDialogButton = AccountDialogElements.OpenAccountDialogButton(email);
             if (isElementDisplayed(openAccountDialogButton))
@@ -16,17 +13,12 @@ namespace WebDriverTask.Pages.Gmail.Logout
             }
         }
 
-        public AccoutDialog And()
-        {
-            return this;
-        }
-
         public static void SwitchToAccountFrame()
         {
-            Driver.SwitchToFrame(AccountDialogElements.AccountIFrame);
+            SwitchToFrame(AccountDialogElements.AccountIFrame);
         }
 
-        public void ClickSignoutButton()
+        public static void ClickSignoutButton()
         {
             IWebElement singoutButton = AccountDialogElements.SingOutButton;
             if (WaitUntilElementIsInteractable(singoutButton))
@@ -37,7 +29,6 @@ namespace WebDriverTask.Pages.Gmail.Logout
             {
                 throw new Exception("Error on click signout button");
             }
-
         }
     }
 }

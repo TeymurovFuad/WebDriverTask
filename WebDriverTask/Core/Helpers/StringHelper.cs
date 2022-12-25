@@ -3,7 +3,8 @@
 namespace WebDriverTask.Core.Helpers
 {
     public static class StringHelper
-    {public static string GenerateUUID()
+    {
+        public static string GenerateUUID()
         {
             string uuid = Guid.NewGuid().ToString();
             return uuid;
@@ -16,17 +17,17 @@ namespace WebDriverTask.Core.Helpers
         }
 
         /// <summary>
-        /// Will replace placeholders with a provided values. 
+        /// Will replace placeholders in target with a provided values. 
         /// The number of values should not be less than number of placeholders.
         /// </summary>
-        public static string? FormatString(string source, params string[] vals)
+        public static string FormatString(string target, params string[] vals)
         {
             string pattern = @"{\\d}";
             Regex regex = new Regex(pattern, RegexOptions.Compiled);
-            MatchCollection matchCollection = regex.Matches(source);
+            MatchCollection matchCollection = regex.Matches(target);
             if(matchCollection.Count > vals.Length)
-                return null;
-            return string.Format(source, vals);
+                return string.Empty;
+            return string.Format(target, vals);
         }
     }
 }
