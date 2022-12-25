@@ -1,43 +1,46 @@
 ﻿using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
+using WebDriverTask.Core.Extensions;
 using WebDriverTask.Core.Helpers;
+using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail.Login
 {
-    public class LoginPageElements
+    public class LoginPageElements: BaseElements
     {
         private const string HelpToWorkBetterText = "If you’d like, take a few moments to help Google work better for you";
 
-        [FindsBy(How = How.Id, Using = "identifierId")]
-        public static IWebElement EmailField { get; private set; }
+        public const string EmailFieldId = "identifierId";
+        public static IWebElement EmailField => GetDriver().FindElements(By.Id(EmailFieldId)).First();
 
-        [FindsBy(How = How.XPath, Using = "//input[@type='password' and @name='Passwd']")]
-        public static IWebElement PasswordField { get; private set; }
+        public const string PasswordFieldXPath = "//input[@type='password' and @name='Passwd']";
+        public static IWebElement PasswordField => GetDriver().FindElements(By.XPath(PasswordFieldXPath)).First();
 
-        [FindsBy(How = How.XPath, Using = $"//div[text()={HelpToWorkBetterText}]")]
-        public static IWebElement HelpWorkBetterText { get; private set; }
+        public const string HelpWorkBetterTextXPath = $"//div[text()={HelpToWorkBetterText}]";
+        public static IWebElement HelpWorkBetterText => GetDriver().FindElements(By.XPath(HelpWorkBetterTextXPath)).First();
 
-        [FindsBy(How = How.XPath, Using = $"//*[text()='Not Now']")]
-        public static IWebElement NotNowButtonOnHelpWorkBetterPage { get; private set; }
+        public const string NotNowButtonOnHelpWorkBetterPageXPath = $"//*[text()='Not Now']";
+        public static IWebElement NotNowButtonOnHelpWorkBetterPage => GetDriver().FindElements(By.XPath(NotNowButtonOnHelpWorkBetterPageXPath)).First();
 
-        [FindsBy(How = How.Id, Using = "lang-chooser")]
-        public static IWebElement DropDownToChooseLanguage { get; private set; }
+        public const string DropDownToChooseLanguageId = "lang-chooser";
+        public static IWebElement DropDownToChooseLanguage => GetDriver().FindElements(By.Id(DropDownToChooseLanguageId)).First();
 
-        [FindsBy(How = How.XPath, Using = "//ul[@aria-label='Change language']/li")]
-        public static List<IWebElement> AllLanguagesFromDropDown { get; private set; }
+        public const string AllLanguagesFromDropDownXPath = "//ul[@role='listbox']/li";
+        public static List<IWebElement> AllLanguagesFromDropDown => GetDriver().FindElements(By.XPath(AllLanguagesFromDropDownXPath)).ToList();
+        public static IWebElement CurrentLanguage => GetDriver().FindElements(By.XPath($"{AllLanguagesFromDropDownXPath}[@aria-selected='true']")).First();
 
-        [FindsBy(How = How.XPath, Using = "//button[span[contains(text(), 'Next')]]")]
-        public static IWebElement NextButton { get; private set; }
+        public const string NextButtonXPath = "//button[span[contains(text(), 'Next')]]";
+        public static IWebElement NextButton => GetDriver().FindElements(By.XPath(NextButtonXPath)).First();
 
-        private IWebElement LanguageFromDropDown { get; set; }
+        private static IWebElement LanguageFromDropDown { get; set; }
 
         public const string pathToSpecificLanguageFromDropdown = "//span[contains(text(), {0})]";
-        public const string subPathToRetreiveLanguageText = "/span/span";
+        public const string subPathToRetreiveLanguageText = "./span/span";
         public const string subPathToCheckDropDownStatus = "//div[@aria-expanded]";
 
-        public IWebElement FindSpecificLanguageFromDropDown(string language)
+        public static IWebElement FindSpecificLanguageFromDropDown(string language)
         {
-            string xpathToLanguage = StringHelper.FormatString(pathToSpecificLanguageFromDropdown, language)!;
+            string xpathToLanguage = StringHelper.FormatString(pathToSpecificLanguageFromDropdown, language.Capitalise())!;
 
             foreach (IWebElement element in AllLanguagesFromDropDown)
             {

@@ -26,17 +26,17 @@ namespace WebDriverTask.Pages.Gmail
 
         public static void GoToDrafts()
         {
-            Drafts.Open();
+            DraftsFolder.Open();
         }
 
         public static void GoToSent()
         {
-            Sent.Open(); 
+            SentFolder.Open(); 
         }
 
         public static void GoToInbox()
         {
-            Inbox.Open();
+            InboxFolder.Open();
         }
     }
 }

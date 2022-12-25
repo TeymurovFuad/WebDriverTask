@@ -1,11 +1,12 @@
 ﻿using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
+using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail.Logout
 {
-    public static class LogoutPageElements
+    public class LogoutPageElements: BaseElements
     {
-        [FindsBy(How = How.Id, Using = "//span[text()='Choose an account']")]
-        public static IWebElement ChooseAnAccout { get; private set; }
+        public const string ChooseAnAccoutXPath =  "//span[text()='Choose an account']";
+        public static IWebElement ChooseAnAccout => GetDriver().FindElements(By.XPath(ChooseAnAccoutXPath)).First();
     }
 }

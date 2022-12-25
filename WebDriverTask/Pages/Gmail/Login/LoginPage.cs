@@ -1,9 +1,16 @@
 ﻿using OpenQA.Selenium;
+using SeleniumExtras.PageObjects;
+using WebDriverTask.Core.Extensions;
 
 namespace WebDriverTask.Pages.Gmail.Login
 {
     public class LoginPage: MainPage
     {
+        public LoginPage()
+        {
+            //PageFactory
+        }
+
         public void SkipHelpToWorkBetterPage()
         {
             //Temporary workaround
@@ -21,18 +28,6 @@ namespace WebDriverTask.Pages.Gmail.Login
             }
         }
 
-        public static IWebElement? GetCurrentSelectedLanguageElement()
-        {
-            foreach (IWebElement language in LoginPageElements.AllLanguagesFromDropDown)
-            {
-                if (language.GetAttribute("aria-selected") == "true")
-                {
-                    return language;
-                }
-            }
-            return null;
-        }
-
         public static bool isLanguageChooserDropDownExpanded()
         {
             IWebElement dropDownElement = LoginPageElements.DropDownToChooseLanguage.FindElement(By.XPath(LoginPageElements.subPathToCheckDropDownStatus));
@@ -48,11 +43,8 @@ namespace WebDriverTask.Pages.Gmail.Login
 
         public static string GetValueOfCurrentSelectedLanguage()
         {
-            if(GetCurrentSelectedLanguageElement() != null)
-            {
-                return GetCurrentSelectedLanguageElement()!.FindElement(By.XPath(LoginPageElements.subPathToRetreiveLanguageText)).Text;
-            }
-            return string.Empty;
+            string? languageValue = LoginPageElements.CurrentLanguage.FindElement(By.XPath(LoginPageElements.subPathToRetreiveLanguageText)).Text;
+            return languageValue ?? string.Empty;
         }
 
         public static string GetValueOfLanguage(IWebElement language)
@@ -62,11 +54,15 @@ namespace WebDriverTask.Pages.Gmail.Login
 
         public static void ChangeLanguage(string languageToChange)
         {
-            foreach(IWebElement language in LoginPageElements.AllLanguagesFromDropDown)
+            if (!GetValueOfCurrentSelectedLanguage().Contains(languageToChange, StringComparison.InvariantCultureIgnoreCase))
             {
-                if (GetValueOfLanguage(language).Contains(languageToChange, StringComparison.InvariantCultureIgnoreCase))
+                foreach (IWebElement language in LoginPageElements.AllLanguagesFromDropDown)
                 {
-                    language.Click();
+                    if (GetValueOfLanguage(language).Contains(languageToChange, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        language.Click();
+                        break;
+                    }
                 }
             }
         }

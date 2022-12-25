@@ -5,22 +5,22 @@ using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail
 {
-    public static class MainPageElements
+    public class MainPageElements: BaseElements
     {
-        [FindsBy(How = How.XPath, Using = "//div[h2[text()='Labels'] and //a[text()='Inbox']][1]")]
-        public static IWebElement FoldersButtonContainer { get; private set; }
+        public const string FoldersButtonContainerXPath = "//div[h2[text()='Labels'] and //a[text()='Inbox']][1]";
+        public static IWebElement FoldersButtonContainer => GetDriver().FindElements(By.XPath(FoldersButtonContainerXPath)).First();
 
-        [FindsBy(How = How.XPath, Using = "//div[text()='Compose']")]
-        public static IWebElement ComposeButton { get; private set; }
+        public const string ComposeButtonXPath = "//div[text()='Compose']";
+        public static IWebElement ComposeButton => GetDriver().FindElements(By.XPath(ComposeButtonXPath)).First();
 
-        [FindsBy(How = How.XPath, Using = "//div[@data-tooltip='Inbox']")]
-        public static IWebElement InboxFolder { get; private set; }
+        public const string InboxFolderXPath = "//div[@data-tooltip='Inbox']";
+        public static IWebElement InboxFolder => GetDriver().FindElements(By.XPath(InboxFolderXPath)).First();
 
-        [FindsBy(How = How.XPath, Using = "//div[@data-tooltip='Drafts']")]
-        public static IWebElement DraftsFolder { get; private set; }
+        public const string DraftsFolderXPath = "//div[@data-tooltip='Drafts']";
+        public static IWebElement DraftsFolder => GetDriver().FindElements(By.XPath(DraftsFolderXPath)).First();
 
-        [FindsBy(How = How.XPath, Using = "//div[@data-tooltip='Sent']")]
-        public static IWebElement SentFolder { get; private set; }
+        public const string SentFolderXPath = "//div[@data-tooltip='Sent']";
+        public static IWebElement SentFolder => GetDriver().FindElements(By.XPath(SentFolderXPath)).First();
 
         private static string _pathToMailContainingTable = "//table[tbody[position()=1]//{0}]";
         private const string _pathToSpecificMail = "/span[text()='{0}']//ancestor::tr";

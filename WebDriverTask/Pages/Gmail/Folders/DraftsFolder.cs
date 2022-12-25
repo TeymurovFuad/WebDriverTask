@@ -4,11 +4,11 @@ using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail.Folders
 {
-    public class Drafts : MainPage, IMailFolder
+    public class DraftsFolder : MainPage, IMailFolder
     {
         public static string PathToDraftMails { get; private set; } = "//span[text()='Draft']/ancestor::tr";
         public static string FolderSpecificIdendifierIfNoMailExists { get; private set; } = "td[text()=\"You don't have any saved drafts.\"]";
-        private static string _pathToSpecificDraftMails = "//span[text()='{0}']";
+        private static string _pathToSpecificDraftMails => "//span[text()='{0}']";
         public static List<IWebElement> DraftMails { get; private set; }
         public static string FolderName { get; private set; }
 

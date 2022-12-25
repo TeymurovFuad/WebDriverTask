@@ -4,12 +4,12 @@ using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail.Folders
 {
-    public class Sent : MainPage, IMailFolder
+    public class SentFolder : MainPage, IMailFolder
     {
         public static string FolderSpecificIdendifierIfNoMailExists { get; set; } = "td[text()='No sent messages! ']";
         public static string FolderName { get; private set; }
         public static string PathToMails = "//div[text()='To: ']/ancestor::tr";
-        private static string _pathToSpecificMail = "//span[text()='{byBodyOrSubject}']";
+        private static string _pathToSpecificMail = "//span[text()='{0}']";
 
         public static List<IWebElement> GetMails()
         {
@@ -63,7 +63,7 @@ namespace WebDriverTask.Pages.Gmail.Folders
 
         public static bool VerifyPageOpened()
         {
-            return GetPageTitle().Contains(FolderName, StringComparison.OrdinalIgnoreCase);
+            return GetPageTitle().Contains(FolderName, StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace WebDriverTask.Pages.Gmail.Folders
 {
-    public class Inbox : MainPage, IMailFolder
+    public class InboxFolder : MainPage, IMailFolder
     {
         public string PathToDraftMails => throw new NotImplementedException();
 

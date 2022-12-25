@@ -64,7 +64,7 @@ namespace WebDriverTask.Tests
             LoginPage.ToggleLanguageChooserDropDown();
             LoginPage.ChangeLanguage(expectedLanguage);
             string actualLanguage = LoginPage.GetValueOfCurrentSelectedLanguage();
-            Assert.IsTrue(actualLanguage.Contains(expectedLanguage, StringComparison.CurrentCultureIgnoreCase));
+            Assert.That(actualLanguage.Contains(expectedLanguage, StringComparison.CurrentCultureIgnoreCase), Is.True);
         }
 
         [Test, Order(3)]
@@ -93,7 +93,6 @@ namespace WebDriverTask.Tests
             MessageDialog.To(someMailAddress);
             MessageDialog.Subject(someSubject);
             MessageDialog.Body(someBody);
-            MessageDialog.Send();
             MessageDialog.CloseAllMailDialogs();
             Assert.IsFalse(MessageDialog.isMailDialogDisplayed());
 
@@ -106,23 +105,23 @@ namespace WebDriverTask.Tests
         public void F_VerifyCreatedMessageExistsInDrafts()
         {
             MainPage.GoToDrafts();
-            Assert.IsNotNull(Drafts.GetMailFromTable(testData.GetVariable<string>("subject")));
+            Assert.IsNotNull(DraftsFolder.GetMailFromTable(testData.GetVariable<string>("subject")));
         }
 
         [Test, Order(7)]
         public void G_SendMailFromDraftAndVerifyMailDissapearedFromDraftFolder()
         {
             MessageDialog.CloseAllMailDialogs();
-            Drafts.GetMailFromTable(testData.GetVariable<string>("subject"))!.Click();
+            DraftsFolder.GetMailFromTable(testData.GetVariable<string>("subject"))!.Click();
             MessageDialogElements.SendButton.Click();
-            Assert.IsNull(Drafts.GetMailFromTable(testData.GetVariable<string>("subject")));
+            Assert.IsNull(DraftsFolder.GetMailFromTable(testData.GetVariable<string>("subject")));
         }
 
         [Test, Order(8)]
         public void H_GoToSentMailsFolderAndVerifyThatMailIsThere()
         {
             MainPage.GoToSent();
-            Assert.IsNotNull(Sent.GetMailFromTable(testData.GetVariable<string>("subject")));
+            Assert.IsNotNull(SentFolder.GetMailFromTable(testData.GetVariable<string>("subject")));
         }
 
         [Test, Order(9)]
