@@ -1,0 +1,14 @@
+﻿MODULE 7: DESIGN PATTERNS FOR PAGES WITH .NET
+HOME TASK
+1.	Convert your project from previous hometask (Selenium WebDriver Basics, hometask #1) to match Page Object / Page Factory patterns. For writing tests and implementation, use WebDriver API and NUnit.
+2.	Implement additional test scenarios (define with your mentor) with Page Object / Page Factory to get 3 scenarios as total.
+BONUS TASK
+•	Add mechanism (function/method) which automatically will switch PO depends on which page we are on at the current moment.
+
+ACCEPTANCE CRITERIA
+1.	Page Objects have consistent structure (decomposition of PO is right).
+2.	Test scenarios are clear, stable and good structured.
+3.	There is at least one level of inheritance between pages (Abstract Page exists).
+4.	There is no code duplication at all.
+5.	Inner implementation of PO is hidden from tests.
+6.	Naming and Code Conventions should be followed.
