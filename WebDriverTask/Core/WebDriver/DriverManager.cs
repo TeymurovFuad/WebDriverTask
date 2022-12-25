@@ -1,11 +1,12 @@
 ﻿
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using WebDriverTask.Core.BrowserConfigs;
+using WebDriverTask.Core.Browser;
+using WebDriverTask.Core.Browser.Configuration;
 
-namespace WebDriverTask.Core.WebDriverConfigs
+namespace WebDriverTask.Core.WebDriver
 {
-    public class DriverManager: DriverBuilder
+    public class DriverManager: BrowserBuilder
     {
         private static IWebDriver? driver = null;
 
@@ -13,7 +14,7 @@ namespace WebDriverTask.Core.WebDriverConfigs
 
         public IWebDriver Instance()
         {
-            driver = Driver.GetDriver();
+            driver = GetDriver();
             return driver;
         }
 
@@ -22,7 +23,7 @@ namespace WebDriverTask.Core.WebDriverConfigs
             if(driver == null)
             {
                 Build(browser);
-                driver = Driver.GetDriver();
+                driver = GetDriver();
                 driver.Manage().Timeouts().ImplicitWait.Add(TimeSpan.FromSeconds(5));
                 driver.Manage().Window.Maximize();
             }
@@ -42,7 +43,7 @@ namespace WebDriverTask.Core.WebDriverConfigs
         }
         public static void CloseDriver()
         {
-            Driver.Close();
+            Close();
         }
 
         public static void ClearAllCookies()

@@ -1,12 +1,12 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
-using WebDriverTask.Core.BrowserConfigs;
 using WebDriverTask.Core.CustomExceptions;
+using WebDriverTask.Core.WebDriver;
 
-namespace WebDriverTask.Core.WebDriverConfigs
+namespace WebDriverTask.Core.Browser.Configuration
 {
-    public abstract class DriverFactory
+    public abstract class BrowserFactory : Driver
     {
         private static BrowserType _browserType { get; set; }
 
@@ -22,9 +22,9 @@ namespace WebDriverTask.Core.WebDriverConfigs
             }
         }
 
-        protected static void CreateDriver(BrowserType browserType)
+        protected static void CreateBrowser(BrowserType browserType)
         {
-            IWebDriver? driver = null;
+            IWebDriver driver;
             _browserType = browserType;
             switch (browserType)
             {
@@ -37,7 +37,7 @@ namespace WebDriverTask.Core.WebDriverConfigs
                 default:
                     throw new BrowserTypeException($"Wrong browser was passed: {browserType.ToString()}");
             }
-            Driver.SetDriver(driver);
+            SetDriver(driver);
         }
     }
 }

@@ -1,0 +1,14 @@
+{
+  "Browsers": {
+    "Chrome": {
+      "options": [
+        {
+          "incognito": "--incognito"
+        }
+      ],
+      "settings": [
+        {}
+      ]
+    }
+  }
+}

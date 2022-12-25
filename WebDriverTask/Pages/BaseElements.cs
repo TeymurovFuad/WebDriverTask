@@ -1,6 +1,8 @@
-﻿namespace WebDriverTask.Pages
+﻿using WebDriverTask.Core.WebDriver;
+
+namespace WebDriverTask.Pages
 {
-    public abstract class BaseElements
+    public class BaseElements: Driver
     {
 
     }

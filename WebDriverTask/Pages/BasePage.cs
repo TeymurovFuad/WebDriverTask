@@ -1,11 +1,11 @@
 ﻿using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
 using System.Reflection;
-using WebDriverTask.Core.WebDriverConfigs;
+using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages
 {
-    public class BasePage: DriverManager
+    public class BasePage : DriverManager
     {
         protected BasePage() { }
 
@@ -13,13 +13,13 @@ namespace WebDriverTask.Pages
         {
             if (condition && isElementDisplayed(element))
             {
-                bool success=false;
+                bool success = false;
                 int retry = 5;
                 do
                 {
                     try
                     {
-                        DriverManager.WaitUntilElementIsInteractable(element);
+                        WaitUntilElementIsInteractable(element);
                         element.Click();
                         success = true;
                     }
@@ -40,13 +40,14 @@ namespace WebDriverTask.Pages
 
         public void WaitPageLoad(int seconds = 5)
         {
-            Driver.GetDriver().Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
+            GetDriver().Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
         }
 
-        public bool isElementDisplayed(IWebElement element)
+        public static bool isElementDisplayed(IWebElement element)
         {
             try
             {
+                WaitUntilElementDisplayed(element);
                 return element.Displayed;
             }
             catch (NoSuchElementException)
@@ -55,11 +56,11 @@ namespace WebDriverTask.Pages
             }
         }
 
-        public bool isElementDisplayed(By locator)
+        public static bool isElementDisplayed(By locator)
         {
             try
             {
-                return Driver.GetDriver().FindElements(locator).Count > 0;
+                return GetDriver().FindElements(locator).Count > 0;
             }
             catch (NoSuchElementException)
             {
@@ -67,7 +68,7 @@ namespace WebDriverTask.Pages
             }
         }
 
-        public bool isElementDisplayed(By locator, IWebElement parent)
+        public static bool isElementDisplayed(By locator, IWebElement parent)
         {
             try
             {
@@ -83,7 +84,7 @@ namespace WebDriverTask.Pages
         {
             try
             {
-                IAlert alert = Driver.GetDriver().SwitchTo().Alert();
+                IAlert alert = GetDriver().SwitchTo().Alert();
                 if (accept)
                 {
                     alert.Accept();
@@ -92,7 +93,7 @@ namespace WebDriverTask.Pages
                 {
                     alert.Dismiss();
                 }
-                Driver.GetDriver().SwitchTo().DefaultContent();
+                GetDriver().SwitchTo().DefaultContent();
             }
             catch (NoAlertPresentException e)
             {
@@ -100,7 +101,7 @@ namespace WebDriverTask.Pages
             }
         }
 
-        public string IgnoreCaseInXPath(string partOrXpathToBeIgnored, string? property="text()")
+        public string IgnoreCaseInXPath(string partOrXpathToBeIgnored, string? property = "text()")
         {
             return $"contains(translate({property}, {partOrXpathToBeIgnored.ToLower()}, {partOrXpathToBeIgnored.ToUpper()}), {partOrXpathToBeIgnored})";
         }
@@ -114,6 +115,11 @@ namespace WebDriverTask.Pages
                 locator = findsByAttribute.Using;
             }
             return locator;
+        }
+
+        public static string GetPageTitle()
+        {
+            return GetDriver().Title;
         }
     }
 }
