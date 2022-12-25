@@ -23,33 +23,6 @@ namespace WebDriverTask.Tests
             _mainPage = new MainPage();
         }
 
-        //private bool _isFailed;
-        //private const string _createAccountButtonXPath = "//span[@jsname and text()='Create account']";
-        //private const string _createPersonalUseAccountButtonXPath = "//span[@jsname and text()='For my personal use']";
-        //private const string _languageChooserDropdownId = "lang-chooser";
-        //private const string _languageFromDropDownXPath = "//div[@id='lang-chooser']/div/div/ul/li//span[@jsname]/../..";
-        //private const string _errorForExistingUsernameXPath = "//div[text()='You can use letters, numbers & periods']/../div[@aria-live='assertive' and @aria-atomic='true' ]/div[text()='That username is taken. Try another.']";
-        //private const string _nextButtonXPath = "//button//span[text()='Next']/..";
-        //private const string _phoneNumberVerificationPageHeaderXPath = "//h1/span[text()='Verifying your phone number']";
-        //private const string _emailFieldId = "identifierId";
-        //private const string _passwordFieldXPath = "//input[@type='password' and @name='Passwd']";
-        //private const string _headingTextOfLoginLogoutPageXPath = "//h1[@id='headingText']/span";
-        //private const string _buttonToComposeMail = "//div[text()='Compose']";
-        //private const string _newMessageDialogBoxXPath = "//div[@aria-label='New Message']";
-        //private const string _toXPath = "//div[@name='to']//input";
-        //private const string _subjectXPath = "//input[@name='subjectbox']";
-        //private const string _mailBodyXPath = "//div[@aria-label='Message Body']";
-        //private const string _newMailDialogBoxSendButtonXPath = "//div[@role='button' and text()='Send']";
-        //private const string _closeNewMailComposeModalXPath = "//img[@aria-label='Save & close']";
-        //private const string _draftsXPath = "//div[@data-tooltip='Drafts']//a/../..";
-        //private const string _messageInDraft_InjecableXPath = "//table/tbody/tr/td//span[contains(text(), '$var')]";
-        //private const string _sentXPath = "//div[@data-tooltip='Sent']//a";
-        //private const string _messageInSent_InjecableXPath = "//table/tbody/tr/td//div[@title='Inbox']//ancestor-or-self::td//span[contains(text(), '$var')]";
-        //private const string _mailHomePageFoldersXPath_Injectable = "//div[@data-tooltip='$folderName']";
-        //private const string _dialogBoxContainingSignOutButtonXPath_Injectable = "//a[contains(@aria-label, '($email)') and contains(@href, 'SignOut')]";
-        //private const string _iframeContainingDialogBoxForSignOutXPath = "//iframe[@name='account']";
-        //private const string _signOutButtonXPath = "//a[contains(@href, 'Logout')]/div[text()='Sign out']";
-
         [Test, Order(1)]
         public void A_OpenBrowser()
         {
@@ -133,68 +106,5 @@ namespace WebDriverTask.Tests
             DriverManager.WaitPageToLoad();
             Assert.IsTrue(LogotuPage.isLogoutPageDisplayed());
         }
-
-        #region Methods to interact with elements
-        //public string GetPageLanguage()
-        //{
-        //    ICollection<IWebElement> languages;
-        //    string language = string.Empty;
-        //    if (!_interaction.isElementDisplayed(By.Id(_languageChooserDropdownId)))
-        //    {
-        //        DriverManager.WaitUntilElementDisplayed(By.Id(_languageChooserDropdownId));
-        //    }
-        //    _interaction.ClickElement(By.Id(_languageChooserDropdownId), driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "false");
-        //    languages = driver!.FindElements(By.XPath(_languageFromDropDownXPath));
-        //    foreach (IWebElement lan in languages)
-        //    {
-        //        if (lan.GetAttribute("aria-selected") == "true")
-        //        {
-        //            var x = lan.GetAttribute("outerHTML");
-        //            language = lan.FindElement(By.XPath("//span/span[@jsname]")).Text;
-        //            break;
-        //        }
-        //    }
-        //    _interaction.ClickElement(By.Id(_languageChooserDropdownId), driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "true");
-        //    return language;
-        //}
-
-        //public void ChangePageLanguage(string language)
-        //{
-        //    ICollection<IWebElement> languages;
-        //    if (!_interaction.isElementDisplayed(By.Id(_languageChooserDropdownId)))
-        //    {
-        //        DriverManager.WaitUntilElementDisplayed(By.Id(_languageChooserDropdownId));
-        //    }
-        //    languages = driver!.FindElements(By.XPath(_languageFromDropDownXPath));
-        //    _interaction.ClickElement(By.Id(_languageChooserDropdownId), driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "false");
-        //    foreach (IWebElement lan in languages)
-        //    {
-        //        if (lan.Text.ToLower().Contains(language))
-        //        {
-        //            lan.Click();
-        //            _interaction.WaitPageLoad();
-        //            break;
-        //        }
-        //    }
-        //    _interaction.ClickElement(By.Id(_languageChooserDropdownId), driver!.FindElement(By.Id(_languageChooserDropdownId)).FindElement(By.XPath("./div/div")).GetAttribute("aria-expanded") == "true");
-        //}
-        #endregion
-
-
-        //[TearDown]
-        //public void TearDown()
-        //{
-        //    if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
-        //    {
-        //        _isFailed = true;
-        //    }
-        //}
-
-        //[OneTimeTearDown]
-        //public void ClassClean()
-        //{
-        //    driver!.Close();
-        //    driver.Quit();
-        //}
     }
 }
