@@ -5,9 +5,11 @@ namespace WebDriverTask.Core.WebDriver
 {
     public abstract class Driver
     {
-        private static IWebDriver? _webDriver = null;
+        private IWebDriver _webDriver;
 
-        public static IWebDriver GetDriver()
+        protected Driver() { }
+
+        public IWebDriver GetDriver()
         {
             try
             {
@@ -15,50 +17,49 @@ namespace WebDriverTask.Core.WebDriver
             }
             catch (NullReferenceException nre)
             {
-                throw new DriverException("Webdriver is not set", nre);
-            }
-            catch(Exception e)
-            {
-                throw new DriverException("Not able to return webdriver" ,e);
+                throw new DriverException("Webdriver is not set yet", nre);
             }
         }
 
-        public static bool isBuilt()
+        public Driver Instance()
+        {
+            return this;
+        }
+
+        protected void SetDriver(IWebDriver driver)
+        {
+            if(_webDriver!=null)
+                _webDriver = driver;
+        }
+
+        public bool isBuilt()
         {
             return _webDriver != null;
         }
 
-        protected static void SetDriver(IWebDriver driver)
-        {
-            _webDriver = driver;
-        }
-
-        public static string GetUrl()
+        public string GetUrl()
         {
             return _webDriver!.Url;
         }
 
-        public static void SwitchToFrame(IWebElement frame)
+        public void SwitchToFrame(IWebElement frame)
         {
             _webDriver.SwitchTo().Frame(frame);
         }
 
-        public static void SwitchToMain()
+        public void SwitchToMain()
         {
             _webDriver.SwitchTo().DefaultContent();
         }
 
-        public static void GoToUrl(string url)
+        public void GoToUrl(string url)
         {
             _webDriver.Navigate().GoToUrl(url);
         }
 
-        public static void Close()
+        public void Close()
         {
-            if (_webDriver != null)
-            {
-                _webDriver.Close();
-            }
+            _webDriver?.Close();
         }
     }
 }
