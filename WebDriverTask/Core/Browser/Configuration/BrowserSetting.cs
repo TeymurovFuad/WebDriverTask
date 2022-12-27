@@ -5,16 +5,21 @@ using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Core.Browser.Configuration
 {
-    public abstract class BrowserSetting
+    public sealed class BrowserSetting
     {
-        private static DriverOptions DriverOptions { get; set; }
-        protected BrowserSetting() { }
-
-        public static void AddArguments(params string[] arguments)
+        private readonly Driver _driver;
+        private readonly BrowserType _browserType;
+        public BrowserSetting(Driver driver, BrowserType browserType)
         {
-            if (Driver.isBuilt() && arguments != null && arguments.Length > 0)
+            _driver = driver;
+            _browserType = browserType;
+        }
+
+        public void AddArguments(params string[] arguments)
+        {
+            if (arguments!.Length > 0)
                 {
-                switch (BrowserFactory.GetBrowserType())
+                switch (_browserType)
                 {
                     case BrowserType.Chrome:
                         ChromeOptions chromeOptions = new ChromeOptions();
@@ -31,17 +36,16 @@ namespace WebDriverTask.Core.Browser.Configuration
                         }
                         break;
                     default:
-                        throw new NotImplementedException();
+                        throw new NotImplementedException($"There is no implementation for a given browser type ({_browserType})");
                 }
             }
         }
 
-        public static void AddPreferences(Dictionary<string, object> preferences)
+        public void AddPreferences(Dictionary<string, object> preferences)
         {
-            if (Driver.isBuilt() && preferences != null && preferences.Count > 0)
+            if (preferences!.Count > 0)
             {
-
-                switch (BrowserFactory.GetBrowserType())
+                switch (_browserType)
                 {
                     case BrowserType.Chrome:
                         ChromeOptions chromeOptions = new ChromeOptions();
@@ -58,7 +62,7 @@ namespace WebDriverTask.Core.Browser.Configuration
                         }
                         break;
                     default:
-                        throw new NotImplementedException();
+                        throw new NotImplementedException($"There is no implementation for a given browser type ({_browserType})");
                 }
             }
         }

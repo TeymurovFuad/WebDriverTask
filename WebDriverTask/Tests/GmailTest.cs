@@ -27,7 +27,7 @@ namespace WebDriverTask.Tests
         public void OpenBrowser()
         {
             DriverManager.WaitPageToLoad();
-            Assert.IsTrue(driver.Title.Contains("gmail", StringComparison.CurrentCultureIgnoreCase));
+            Assert.IsTrue(webDriver.Title.Contains("gmail", StringComparison.CurrentCultureIgnoreCase));
         }
 
         [Test, Order(2)]

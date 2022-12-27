@@ -4,6 +4,6 @@ namespace WebDriverTask.Pages
 {
     public class BaseElements: Driver
     {
-
+        public BaseElements(): base() { }
     }
 }

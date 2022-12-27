@@ -8,9 +8,11 @@ namespace WebDriverTask.Core.Browser.Configuration
 {
     public abstract class BrowserFactory : Driver
     {
-        private static BrowserType _browserType { get; set; }
+        protected BrowserFactory() : base() { }
 
-        public static BrowserType GetBrowserType()
+        private BrowserType _browserType { get; set; }
+
+        public BrowserType GetBrowserType()
         {
             try
             {
@@ -18,11 +20,11 @@ namespace WebDriverTask.Core.Browser.Configuration
             }
             catch (Exception)
             {
-                throw new BrowserTypeException("Browser type is not set. It is expected to be set when create driver");
+                throw new BrowserTypeException("Browser type is not set yet. It is expected to be set when creating webDriver");
             }
         }
 
-        protected static void CreateBrowser(BrowserType browserType)
+        protected void CreateBrowser(BrowserType browserType)
         {
             IWebDriver driver;
             _browserType = browserType;

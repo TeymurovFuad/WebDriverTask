@@ -9,22 +9,19 @@ namespace WebDriverTask.Tests.TestConfig
 {
     public abstract class Hooks
     {
-        private BrowserType _browserType;
-        private string? _url;
-        protected IWebDriver driver;
-        protected TestData testData;
-        protected DriverManager driverManager;
-        protected BrowserSetting browserSetting;
+        private string? _url { get; set; }
         private bool _isFailed;
-        public bool SropOnFail { private get; set; } = true;
 
-        protected Hooks(BrowserType browserType)
-        {
-            _browserType = browserType;
-        }
+        private BrowserType _browserType { get; set; }
+        protected IWebDriver webDriver { get; set; }
+        protected TestData testData { get; set; }
+        protected DriverManager driverManager { get; set; }
+        public bool StopOnFail { private get; set; }
 
-        protected Hooks(BrowserType browserType, string url)
+        protected Hooks(BrowserType browserType, string? url=null)
         {
+            testData = new TestData();
+            driverManager = new DriverManager();
             _browserType = browserType;
             _url = url;
         }
@@ -32,20 +29,16 @@ namespace WebDriverTask.Tests.TestConfig
         [OneTimeSetUp]
         public void ClassSetUp()
         {
-            driverManager = new DriverManager();
-            driver = driverManager.BuildDriver(_browserType).Instance();
-            driverManager.AddArgumentsToDriver();
-            if(_url != null && _url != string.Empty)
-            {
-                Driver.GoToUrl(_url);
-            }
-            testData = new TestData();
+            driverManager.BuildDriver(_browserType);
+
+            if(!string.IsNullOrEmpty(_url))
+                driverManager.GoToUrl(_url);
         }
 
         [SetUp]
         public void TestSetup()
         {
-            if (SropOnFail && _isFailed)
+            if (StopOnFail && _isFailed)
             {
                 Assert.Inconclusive("One of the tests is failed. Given that all tests are chained, so failure of one may result in failure of all, thereby flow stopped.");
             }
@@ -54,16 +47,13 @@ namespace WebDriverTask.Tests.TestConfig
         [TearDown]
         public void TestTearDown()
         {
-            if (SropOnFail && TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
-            {
-                _isFailed = true;
-            }
+            _isFailed = TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed;
         }
 
         [OneTimeTearDown]
         public void ClassTearDown()
         {
-            DriverManager.QuitDriver();
+            driverManager.QuitDriver();
         }
     }
 }
