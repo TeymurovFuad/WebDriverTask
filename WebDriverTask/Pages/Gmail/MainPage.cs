@@ -33,10 +33,5 @@ namespace WebDriverTask.Pages.Gmail
         {
             SentFolder.Open(); 
         }
-
-        public static void GoToInbox()
-        {
-            InboxFolder.Open();
-        }
     }
 }
