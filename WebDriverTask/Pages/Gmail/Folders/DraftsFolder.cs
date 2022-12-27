@@ -1,20 +1,20 @@
 ﻿using OpenQA.Selenium;
 using WebDriverTask.Core.Helpers;
-using WebDriverTask.Core.WebDriver;
+using WebDriverTask.Pages.Gmail.Dialogs.Message;
 
 namespace WebDriverTask.Pages.Gmail.Folders
 {
-    public class DraftsFolder : MainPage, IMailFolder
+    public class DraftsFolder : MessageDialog, IMailFolder
     {
-        public static string PathToDraftMails { get; private set; } = "//span[text()='Draft']/ancestor::tr";
-        public static string FolderSpecificIdendifierIfNoMailExists { get; private set; } = "td[text()=\"You don't have any saved drafts.\"]";
-        private static string _pathToSpecificDraftMails => "//span[text()='{0}']";
-        public static List<IWebElement> DraftMails { get; private set; }
-        public static string FolderName { get; private set; }
+        public string PathToDraftMails { get; private set; } = "//span[text()='Draft']/ancestor::tr";
+        public string FolderSpecificIdendifierIfNoMailExists { get; private set; } = "td[text()=\"You don't have any saved drafts.\"]";
+        private string _pathToSpecificDraftMails => "//span[text()='{0}']";
+        public List<IWebElement> DraftMails { get; private set; }
+        public string FolderName { get; private set; }
 
-        public static void Open()
+        public void Open()
         {
-            IWebElement draftsFolder = MainPageElements.DraftsFolder;
+            IWebElement draftsFolder = mainPageElements.DraftsFolder;
             SetFolderName(draftsFolder);
             try
             {
@@ -31,13 +31,13 @@ namespace WebDriverTask.Pages.Gmail.Folders
             }
         }
 
-        public static List<IWebElement> GetMails()
+        public List<IWebElement> GetMails()
         {
             DraftMails = GetDriver().FindElements(By.XPath(PathToDraftMails)).ToList();
             return DraftMails;
         }
 
-        public static IWebElement? GetMailFromTable(string bySubjectOrBody)
+        public IWebElement? GetMailFromTable(string bySubjectOrBody)
         {
             GetMails();
             string path = StringHelper.FormatString(_pathToSpecificDraftMails, bySubjectOrBody)!;
@@ -51,17 +51,17 @@ namespace WebDriverTask.Pages.Gmail.Folders
             return null;
         }
 
-        public static bool isMailBoxEmpty()
+        public bool isMailBoxEmpty()
         {
             return isElementDisplayed(By.XPath(FolderSpecificIdendifierIfNoMailExists));
         }
 
-        private static void SetFolderName(IWebElement element)
+        private void SetFolderName(IWebElement element)
         {
             FolderName = element.FindElement(By.XPath("//a")).Text;
         }
 
-        public static bool VerifyPageOpened()
+        public bool VerifyPageOpened()
         {
             return GetPageTitle().Contains(FolderName, StringComparison.OrdinalIgnoreCase);
         }

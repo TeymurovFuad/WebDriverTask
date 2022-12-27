@@ -2,7 +2,7 @@
 
 namespace WebDriverTask.Pages
 {
-    public class BaseElements: Driver
+    public class BaseElements: DriverManager
     {
         public BaseElements(): base() { }
     }

@@ -1,29 +1,27 @@
 ﻿using OpenQA.Selenium;
-using SeleniumExtras.PageObjects;
 using WebDriverTask.Core.Helpers;
-using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail
 {
     public class MainPageElements: BaseElements
     {
-        public const string FoldersButtonContainerXPath = "//div[h2[text()='Labels'] and //a[text()='Inbox']][1]";
+        public readonly string FoldersButtonContainerXPath = "//div[h2[text()='Labels'] and //a[text()='Inbox']][1]";
         public IWebElement FoldersButtonContainer => GetDriver().FindElements(By.XPath(FoldersButtonContainerXPath)).First();
 
-        public const string ComposeButtonXPath = "//div[text()='Compose']";
+        public readonly string ComposeButtonXPath = "//div[text()='Compose']";
         public IWebElement ComposeButton => GetDriver().FindElements(By.XPath(ComposeButtonXPath)).First();
 
-        public const string InboxFolderXPath = "//div[@data-tooltip='Inbox']";
+        public readonly string InboxFolderXPath = "//div[@data-tooltip='Inbox']";
         public IWebElement InboxFolder => GetDriver().FindElements(By.XPath(InboxFolderXPath)).First();
 
-        public const string DraftsFolderXPath = "//div[@data-tooltip='Drafts']";
+        public readonly string DraftsFolderXPath = "//div[@data-tooltip='Drafts']";
         public IWebElement DraftsFolder => GetDriver().FindElements(By.XPath(DraftsFolderXPath)).First();
 
-        public const string SentFolderXPath = "//div[@data-tooltip='Sent']";
+        public readonly string SentFolderXPath = "//div[@data-tooltip='Sent']";
         public IWebElement SentFolder => GetDriver().FindElements(By.XPath(SentFolderXPath)).First();
 
         private string _pathToMailContainingTable = "//table[tbody[position()=1]//{0}]";
-        private const string _pathToSpecificMail = "/span[text()='{0}']//ancestor::tr";
+        private readonly string _pathToSpecificMail = "/span[text()='{0}']//ancestor::tr";
 
         public IWebElement GetTableContainingMails(string folderSpecificIdentifier)
         {
@@ -45,7 +43,7 @@ namespace WebDriverTask.Pages.Gmail
         {
             string pathToMail = PathToSpecificMail(subjectOrBody);
             IWebElement mail = GetDriver().FindElement(By.XPath(pathToMail));
-            DriverManager.WaitUntilElementIsInteractable(mail);
+            WaitUntilElementIsInteractable(mail);
             return mail;
         }
     }
