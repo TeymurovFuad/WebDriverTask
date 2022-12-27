@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using SeleniumExtras.PageObjects;
 using System.Reflection;
 using WebDriverTask.Core.WebDriver;
 
@@ -43,7 +42,7 @@ namespace WebDriverTask.Pages
             GetDriver().Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
         }
 
-        public static bool isElementDisplayed(IWebElement element)
+        public bool isElementDisplayed(IWebElement element)
         {
             try
             {
@@ -56,7 +55,7 @@ namespace WebDriverTask.Pages
             }
         }
 
-        public static bool isElementDisplayed(By locator)
+        public bool isElementDisplayed(By locator)
         {
             try
             {
@@ -68,7 +67,7 @@ namespace WebDriverTask.Pages
             }
         }
 
-        public static bool isElementDisplayed(By locator, IWebElement parent)
+        public bool isElementDisplayed(By locator, IWebElement parent)
         {
             try
             {
@@ -106,18 +105,7 @@ namespace WebDriverTask.Pages
             return $"contains(translate({property}, {partOrXpathToBeIgnored.ToLower()}, {partOrXpathToBeIgnored.ToUpper()}), {partOrXpathToBeIgnored})";
         }
 
-        public string GetLocatorFromFindsByAttribute<T>(IWebElement element) where T : class
-        {
-            string locator = string.Empty;
-            MemberInfo memberInfo = typeof(T).GetMember(element.GetType().Name)[0];
-            if (memberInfo.GetCustomAttribute(typeof(FindsByAttribute)) is FindsByAttribute findsByAttribute)
-            {
-                locator = findsByAttribute.Using;
-            }
-            return locator;
-        }
-
-        public static string GetPageTitle()
+        public string GetPageTitle()
         {
             return GetDriver().Title;
         }

@@ -1,8 +1,4 @@
-﻿using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
-using WebDriverTask.Core.CustomExceptions;
-
-namespace WebDriverTask.Core.Browser.Configuration
+﻿namespace WebDriverTask.Core.Browser.Configuration
 {
     public abstract class BrowserBuilder : BrowserFactory
     {

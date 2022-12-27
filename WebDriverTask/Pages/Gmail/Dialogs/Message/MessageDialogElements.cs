@@ -1,11 +1,9 @@
 ﻿using OpenQA.Selenium;
-using SeleniumExtras.PageObjects;
 using WebDriverTask.Core.Helpers;
-using WebDriverTask.Core.WebDriver;
 
-namespace WebDriverTask.Pages.Gmail.MailDialog
+namespace WebDriverTask.Pages.Gmail.Dialogs.Message
 {
-    public class MessageDialogElements: BaseElements
+    public class MessageDialogElements : BaseElements
     {
         private const string _newMailDialogHeader = "New Message";
         private const string _mailDialogXPath = "//h2[div[text()='Compose:'] and div/span[text()='{0}']]";
@@ -40,7 +38,7 @@ namespace WebDriverTask.Pages.Gmail.MailDialog
 
         public string PathToMailDialog(string mailSubject)
         {
-            return StringHelper.FormatString(_mailDialogXPath, mailSubject??_newMailDialogHeader)!;
+            return StringHelper.FormatString(_mailDialogXPath, mailSubject ?? _newMailDialogHeader)!;
         }
     }
 }

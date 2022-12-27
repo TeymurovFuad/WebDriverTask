@@ -1,11 +1,16 @@
 ﻿namespace WebDriverTask.Pages.Gmail.Logout
 {
-    public class LogotuPage: MainPage
+    public class LogoutPage: MainPage
     {
-        public static bool isLogoutPageDisplayed()
+        readonly LogoutPageElements _logoutPageElements;
+        public LogoutPage()
         {
-            WaitUntilElementDisplayed(LogoutPageElements.ChooseAnAccout);
-            return isElementDisplayed(LogoutPageElements.ChooseAnAccout);
+            _logoutPageElements = new LogoutPageElements();
+        }
+        public bool isLogoutPageDisplayed()
+        {
+            WaitUntilElementDisplayed(_logoutPageElements.ChooseAnAccout);
+            return isElementDisplayed(_logoutPageElements.ChooseAnAccout);
         }
     }
 }

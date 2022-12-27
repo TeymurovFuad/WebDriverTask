@@ -1,6 +1,4 @@
 ﻿using OpenQA.Selenium;
-using SeleniumExtras.PageObjects;
-using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail.Logout
 {

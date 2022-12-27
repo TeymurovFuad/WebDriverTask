@@ -9,7 +9,6 @@ namespace WebDriverTask.Core.WebDriver
 {
     public class DriverManager : BrowserBuilder
     {
-        private IWebDriver? _driver { get; set; }
         private BrowserSetting _browserSetting { get; set; }
 
         public DriverManager() : base() { }
@@ -17,9 +16,9 @@ namespace WebDriverTask.Core.WebDriver
         public void BuildDriver(BrowserType browserType)
         {
             Build(browserType);
-            _driver = GetDriver();
-            _driver?.Manage().Timeouts().ImplicitWait.Add(TimeSpan.FromSeconds(5));
-            _driver?.Manage().Window.Maximize();
+            GetDriver();
+            GetDriver()?.Manage().Timeouts().ImplicitWait.Add(TimeSpan.FromSeconds(5));
+            GetDriver()?.Manage().Window.Maximize();
         }
 
         public void AddArgumentsToBrowser([DisallowNull] params string[] arguments)
@@ -29,9 +28,8 @@ namespace WebDriverTask.Core.WebDriver
 
         public void QuitDriver()
         {
-            _driver?.Quit();
-            _driver?.Dispose();
-            _driver = null;
+            GetDriver()?.Quit();
+            GetDriver()?.Dispose();
         }
 
         public void CloseDriver()
@@ -41,31 +39,31 @@ namespace WebDriverTask.Core.WebDriver
 
         public void ClearAllCookies()
         {
-            if (_driver != null)
-                _driver!.Manage().Cookies.DeleteAllCookies();
+            if (GetDriver() != null)
+                GetDriver()!.Manage().Cookies.DeleteAllCookies();
         }
 
         public void WaitPageToLoad(int secondsToWait = 5)
         {
-            if (secondsToWait > 0 && _driver != null)
-                _driver!.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(secondsToWait);
+            if (secondsToWait > 0 && GetDriver() != null)
+                GetDriver()!.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(secondsToWait);
         }
 
         public bool WaitUntilElementDisplayed(IWebElement element, int waitTimeInSeconds = 5)
         {
-            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(waitTimeInSeconds));
+            WebDriverWait wait = new WebDriverWait(GetDriver(), TimeSpan.FromSeconds(waitTimeInSeconds));
             return wait.Until(c => element.Displayed);
         }
 
         public bool WaintUntilUrlChanged(string previousUrl, int waitTimeInSeconds = 5)
         {
-            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(waitTimeInSeconds));
+            WebDriverWait wait = new WebDriverWait(GetDriver(), TimeSpan.FromSeconds(waitTimeInSeconds));
             return wait.Until(c => c.Url != previousUrl);
         }
 
         public bool WaitUntilElementIsInteractable(IWebElement element, int waitTimeInSeconds = 5)
         {
-            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(waitTimeInSeconds));
+            WebDriverWait wait = new WebDriverWait(GetDriver(), TimeSpan.FromSeconds(waitTimeInSeconds));
             return wait.Until(c => element.Displayed && element.Enabled);
         }
     }
