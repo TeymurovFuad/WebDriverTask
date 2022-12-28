@@ -16,13 +16,14 @@ namespace WebDriverTask.Tests
 
         public GmailTest() : base(browserType: BrowserType.Chrome, url: _url)
         {
-            _mainPage = new MainPage();
+            _mainPage = new MainPage(webDriver);
+            StopOnFail= true;
         }
 
         [Test, Order(1)]
         public void OpenBrowser()
         {
-            driverManager.GetDriver().WaitPageToLoad();
+            webDriver.WaitPageToLoad();
             Assert.IsTrue(webDriver.Title.Contains("gmail", StringComparison.CurrentCultureIgnoreCase));
         }
 
@@ -101,7 +102,7 @@ namespace WebDriverTask.Tests
             _mainPage.accoutDialog.OpenAccountDialog(testData.GetVariable<string>("email"));
             _mainPage.accoutDialog.SwitchToAccountFrame();
             _mainPage.accoutDialog.ClickSignoutButton();
-            driverManager.GetDriver().WaitPageToLoad();
+            webDriver.WaitPageToLoad();
             Assert.IsTrue(_mainPage.logoutPage.isLogoutPageDisplayed());
         }
     }

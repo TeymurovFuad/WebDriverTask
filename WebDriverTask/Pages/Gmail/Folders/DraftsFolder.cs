@@ -5,7 +5,7 @@ using WebDriverTask.Pages.Gmail.Dialogs.Message;
 
 namespace WebDriverTask.Pages.Gmail.Folders
 {
-    public class DraftsFolder : MessageDialog, IMailFolder
+    public class DraftsFolder : MessageDialog
     {
         public string PathToDraftMails { get; private set; } = "//span[text()='Draft']/ancestor::tr";
         public string FolderSpecificIdendifierIfNoMailExists { get; private set; } = "td[text()=\"You don't have any saved drafts.\"]";
@@ -15,7 +15,7 @@ namespace WebDriverTask.Pages.Gmail.Folders
 
         public List<IWebElement> GetMails()
         {
-            DraftMails = GetDriver().FindElements(By.XPath(PathToDraftMails)).ToList();
+            DraftMails = DriverInstance().FindElements(By.XPath(PathToDraftMails)).ToList();
             return DraftMails;
         }
 
@@ -35,7 +35,7 @@ namespace WebDriverTask.Pages.Gmail.Folders
 
         public bool isMailBoxEmpty()
         {
-            return GetDriver().isElementDisplayed(By.XPath(FolderSpecificIdendifierIfNoMailExists));
+            return DriverInstance().isElementDisplayed(By.XPath(FolderSpecificIdendifierIfNoMailExists));
         }
 
         private void SetFolderName(IWebElement element)
@@ -45,7 +45,7 @@ namespace WebDriverTask.Pages.Gmail.Folders
 
         public bool VerifyPageOpened()
         {
-            return GetDriver().Title.Contains(FolderName, StringComparison.OrdinalIgnoreCase);
+            return DriverInstance().Title.Contains(FolderName, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

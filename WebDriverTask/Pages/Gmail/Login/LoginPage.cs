@@ -1,9 +1,10 @@
 ﻿using OpenQA.Selenium;
 using WebDriverTask.Core.Extensions;
+using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail.Login
 {
-    public class LoginPage: MainPage
+    public class LoginPage: BasePage
     {
         readonly LoginPageElements _loginPageElements;
         public LoginPage()
@@ -14,7 +15,7 @@ namespace WebDriverTask.Pages.Gmail.Login
         public void SkipHelpToWorkBetterPage()
         {
             //Temporary workaround
-            GetDriver().WaitUntilElementIsInteractable(_loginPageElements.HelpWorkBetterText);
+            DriverInstance().WaitUntilElementIsInteractable(_loginPageElements.HelpWorkBetterText);
             _loginPageElements.NotNowButtonOnHelpWorkBetterPage.Click();
         }
 
@@ -27,7 +28,7 @@ namespace WebDriverTask.Pages.Gmail.Login
 
         public void ToggleLanguageChooserDropDown()
         {
-            GetDriver().WaitUntilElementIsInteractable(_loginPageElements.DropDownToChooseLanguage);
+            DriverInstance().WaitUntilElementIsInteractable(_loginPageElements.DropDownToChooseLanguage);
             _loginPageElements.DropDownToChooseLanguage.Click();
         }
 
@@ -59,20 +60,20 @@ namespace WebDriverTask.Pages.Gmail.Login
 
         public void FillEmail(string email)
         {
-            GetDriver().WaitUntilElementIsInteractable(_loginPageElements.EmailField);
+            DriverInstance().WaitUntilElementIsInteractable(_loginPageElements.EmailField);
             _loginPageElements.EmailField.SendKeys(email);
         }
 
         public void FillPassword(string password)
         {
-            GetDriver().WaitUntilElementIsInteractable(_loginPageElements.PasswordField);
+            DriverInstance().WaitUntilElementIsInteractable(_loginPageElements.PasswordField);
             _loginPageElements.PasswordField.SendKeys(password);
         }
 
         public void ClickNext()
         {
             _loginPageElements.NextButton.Click();
-            GetDriver().WaitPageToLoad();
+            DriverInstance().WaitPageToLoad();
         }
     }
 }

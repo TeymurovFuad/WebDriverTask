@@ -2,6 +2,7 @@
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using WebDriverTask.Core.Browser;
+using WebDriverTask.Core.Extensions;
 using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Tests.TestConfig
@@ -21,6 +22,7 @@ namespace WebDriverTask.Tests.TestConfig
         {
             testData = new TestData();
             driverManager = new DriverManager();
+            webDriver = driverManager.BuildDriver(browserType).GetDriverInstance();
             _browserType = browserType;
             _url = url;
         }
@@ -28,10 +30,8 @@ namespace WebDriverTask.Tests.TestConfig
         [OneTimeSetUp]
         public void ClassSetUp()
         {
-            driverManager.BuildDriver(_browserType);
-
-            if(!string.IsNullOrEmpty(_url))
-                driverManager.GoToUrl(_url);
+            if (!string.IsNullOrEmpty(_url))
+                driverManager.GetDriverInstance().GoToUrl(_url);
         }
 
         [SetUp]

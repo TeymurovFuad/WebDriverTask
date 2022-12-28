@@ -5,9 +5,20 @@ using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages
 {
-    public class BasePage : DriverManager
+    public abstract class BasePage
     {
-        protected BasePage() { }
+        private IWebDriver webDriver;
+        private DriverManager _driverManager;
+
+        protected BasePage()
+        {
+            _driverManager = new DriverManager();
+        }
+
+        protected IWebDriver DriverInstance()
+        {
+            return _driverManager.GetDriverInstance();
+        }
 
         public void ClickElement(IWebElement element, bool condition = true)
         {
@@ -19,7 +30,7 @@ namespace WebDriverTask.Pages
                 {
                     try
                     {
-                        GetDriver().WaitUntilElementIsInteractable(element);
+                        webDriver.WaitUntilElementIsInteractable(element);
                         element.Click();
                         success = true;
                     }
@@ -40,14 +51,14 @@ namespace WebDriverTask.Pages
 
         public void WaitPageLoad(int seconds = 5)
         {
-            GetDriver().Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
+            webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
         }
 
         public void HandleAlert(bool accept)
         {
             try
             {
-                IAlert alert = GetDriver().SwitchTo().Alert();
+                IAlert alert = webDriver.SwitchTo().Alert();
                 if (accept)
                 {
                     alert.Accept();
@@ -56,7 +67,7 @@ namespace WebDriverTask.Pages
                 {
                     alert.Dismiss();
                 }
-                GetDriver().SwitchTo().DefaultContent();
+                webDriver.SwitchTo().DefaultContent();
             }
             catch (NoAlertPresentException e)
             {
@@ -71,7 +82,7 @@ namespace WebDriverTask.Pages
 
         public string GetPageTitle()
         {
-            return GetDriver().Title;
+            return webDriver.Title;
         }
     }
 }

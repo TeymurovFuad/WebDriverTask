@@ -1,9 +1,10 @@
 ﻿using OpenQA.Selenium;
 using WebDriverTask.Core.Extensions;
+using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail.Dialogs.Account
 {
-    public class AccoutDialog : MainPage
+    public class AccoutDialog : BasePage
     {
         readonly AccountDialogElements _accountDialogElements;
         public AccoutDialog()
@@ -22,7 +23,7 @@ namespace WebDriverTask.Pages.Gmail.Dialogs.Account
 
         public void SwitchToAccountFrame()
         {
-            SwitchToFrame(_accountDialogElements.AccountIFrame);
+            DriverInstance().SwitchToFrame(_accountDialogElements.AccountIFrame);
         }
 
         public void ClickSignoutButton()
