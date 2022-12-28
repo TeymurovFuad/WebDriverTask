@@ -13,6 +13,11 @@ namespace WebDriverTask.Core.WebDriver
 
         public DriverManager() : base() { }
 
+        public IWebDriver GetDriverInstance()
+        {
+            return GetDriver();
+        }
+
         public void BuildDriver(BrowserType browserType)
         {
             Build(browserType);
@@ -41,30 +46,6 @@ namespace WebDriverTask.Core.WebDriver
         {
             if (GetDriver() != null)
                 GetDriver()!.Manage().Cookies.DeleteAllCookies();
-        }
-
-        public void WaitPageToLoad(int secondsToWait = 5)
-        {
-            if (secondsToWait > 0 && GetDriver() != null)
-                GetDriver()!.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(secondsToWait);
-        }
-
-        public bool WaitUntilElementDisplayed(IWebElement element, int waitTimeInSeconds = 5)
-        {
-            WebDriverWait wait = new WebDriverWait(GetDriver(), TimeSpan.FromSeconds(waitTimeInSeconds));
-            return wait.Until(c => element.Displayed);
-        }
-
-        public bool WaintUntilUrlChanged(string previousUrl, int waitTimeInSeconds = 5)
-        {
-            WebDriverWait wait = new WebDriverWait(GetDriver(), TimeSpan.FromSeconds(waitTimeInSeconds));
-            return wait.Until(c => c.Url != previousUrl);
-        }
-
-        public bool WaitUntilElementIsInteractable(IWebElement element, int waitTimeInSeconds = 5)
-        {
-            WebDriverWait wait = new WebDriverWait(GetDriver(), TimeSpan.FromSeconds(waitTimeInSeconds));
-            return wait.Until(c => element.Displayed && element.Enabled);
         }
     }
 }
