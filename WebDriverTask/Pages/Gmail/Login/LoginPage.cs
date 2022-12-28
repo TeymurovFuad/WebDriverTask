@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using WebDriverTask.Core.Extensions;
 
 namespace WebDriverTask.Pages.Gmail.Login
 {
@@ -13,18 +14,8 @@ namespace WebDriverTask.Pages.Gmail.Login
         public void SkipHelpToWorkBetterPage()
         {
             //Temporary workaround
-            WaitUntilElementDisplayed(_loginPageElements.HelpWorkBetterText);
-            if (WaitUntilElementIsInteractable(_loginPageElements.HelpWorkBetterText))
-            {
-                try
-                {
-                    _loginPageElements.NotNowButtonOnHelpWorkBetterPage.Click();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
+            GetDriver().WaitUntilElementIsInteractable(_loginPageElements.HelpWorkBetterText);
+            _loginPageElements.NotNowButtonOnHelpWorkBetterPage.Click();
         }
 
         public bool isLanguageChooserDropDownExpanded()
@@ -36,7 +27,7 @@ namespace WebDriverTask.Pages.Gmail.Login
 
         public void ToggleLanguageChooserDropDown()
         {
-            WaitUntilElementIsInteractable(_loginPageElements.DropDownToChooseLanguage);
+            GetDriver().WaitUntilElementIsInteractable(_loginPageElements.DropDownToChooseLanguage);
             _loginPageElements.DropDownToChooseLanguage.Click();
         }
 
@@ -68,20 +59,20 @@ namespace WebDriverTask.Pages.Gmail.Login
 
         public void FillEmail(string email)
         {
-            WaitUntilElementIsInteractable(_loginPageElements.EmailField);
+            GetDriver().WaitUntilElementIsInteractable(_loginPageElements.EmailField);
             _loginPageElements.EmailField.SendKeys(email);
         }
 
         public void FillPassword(string password)
         {
-            WaitUntilElementIsInteractable(_loginPageElements.PasswordField);
+            GetDriver().WaitUntilElementIsInteractable(_loginPageElements.PasswordField);
             _loginPageElements.PasswordField.SendKeys(password);
         }
 
         public void ClickNext()
         {
             _loginPageElements.NextButton.Click();
-            WaitPageToLoad();
+            GetDriver().WaitPageToLoad();
         }
     }
 }

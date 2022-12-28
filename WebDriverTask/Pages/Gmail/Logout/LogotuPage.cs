@@ -1,4 +1,6 @@
-﻿namespace WebDriverTask.Pages.Gmail.Logout
+﻿using WebDriverTask.Core.Extensions;
+
+namespace WebDriverTask.Pages.Gmail.Logout
 {
     public class LogoutPage: MainPage
     {
@@ -9,8 +11,7 @@
         }
         public bool isLogoutPageDisplayed()
         {
-            WaitUntilElementDisplayed(_logoutPageElements.ChooseAnAccout);
-            return isElementDisplayed(_logoutPageElements.ChooseAnAccout);
+            return _logoutPageElements.ChooseAnAccout.isElementDisplayed();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using WebDriverTask.Core.Extensions;
 
 namespace WebDriverTask.Pages.Gmail.Dialogs.Account
 {
@@ -13,7 +14,7 @@ namespace WebDriverTask.Pages.Gmail.Dialogs.Account
         public void OpenAccountDialog(string email)
         {
             IWebElement openAccountDialogButton = _accountDialogElements.OpenAccountDialogButton(email);
-            if (isElementDisplayed(openAccountDialogButton))
+            if (openAccountDialogButton.isElementDisplayed())
             {
                 openAccountDialogButton.Click();
             }
@@ -26,10 +27,10 @@ namespace WebDriverTask.Pages.Gmail.Dialogs.Account
 
         public void ClickSignoutButton()
         {
-            IWebElement singoutButton = _accountDialogElements.SingOutButton;
-            if (WaitUntilElementIsInteractable(singoutButton))
+            IWebElement signoutButton = _accountDialogElements.SingOutButton;
+            if (signoutButton.isElementDisplayed())
             {
-                singoutButton.Click();
+                signoutButton.Click();
             }
             else
             {

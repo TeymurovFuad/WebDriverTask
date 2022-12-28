@@ -36,9 +36,10 @@ namespace WebDriverTask.Pages.Gmail.Dialogs.Message
             return GetDriver().FindElements(By.XPath(pathToDialog)).ToList();
         }
 
-        public string PathToMailDialog(string mailSubject)
+        public IWebElement GetMailDialog(string? mailSubject=null)
         {
-            return StringHelper.FormatString(_mailDialogXPath, mailSubject ?? _newMailDialogHeader)!;
+            string pathToSpecifiedMessageDialog = StringHelper.FormatString(_mailDialogXPath, mailSubject ?? _newMailDialogHeader)!;
+            return GetDriver().FindElement(By.XPath(pathToSpecifiedMessageDialog));
         }
     }
 }
