@@ -1,8 +1,9 @@
 ﻿using OpenQA.Selenium;
+using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail.Dialogs.Message
 {
-    public class MessageDialog : MainPage
+    public class MessageDialog : DriverManager
     {
         public readonly MessageDialogElements messageDialogElements;
         public MessageDialog()
@@ -36,11 +37,6 @@ namespace WebDriverTask.Pages.Gmail.Dialogs.Message
             {
                 saveAndCloseButton.Click();
             }
-        }
-
-        public bool isMailDialogDisplayed(string? mailSubject = null)
-        {
-            return isElementDisplayed(By.XPath(messageDialogElements.PathToMailDialog(mailSubject)));
         }
     }
 }

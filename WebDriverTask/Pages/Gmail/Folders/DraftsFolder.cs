@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using WebDriverTask.Core.Extensions;
 using WebDriverTask.Core.Helpers;
 using WebDriverTask.Pages.Gmail.Dialogs.Message;
 
@@ -12,25 +13,6 @@ namespace WebDriverTask.Pages.Gmail.Folders
         public List<IWebElement> DraftMails { get; private set; }
         public string FolderName { get; private set; }
 
-        public void Open()
-        {
-            IWebElement draftsFolder = mainPageElements.DraftsFolder;
-            SetFolderName(draftsFolder);
-            try
-            {
-                draftsFolder.Click();
-            }
-            catch (Exception e)when(e is ElementNotVisibleException || e is ElementNotInteractableException)
-            {
-                WaitUntilElementIsInteractable(draftsFolder);
-                draftsFolder.Click();
-            }
-            catch(Exception)
-            {
-                throw;
-            }
-        }
-
         public List<IWebElement> GetMails()
         {
             DraftMails = GetDriver().FindElements(By.XPath(PathToDraftMails)).ToList();
@@ -43,7 +25,7 @@ namespace WebDriverTask.Pages.Gmail.Folders
             string path = StringHelper.FormatString(_pathToSpecificDraftMails, bySubjectOrBody)!;
             foreach (IWebElement draftMail in DraftMails)
             {
-                if(isElementDisplayed(By.XPath(path), draftMail))
+                if(draftMail.isContainsChild(By.XPath(path)))
                 {
                     return draftMail;
                 }
@@ -53,7 +35,7 @@ namespace WebDriverTask.Pages.Gmail.Folders
 
         public bool isMailBoxEmpty()
         {
-            return isElementDisplayed(By.XPath(FolderSpecificIdendifierIfNoMailExists));
+            return GetDriver().isElementDisplayed(By.XPath(FolderSpecificIdendifierIfNoMailExists));
         }
 
         private void SetFolderName(IWebElement element)
@@ -63,7 +45,7 @@ namespace WebDriverTask.Pages.Gmail.Folders
 
         public bool VerifyPageOpened()
         {
-            return GetPageTitle().Contains(FolderName, StringComparison.OrdinalIgnoreCase);
+            return GetDriver().Title.Contains(FolderName, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

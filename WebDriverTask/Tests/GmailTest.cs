@@ -3,6 +3,8 @@ using WebDriverTask.Tests.TestConfig;
 using WebDriverTask.Core.Browser;
 using WebDriverTask.Pages.Gmail;
 using WebDriverTask.Core.Helpers;
+using OpenQA.Selenium;
+using WebDriverTask.Core.Extensions;
 
 namespace WebDriverTask.Tests
 {
@@ -20,7 +22,7 @@ namespace WebDriverTask.Tests
         [Test, Order(1)]
         public void OpenBrowser()
         {
-            driverManager.WaitPageToLoad();
+            driverManager.GetDriver().WaitPageToLoad();
             Assert.IsTrue(webDriver.Title.Contains("gmail", StringComparison.CurrentCultureIgnoreCase));
         }
 
@@ -49,7 +51,8 @@ namespace WebDriverTask.Tests
         public void OpenDialogToComposeNewMail()
         {
             _mainPage.ComposeNewMail();
-            Assert.IsTrue(_mainPage.messageDialog.isMailDialogDisplayed());
+            IWebElement messageDialog = _mainPage.messageDialog.messageDialogElements.GetMailDialog();
+            Assert.IsTrue(messageDialog.isElementDisplayed());
         }
 
         [Test, Order(5)]
@@ -61,7 +64,8 @@ namespace WebDriverTask.Tests
             _mainPage.messageDialog.Subject(someSubject);
             _mainPage.messageDialog.Body(someBody);
             _mainPage.messageDialog.CloseAllMailDialogs();
-            Assert.IsFalse(_mainPage.messageDialog.isMailDialogDisplayed());
+            IWebElement messageDialog = _mainPage.messageDialog.messageDialogElements.GetMailDialog();
+            Assert.IsFalse(messageDialog.isElementDisplayed());
 
             testData.SetVariable("to", someMailAddress);
             testData.SetVariable("subject", someSubject);
@@ -97,7 +101,7 @@ namespace WebDriverTask.Tests
             _mainPage.accoutDialog.OpenAccountDialog(testData.GetVariable<string>("email"));
             _mainPage.accoutDialog.SwitchToAccountFrame();
             _mainPage.accoutDialog.ClickSignoutButton();
-            driverManager.WaitPageToLoad();
+            driverManager.GetDriver().WaitPageToLoad();
             Assert.IsTrue(_mainPage.logoutPage.isLogoutPageDisplayed());
         }
     }

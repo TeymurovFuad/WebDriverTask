@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using WebDriverTask.Core.Extensions;
 using WebDriverTask.Pages.Gmail.Dialogs.Account;
 using WebDriverTask.Pages.Gmail.Dialogs.Message;
 using WebDriverTask.Pages.Gmail.Folders;
@@ -41,17 +42,17 @@ namespace WebDriverTask.Pages.Gmail
 
         protected bool isMailboxEmpty(By locator)
         {
-            return isElementDisplayed(locator);
+            return GetDriver().isElementDisplayed(locator);
         }
 
         public void GoToDrafts()
         {
-            draftsFolder.Open();
+            mainPageElements.DraftsFolder.Click();
         }
 
         public void GoToSent()
         {
-            sentFolder.Open(); 
+            mainPageElements.SentFolder.Click();
         }
     }
 }

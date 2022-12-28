@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using WebDriverTask.Core.Extensions;
 using WebDriverTask.Core.Helpers;
 
 namespace WebDriverTask.Pages.Gmail
@@ -43,7 +44,7 @@ namespace WebDriverTask.Pages.Gmail
         {
             string pathToMail = PathToSpecificMail(subjectOrBody);
             IWebElement mail = GetDriver().FindElement(By.XPath(pathToMail));
-            WaitUntilElementIsInteractable(mail);
+            GetDriver().WaitUntilElementIsInteractable(mail);
             return mail;
         }
     }
