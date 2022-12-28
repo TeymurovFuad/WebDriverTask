@@ -9,6 +9,7 @@ namespace WebDriverTask.Core.WebDriver
 {
     public class DriverManager : BrowserBuilder
     {
+        IWebDriver webDriver { get; set; }
         private BrowserSetting _browserSetting { get; set; }
 
         public DriverManager() : base() { }
@@ -18,12 +19,13 @@ namespace WebDriverTask.Core.WebDriver
             return GetDriver();
         }
 
-        public void BuildDriver(BrowserType browserType)
+        public DriverManager BuildDriver(BrowserType browserType)
         {
             Build(browserType);
-            GetDriver();
-            GetDriver()?.Manage().Timeouts().ImplicitWait.Add(TimeSpan.FromSeconds(5));
-            GetDriver()?.Manage().Window.Maximize();
+            webDriver = GetDriver();
+            webDriver?.Manage().Timeouts().ImplicitWait.Add(TimeSpan.FromSeconds(5));
+            webDriver?.Manage().Window.Maximize();
+            return this;
         }
 
         public void AddArgumentsToBrowser([DisallowNull] params string[] arguments)
@@ -33,19 +35,19 @@ namespace WebDriverTask.Core.WebDriver
 
         public void QuitDriver()
         {
-            GetDriver()?.Quit();
-            GetDriver()?.Dispose();
+            webDriver?.Quit();
+            webDriver?.Dispose();
         }
 
         public void CloseDriver()
         {
-            Close();
+            webDriver?.Close();
         }
 
         public void ClearAllCookies()
         {
-            if (GetDriver() != null)
-                GetDriver()!.Manage().Cookies.DeleteAllCookies();
+            if (webDriver != null)
+                webDriver!.Manage().Cookies.DeleteAllCookies();
         }
     }
 }

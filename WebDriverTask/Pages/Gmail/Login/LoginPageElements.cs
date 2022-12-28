@@ -9,26 +9,27 @@ namespace WebDriverTask.Pages.Gmail.Login
         private readonly string HelpToWorkBetterText = "If you’d like, take a few moments to help Google work better for you";
 
         public readonly string EmailFieldId = "identifierId";
-        public IWebElement EmailField => GetDriver().FindElements(By.Id(EmailFieldId)).First();
+        public IWebElement EmailField => DriverInstance().FindElements(By.Id(EmailFieldId)).First();
 
         public readonly string PasswordFieldXPath = "//input[@type='password' and @name='Passwd']";
-        public IWebElement PasswordField => GetDriver().FindElements(By.XPath(PasswordFieldXPath)).First();
+        public IWebElement PasswordField => DriverInstance().FindElements(By.XPath(PasswordFieldXPath)).First();
 
         public string HelpWorkBetterTextXPath => $"//div[text()={HelpToWorkBetterText}]";
-        public IWebElement HelpWorkBetterText => GetDriver().FindElements(By.XPath(HelpWorkBetterTextXPath)).First();
+        public IWebElement HelpWorkBetterText => DriverInstance().FindElements(By.XPath(HelpWorkBetterTextXPath)).First();
 
         public readonly string NotNowButtonOnHelpWorkBetterPageXPath = $"//*[text()='Not Now']";
-        public IWebElement NotNowButtonOnHelpWorkBetterPage => GetDriver().FindElements(By.XPath(NotNowButtonOnHelpWorkBetterPageXPath)).First();
+        public IWebElement NotNowButtonOnHelpWorkBetterPage => DriverInstance().FindElements(By.XPath(NotNowButtonOnHelpWorkBetterPageXPath)).First();
 
         public readonly string DropDownToChooseLanguageId = "lang-chooser";
-        public IWebElement DropDownToChooseLanguage => GetDriver().FindElements(By.Id(DropDownToChooseLanguageId)).First();
+        dynamic x => DriverInstance().FindElement(By.Id(DropDownToChooseLanguageId));
+        public IWebElement DropDownToChooseLanguage => DriverInstance().FindElement(By.Id(DropDownToChooseLanguageId));
 
         public readonly string AllLanguagesFromDropDownXPath = "//ul[@role='listbox']/li";
-        public List<IWebElement> AllLanguagesFromDropDown => GetDriver().FindElements(By.XPath(AllLanguagesFromDropDownXPath)).ToList();
-        public IWebElement CurrentLanguage => GetDriver().FindElements(By.XPath($"{AllLanguagesFromDropDownXPath}[@aria-selected='true']")).First();
+        public List<IWebElement> AllLanguagesFromDropDown => DriverInstance().FindElements(By.XPath(AllLanguagesFromDropDownXPath)).ToList();
+        public IWebElement CurrentLanguage => DriverInstance().FindElements(By.XPath($"{AllLanguagesFromDropDownXPath}[@aria-selected='true']")).First();
 
         public readonly string NextButtonXPath = "//button[span[contains(text(), 'Next')]]";
-        public IWebElement NextButton => GetDriver().FindElements(By.XPath(NextButtonXPath)).First();
+        public IWebElement NextButton => DriverInstance().FindElements(By.XPath(NextButtonXPath)).First();
 
         private IWebElement LanguageFromDropDown { get; set; }
 

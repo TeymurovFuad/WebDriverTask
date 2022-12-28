@@ -1,8 +1,9 @@
 ﻿using WebDriverTask.Core.Extensions;
+using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail.Logout
 {
-    public class LogoutPage: MainPage
+    public class LogoutPage: BasePage
     {
         readonly LogoutPageElements _logoutPageElements;
         public LogoutPage()

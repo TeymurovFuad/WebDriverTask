@@ -3,7 +3,7 @@ using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail.Dialogs.Message
 {
-    public class MessageDialog : DriverManager
+    public class MessageDialog : BasePage
     {
         public readonly MessageDialogElements messageDialogElements;
         public MessageDialog()

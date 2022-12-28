@@ -1,9 +1,19 @@
-﻿using WebDriverTask.Core.WebDriver;
+﻿using OpenQA.Selenium;
+using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages
 {
-    public class BaseElements: DriverManager
+    public abstract class BaseElements
     {
-        public BaseElements(): base() { }
+        protected DriverManager _driverManager;
+        public BaseElements()
+        {
+            _driverManager = new DriverManager();
+        }
+
+        protected IWebDriver DriverInstance()
+        {
+            return _driverManager.GetDriverInstance();
+        }
     }
 }

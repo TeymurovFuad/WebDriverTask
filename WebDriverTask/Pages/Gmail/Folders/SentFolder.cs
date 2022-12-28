@@ -5,7 +5,7 @@ using WebDriverTask.Pages.Gmail.Dialogs.Message;
 
 namespace WebDriverTask.Pages.Gmail.Folders
 {
-    public class SentFolder : MessageDialog, IMailFolder
+    public class SentFolder : MessageDialog
     {
         public string FolderSpecificIdendifierIfNoMailExists { get; set; } = "td[text()='No sent messages! ']";
         public string FolderName { get; private set; }
@@ -14,8 +14,8 @@ namespace WebDriverTask.Pages.Gmail.Folders
 
         public List<IWebElement> GetMails()
         {
-            GetDriver().isElementDisplayed(By.XPath(pathToMails));
-            List<IWebElement> sentMails = GetDriver().FindElements(By.XPath(pathToMails)).ToList();
+            DriverInstance().isElementDisplayed(By.XPath(pathToMails));
+            List<IWebElement> sentMails = DriverInstance().FindElements(By.XPath(pathToMails)).ToList();
             return sentMails;
         }
 
@@ -35,7 +35,7 @@ namespace WebDriverTask.Pages.Gmail.Folders
 
         public bool isMailBoxEmpty()
         {
-            return GetDriver().isElementDisplayed(By.XPath(FolderSpecificIdendifierIfNoMailExists));
+            return DriverInstance().isElementDisplayed(By.XPath(FolderSpecificIdendifierIfNoMailExists));
         }
 
         private void SetFolderName(IWebElement element)
@@ -45,7 +45,7 @@ namespace WebDriverTask.Pages.Gmail.Folders
 
         public bool VerifyPageOpened()
         {
-            return GetDriver().Title.Contains(FolderName, StringComparison.InvariantCultureIgnoreCase);
+            return DriverInstance().Title.Contains(FolderName, StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

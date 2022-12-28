@@ -34,5 +34,25 @@ namespace WebDriverTask.Core.Extensions
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitTimeInSeconds));
             return wait.Until(c => element.Displayed && element.Enabled);
         }
+
+        public static string GetUrl(this IWebDriver driver)
+        {
+            return driver.Url;
+        }
+
+        public static void SwitchToFrame(this IWebDriver driver, IWebElement frame)
+        {
+            driver.SwitchTo().Frame(frame);
+        }
+
+        public static void SwitchToMain(this IWebDriver driver)
+        {
+            driver.SwitchTo().DefaultContent();
+        }
+
+        public static void GoToUrl(this IWebDriver driver, string url)
+        {
+            driver.Navigate().GoToUrl(url);
+        }
     }
 }

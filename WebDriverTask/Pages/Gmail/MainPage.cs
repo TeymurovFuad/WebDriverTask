@@ -10,6 +10,7 @@ namespace WebDriverTask.Pages.Gmail
 {
     public class MainPage: BasePage
     {
+        public IWebDriver webDriver { get; private set; }
         public readonly MainPageElements mainPageElements;
         public readonly DraftsFolder draftsFolder;
         public readonly SentFolder sentFolder;
@@ -18,15 +19,16 @@ namespace WebDriverTask.Pages.Gmail
         public readonly LoginPage loginPage;
         public readonly LogoutPage logoutPage;
 
-        public MainPage() : base()
+        public MainPage(IWebDriver webDriver) : base()
         {
+            this.webDriver = webDriver;
             mainPageElements = new MainPageElements();
-            draftsFolder = new DraftsFolder();
             sentFolder = new SentFolder();
             messageDialog = new MessageDialog();
             accoutDialog = new AccoutDialog();
             loginPage = new LoginPage();
             logoutPage = new LogoutPage();
+            draftsFolder = new DraftsFolder();
         }
 
         public void ComposeNewMail()
@@ -42,7 +44,7 @@ namespace WebDriverTask.Pages.Gmail
 
         protected bool isMailboxEmpty(By locator)
         {
-            return GetDriver().isElementDisplayed(locator);
+            return webDriver.isElementDisplayed(locator);
         }
 
         public void GoToDrafts()
