@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using System.Reflection;
+using WebDriverTask.Core.Extensions;
 using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages
@@ -10,7 +11,7 @@ namespace WebDriverTask.Pages
 
         public void ClickElement(IWebElement element, bool condition = true)
         {
-            if (condition && isElementDisplayed(element))
+            if (condition && element.isElementDisplayed())
             {
                 bool success = false;
                 int retry = 5;
@@ -18,7 +19,7 @@ namespace WebDriverTask.Pages
                 {
                     try
                     {
-                        WaitUntilElementIsInteractable(element);
+                        GetDriver().WaitUntilElementIsInteractable(element);
                         element.Click();
                         success = true;
                     }
@@ -33,50 +34,13 @@ namespace WebDriverTask.Pages
 
         public void SendValuesToElement(IWebElement element, string value)
         {
-            if (isElementDisplayed(element))
+            if (element.isElementDisplayed())
                 element.SendKeys(value);
         }
 
         public void WaitPageLoad(int seconds = 5)
         {
             GetDriver().Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
-        }
-
-        public bool isElementDisplayed(IWebElement element)
-        {
-            try
-            {
-                WaitUntilElementDisplayed(element);
-                return element.Displayed;
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
-        }
-
-        public bool isElementDisplayed(By locator)
-        {
-            try
-            {
-                return GetDriver().FindElements(locator).Count > 0;
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
-        }
-
-        public bool isElementDisplayed(By locator, IWebElement parent)
-        {
-            try
-            {
-                return parent.FindElements(locator).Count > 0;
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
         }
 
         public void HandleAlert(bool accept)
