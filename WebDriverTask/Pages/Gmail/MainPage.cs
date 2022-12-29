@@ -8,10 +8,9 @@ using WebDriverTask.Pages.Gmail.Logout;
 
 namespace WebDriverTask.Pages.Gmail
 {
-    public class MainPage: BasePage
+    public class MainPage: MainPageElements
     {
         public IWebDriver webDriver { get; private set; }
-        public readonly MainPageElements mainPageElements;
         public readonly DraftsFolder draftsFolder;
         public readonly SentFolder sentFolder;
         public readonly MessageDialog messageDialog;
@@ -19,22 +18,21 @@ namespace WebDriverTask.Pages.Gmail
         public readonly LoginPage loginPage;
         public readonly LogoutPage logoutPage;
 
-        public MainPage(IWebDriver webDriver) : base()
+        public MainPage(IWebDriver driver) : base(driver)
         {
-            this.webDriver = webDriver;
-            mainPageElements = new MainPageElements();
-            sentFolder = new SentFolder();
-            messageDialog = new MessageDialog();
-            accoutDialog = new AccoutDialog();
-            loginPage = new LoginPage();
-            logoutPage = new LogoutPage();
-            draftsFolder = new DraftsFolder();
+            this.webDriver = driver;
+            sentFolder = new SentFolder(driver);
+            messageDialog = new MessageDialog(driver);
+            accoutDialog = new AccoutDialog(driver);
+            loginPage = new LoginPage(driver);
+            logoutPage = new LogoutPage(driver);
+            draftsFolder = new DraftsFolder(driver);
         }
 
         public void ComposeNewMail()
         {
             messageDialog.CloseAllMailDialogs();
-            mainPageElements.ComposeButton.Click();
+            ComposeButton.Click();
         }
 
         public void OpenFolder(IWebElement folder)
@@ -49,12 +47,12 @@ namespace WebDriverTask.Pages.Gmail
 
         public void GoToDrafts()
         {
-            mainPageElements.DraftsFolder.Click();
+            DraftsFolder.Click();
         }
 
         public void GoToSent()
         {
-            mainPageElements.SentFolder.Click();
+            SentFolder.Click();
         }
     }
 }

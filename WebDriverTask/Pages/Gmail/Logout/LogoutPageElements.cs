@@ -2,9 +2,15 @@
 
 namespace WebDriverTask.Pages.Gmail.Logout
 {
-    public class LogoutPageElements: BaseElements
+    public class LogoutPageElements: BasePage
     {
+        IWebDriver webDriver { get; set; }
+        public LogoutPageElements(IWebDriver driver)
+        {
+            webDriver = driver;
+        }
+
         public readonly string ChooseAnAccoutXPath =  "//span[text()='Choose an account']";
-        public IWebElement ChooseAnAccout => DriverInstance().FindElements(By.XPath(ChooseAnAccoutXPath)).First();
+        public IWebElement ChooseAnAccout => webDriver.FindElements(By.XPath(ChooseAnAccoutXPath)).First();
     }
 }

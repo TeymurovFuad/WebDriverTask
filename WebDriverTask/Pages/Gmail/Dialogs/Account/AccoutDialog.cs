@@ -4,17 +4,18 @@ using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail.Dialogs.Account
 {
-    public class AccoutDialog : BasePage
+    public class AccoutDialog : AccountDialogElements
     {
-        readonly AccountDialogElements _accountDialogElements;
-        public AccoutDialog()
+        IWebDriver webDriver { get; set; }
+        public AccoutDialog(IWebDriver driver): base(driver)
         {
-            _accountDialogElements = new AccountDialogElements();
+            webDriver = driver;
         }
+
 
         public void OpenAccountDialog(string email)
         {
-            IWebElement openAccountDialogButton = _accountDialogElements.OpenAccountDialogButton(email);
+            IWebElement openAccountDialogButton = OpenAccountDialogButton(email);
             if (openAccountDialogButton.isElementDisplayed())
             {
                 openAccountDialogButton.Click();
@@ -23,12 +24,12 @@ namespace WebDriverTask.Pages.Gmail.Dialogs.Account
 
         public void SwitchToAccountFrame()
         {
-            DriverInstance().SwitchToFrame(_accountDialogElements.AccountIFrame);
+            webDriver.SwitchToFrame(AccountIFrame);
         }
 
         public void ClickSignoutButton()
         {
-            IWebElement signoutButton = _accountDialogElements.SingOutButton;
+            IWebElement signoutButton = SingOutButton;
             if (signoutButton.isElementDisplayed())
             {
                 signoutButton.Click();

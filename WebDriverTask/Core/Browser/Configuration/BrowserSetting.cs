@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium.Chrome;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using WebDriverTask.Core.WebDriver;
 
@@ -6,9 +7,9 @@ namespace WebDriverTask.Core.Browser.Configuration
 {
     public sealed class BrowserSetting
     {
-        private readonly Driver _driver;
+        private readonly IWebDriver _driver;
         private readonly BrowserType _browserType;
-        public BrowserSetting(Driver driver, BrowserType browserType)
+        public BrowserSetting(IWebDriver driver, BrowserType browserType)
         {
             _driver = driver;
             _browserType = browserType;

@@ -4,50 +4,50 @@ using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail.Login
 {
-    public class LoginPage: BasePage
+    public class LoginPage: LoginPageElements
     {
-        readonly LoginPageElements _loginPageElements;
-        public LoginPage()
+        IWebDriver webDriver { get; set; }
+        public LoginPage(IWebDriver driver): base(driver)
         {
-            _loginPageElements= new LoginPageElements();
+            webDriver = driver;
         }
 
         public void SkipHelpToWorkBetterPage()
         {
             //Temporary workaround
-            DriverInstance().WaitUntilElementIsInteractable(_loginPageElements.HelpWorkBetterText);
-            _loginPageElements.NotNowButtonOnHelpWorkBetterPage.Click();
+            webDriver.WaitUntilElementIsInteractable(HelpWorkBetterText);
+            NotNowButtonOnHelpWorkBetterPage.Click();
         }
 
         public bool isLanguageChooserDropDownExpanded()
         {
-            IWebElement dropDownElement = _loginPageElements.DropDownToChooseLanguage.FindElement(By.XPath(_loginPageElements.subPathToCheckDropDownStatus));
+            IWebElement dropDownElement = DropDownToChooseLanguage.FindElement(By.XPath(subPathToCheckDropDownStatus));
             string attributeValue = dropDownElement.GetAttribute("aria-expanded");
             return bool.TryParse(attributeValue, out bool isExpanded) && isExpanded;
         }
 
         public void ToggleLanguageChooserDropDown()
         {
-            DriverInstance().WaitUntilElementIsInteractable(_loginPageElements.DropDownToChooseLanguage);
-            _loginPageElements.DropDownToChooseLanguage.Click();
+            webDriver.WaitUntilElementIsInteractable(DropDownToChooseLanguage);
+            DropDownToChooseLanguage.Click();
         }
 
         public string GetValueOfCurrentSelectedLanguage()
         {
-            string? languageValue = _loginPageElements.CurrentLanguage.FindElement(By.XPath(_loginPageElements.subPathToRetreiveLanguageText)).Text;
+            string? languageValue = CurrentLanguage.FindElement(By.XPath(subPathToRetreiveLanguageText)).Text;
             return languageValue ?? string.Empty;
         }
 
         public string GetValueOfLanguage(IWebElement language)
         {
-            return language.FindElement(By.XPath(_loginPageElements.subPathToRetreiveLanguageText)).Text;
+            return language.FindElement(By.XPath(subPathToRetreiveLanguageText)).Text;
         }
 
         public void ChangeLanguage(string languageToChange)
         {
             if (!GetValueOfCurrentSelectedLanguage().Contains(languageToChange, StringComparison.InvariantCultureIgnoreCase))
             {
-                foreach (IWebElement language in _loginPageElements.AllLanguagesFromDropDown)
+                foreach (IWebElement language in AllLanguagesFromDropDown)
                 {
                     if (GetValueOfLanguage(language).Contains(languageToChange, StringComparison.InvariantCultureIgnoreCase))
                     {
@@ -60,20 +60,20 @@ namespace WebDriverTask.Pages.Gmail.Login
 
         public void FillEmail(string email)
         {
-            DriverInstance().WaitUntilElementIsInteractable(_loginPageElements.EmailField);
-            _loginPageElements.EmailField.SendKeys(email);
+            webDriver.WaitUntilElementIsInteractable(EmailField);
+            EmailField.SendKeys(email);
         }
 
         public void FillPassword(string password)
         {
-            DriverInstance().WaitUntilElementIsInteractable(_loginPageElements.PasswordField);
-            _loginPageElements.PasswordField.SendKeys(password);
+            webDriver.WaitUntilElementIsInteractable(PasswordField);
+            PasswordField.SendKeys(password);
         }
 
         public void ClickNext()
         {
-            _loginPageElements.NextButton.Click();
-            DriverInstance().WaitPageToLoad();
+            NextButton.Click();
+            webDriver.WaitPageToLoad();
         }
     }
 }

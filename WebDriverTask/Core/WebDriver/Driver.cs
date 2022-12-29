@@ -1,37 +1,35 @@
 ﻿using OpenQA.Selenium;
+using System.ComponentModel;
+using WebDriverTask.Core.Browser;
+using WebDriverTask.Core.Browser.Configuration;
 using WebDriverTask.Core.CustomExceptions;
 
 namespace WebDriverTask.Core.WebDriver
 {
-    public abstract class Driver
+    public abstract class Driver: BrowserBuilder
     {
-        private IWebDriver _webDriver;
+        private IWebDriver webDriver { get; set; }
 
         protected Driver() { }
 
-        protected IWebDriver GetDriver()
+        public IWebDriver GetDriver()
         {
             if (!isBuilt())
             {
                 throw new DriverException("Webdriver is not set yet");
             }
-            return _webDriver;
+            return webDriver;
         }
 
-        public Driver Instance()
+        protected void SetUpDriver(BrowserType browserType)
         {
-            return this;
-        }
-
-        protected void SetDriver(IWebDriver driver)
-        {
-            if(_webDriver==null)
-                _webDriver = driver;
+            if(webDriver==null)
+                webDriver = CreateBrowser(browserType);
         }
 
         public bool isBuilt()
         {
-            return _webDriver != null;
+            return webDriver != null;
         }
     }
 }
