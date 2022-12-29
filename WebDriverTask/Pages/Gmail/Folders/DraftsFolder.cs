@@ -1,49 +1,37 @@
 ﻿using OpenQA.Selenium;
+using WebDriverTask.Core.Extensions;
 using WebDriverTask.Core.Helpers;
-using WebDriverTask.Core.WebDriver;
+using WebDriverTask.Pages.Gmail.Dialogs.Message;
 
 namespace WebDriverTask.Pages.Gmail.Folders
 {
-    public class DraftsFolder : MainPage, IMailFolder
+    public class DraftsFolder : MessageDialog
     {
-        public static string PathToDraftMails { get; private set; } = "//span[text()='Draft']/ancestor::tr";
-        public static string FolderSpecificIdendifierIfNoMailExists { get; private set; } = "td[text()=\"You don't have any saved drafts.\"]";
-        private static string _pathToSpecificDraftMails => "//span[text()='{0}']";
-        public static List<IWebElement> DraftMails { get; private set; }
-        public static string FolderName { get; private set; }
-
-        public static void Open()
+        IWebDriver webDriver { get; set; }
+        public DraftsFolder(IWebDriver driver): base(driver)
         {
-            IWebElement draftsFolder = MainPageElements.DraftsFolder;
-            SetFolderName(draftsFolder);
-            try
-            {
-                draftsFolder.Click();
-            }
-            catch (Exception e)when(e is ElementNotVisibleException || e is ElementNotInteractableException)
-            {
-                WaitUntilElementIsInteractable(draftsFolder);
-                draftsFolder.Click();
-            }
-            catch(Exception)
-            {
-                throw;
-            }
+            webDriver = driver;
         }
 
-        public static List<IWebElement> GetMails()
+        public string PathToDraftMails { get; private set; } = "//span[text()='Draft']/ancestor::tr";
+        public string FolderSpecificIdendifierIfNoMailExists { get; private set; } = "td[text()=\"You don't have any saved drafts.\"]";
+        private string _pathToSpecificDraftMails => "//span[text()='{0}']";
+        public List<IWebElement> DraftMails { get; private set; }
+        public string FolderName { get; private set; }
+
+        public List<IWebElement> GetMails()
         {
-            DraftMails = GetDriver().FindElements(By.XPath(PathToDraftMails)).ToList();
+            DraftMails = webDriver.FindElements(By.XPath(PathToDraftMails)).ToList();
             return DraftMails;
         }
 
-        public static IWebElement? GetMailFromTable(string bySubjectOrBody)
+        public IWebElement? GetMailFromTable(string bySubjectOrBody)
         {
             GetMails();
             string path = StringHelper.FormatString(_pathToSpecificDraftMails, bySubjectOrBody)!;
             foreach (IWebElement draftMail in DraftMails)
             {
-                if(isElementDisplayed(By.XPath(path), draftMail))
+                if(draftMail.isContainsChild(By.XPath(path)))
                 {
                     return draftMail;
                 }
@@ -51,19 +39,19 @@ namespace WebDriverTask.Pages.Gmail.Folders
             return null;
         }
 
-        public static bool isMailBoxEmpty()
+        public bool isMailBoxEmpty()
         {
-            return isElementDisplayed(By.XPath(FolderSpecificIdendifierIfNoMailExists));
+            return webDriver.isElementDisplayed(By.XPath(FolderSpecificIdendifierIfNoMailExists));
         }
 
-        private static void SetFolderName(IWebElement element)
+        private void SetFolderName(IWebElement element)
         {
             FolderName = element.FindElement(By.XPath("//a")).Text;
         }
 
-        public static bool VerifyPageOpened()
+        public bool VerifyPageOpened()
         {
-            return GetPageTitle().Contains(FolderName, StringComparison.OrdinalIgnoreCase);
+            return webDriver.Title.Contains(FolderName, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

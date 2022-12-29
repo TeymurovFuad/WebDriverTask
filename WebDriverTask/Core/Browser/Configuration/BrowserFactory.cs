@@ -6,23 +6,13 @@ using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Core.Browser.Configuration
 {
-    public abstract class BrowserFactory : Driver
+    public abstract class BrowserFactory
     {
-        private static BrowserType _browserType { get; set; }
+        private BrowserType _browserType { get; set; }
 
-        public static BrowserType GetBrowserType()
-        {
-            try
-            {
-                return _browserType;
-            }
-            catch (Exception)
-            {
-                throw new BrowserTypeException("Browser type is not set. It is expected to be set when create driver");
-            }
-        }
+        protected BrowserFactory() : base() { }
 
-        protected static void CreateBrowser(BrowserType browserType)
+        protected IWebDriver CreateBrowser(BrowserType browserType)
         {
             IWebDriver driver;
             _browserType = browserType;
@@ -37,7 +27,7 @@ namespace WebDriverTask.Core.Browser.Configuration
                 default:
                     throw new BrowserTypeException($"Wrong browser was passed: {browserType.ToString()}");
             }
-            SetDriver(driver);
+            return driver;
         }
     }
 }

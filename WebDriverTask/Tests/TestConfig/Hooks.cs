@@ -2,50 +2,43 @@
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using WebDriverTask.Core.Browser;
-using WebDriverTask.Core.Browser.Configuration;
+using WebDriverTask.Core.Extensions;
 using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Tests.TestConfig
 {
     public abstract class Hooks
     {
-        private BrowserType _browserType;
-        private string? _url;
-        protected IWebDriver driver;
-        protected TestData testData;
-        protected DriverManager driverManager;
-        protected BrowserSetting browserSetting;
+        private BrowserType _browserType { get; set; }
+        protected IWebDriver webDriver { get; set; }
+        protected TestData testData { get; set; }
+        protected DriverManager driverManager { get; set; }
+
         private bool _isFailed;
-        public bool SropOnFail { private get; set; } = true;
+        private string? _url { get; set; }
+        public bool StopOnFail { private get; set; }
 
-        protected Hooks(BrowserType browserType)
+        protected Hooks(BrowserType browserType, string? url=null)
         {
-            _browserType = browserType;
-        }
-
-        protected Hooks(BrowserType browserType, string url)
-        {
-            _browserType = browserType;
             _url = url;
+            _browserType = browserType;
+            testData = new TestData();
+            driverManager = new DriverManager();
+            driverManager.BuildDriver(browserType);
+            webDriver = driverManager.GetWebDriver();
         }
 
         [OneTimeSetUp]
         public void ClassSetUp()
         {
-            driverManager = new DriverManager();
-            driver = driverManager.BuildDriver(_browserType).Instance();
-            driverManager.AddArgumentsToDriver();
-            if(_url != null && _url != string.Empty)
-            {
-                Driver.GoToUrl(_url);
-            }
-            testData = new TestData();
+            if (!string.IsNullOrEmpty(_url))
+                driverManager.GetWebDriver().GoToUrl(_url);
         }
 
         [SetUp]
         public void TestSetup()
         {
-            if (SropOnFail && _isFailed)
+            if (StopOnFail && _isFailed)
             {
                 Assert.Inconclusive("One of the tests is failed. Given that all tests are chained, so failure of one may result in failure of all, thereby flow stopped.");
             }
@@ -54,16 +47,13 @@ namespace WebDriverTask.Tests.TestConfig
         [TearDown]
         public void TestTearDown()
         {
-            if (SropOnFail && TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
-            {
-                _isFailed = true;
-            }
+            _isFailed = TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed;
         }
 
         [OneTimeTearDown]
         public void ClassTearDown()
         {
-            DriverManager.QuitDriver();
+            driverManager.QuitDriver();
         }
     }
 }

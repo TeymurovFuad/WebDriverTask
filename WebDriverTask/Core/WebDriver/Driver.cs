@@ -1,64 +1,35 @@
 ﻿using OpenQA.Selenium;
+using System.ComponentModel;
+using WebDriverTask.Core.Browser;
+using WebDriverTask.Core.Browser.Configuration;
 using WebDriverTask.Core.CustomExceptions;
 
 namespace WebDriverTask.Core.WebDriver
 {
-    public abstract class Driver
+    public abstract class Driver: BrowserBuilder
     {
-        private static IWebDriver? _webDriver = null;
+        private IWebDriver webDriver { get; set; }
 
-        public static IWebDriver GetDriver()
+        protected Driver() { }
+
+        public IWebDriver GetDriver()
         {
-            try
+            if (!isBuilt())
             {
-                return _webDriver!;
+                throw new DriverException("Webdriver is not set yet");
             }
-            catch (NullReferenceException nre)
-            {
-                throw new DriverException("Webdriver is not set", nre);
-            }
-            catch(Exception e)
-            {
-                throw new DriverException("Not able to return webdriver" ,e);
-            }
+            return webDriver;
         }
 
-        public static bool isBuilt()
+        protected void SetUpDriver(BrowserType browserType)
         {
-            return _webDriver != null;
+            if(webDriver==null)
+                webDriver = CreateBrowser(browserType);
         }
 
-        protected static void SetDriver(IWebDriver driver)
+        public bool isBuilt()
         {
-            _webDriver = driver;
-        }
-
-        public static string GetUrl()
-        {
-            return _webDriver!.Url;
-        }
-
-        public static void SwitchToFrame(IWebElement frame)
-        {
-            _webDriver.SwitchTo().Frame(frame);
-        }
-
-        public static void SwitchToMain()
-        {
-            _webDriver.SwitchTo().DefaultContent();
-        }
-
-        public static void GoToUrl(string url)
-        {
-            _webDriver.Navigate().GoToUrl(url);
-        }
-
-        public static void Close()
-        {
-            if (_webDriver != null)
-            {
-                _webDriver.Close();
-            }
+            return webDriver != null;
         }
     }
 }
