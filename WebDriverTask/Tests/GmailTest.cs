@@ -21,7 +21,7 @@ namespace WebDriverTask.Tests
         }
 
         [Test, Order(1)]
-        public void AAAOpenBrowser()
+        public void OpenBrowser()
         {
             webDriver.WaitPageToLoad();
             Assert.IsTrue(webDriver.Title.Contains("gmail", StringComparison.CurrentCultureIgnoreCase));
@@ -29,7 +29,7 @@ namespace WebDriverTask.Tests
 
         [Test, Order(2)]
         [TestCase("english")]
-        public void AAChangePageLanguageToEnglishAndVerifyItChanged(string expectedLanguage)
+        public void ChangePageLanguageToEnglishAndVerifyItChanged(string expectedLanguage)
         {
             _mainPage.loginPage.ToggleLanguageChooserDropDown();
             _mainPage.loginPage.ChangeLanguage(expectedLanguage);
@@ -39,7 +39,7 @@ namespace WebDriverTask.Tests
 
         [Test, Order(3)]
         [TestCase("qy54313@gmail.com", "Aa123456____")]
-        public void BBFillUsernameAndPasswordAndLogin(string email, string password)
+        public void FillUsernameAndPasswordAndLogin(string email, string password)
         {
             _mainPage.loginPage.FillEmail(email);
             _mainPage.loginPage.ClickNext();
@@ -49,7 +49,7 @@ namespace WebDriverTask.Tests
         }
 
         [Test, Order(4)]
-        public void CCOpenDialogToComposeNewMail()
+        public void OpenDialogToComposeNewMail()
         {
             _mainPage.ComposeNewMail();
             IWebElement messageDialog = _mainPage.messageDialog.GetMailDialog();
@@ -58,7 +58,7 @@ namespace WebDriverTask.Tests
 
         [Test, Order(5)]
         [TestCase("someFakeMail@noSuchAddress.pl", "", "SomeTestBody ")]
-        public void DDFillFieldsInMessageDialogAndCloseDialog(string someMailAddress, string someSubject, string someBody)
+        public void FillFieldsInMessageDialogAndCloseDialog(string someMailAddress, string someSubject, string someBody)
         {
             someSubject += StringHelper.GenerateUUID();
             _mainPage.messageDialog.MailTo(someMailAddress);
@@ -73,7 +73,7 @@ namespace WebDriverTask.Tests
         }
 
         [Test, Order(6)]
-        public void EEVerifyCreatedMessageExistsInDrafts()
+        public void VerifyCreatedMessageExistsInDrafts()
         {
             _mainPage.GoToDrafts();
             object? mail = _mainPage.draftsFolder.GetMailFromTable(testData.GetVariable<string>("subject"));
@@ -81,7 +81,7 @@ namespace WebDriverTask.Tests
         }
 
         [Test, Order(7)]
-        public void FFSendMailFromDraftAndVerifyMailDissapearedFromDraftFolder()
+        public void SendMailFromDraftAndVerifyMailDissapearedFromDraftFolder()
         {
             _mainPage.messageDialog.CloseAllMailDialogs();
             _mainPage.draftsFolder.GetMailFromTable(testData.GetVariable<string>("subject"))!.Click();
@@ -90,14 +90,14 @@ namespace WebDriverTask.Tests
         }
 
         [Test, Order(8)]
-        public void GGGoToSentMailsFolderAndVerifyThatMailIsThere()
+        public void GoToSentMailsFolderAndVerifyThatMailIsThere()
         {
             _mainPage.GoToSent();
             Assert.IsNotNull(_mainPage.sentFolder.GetMailFromTable(testData.GetVariable<string>("subject")));
         }
 
         [Test, Order(9)]
-        public void HHSignOutAndVerifyUserSignedOutSuccessfully()
+        public void SignOutAndVerifyUserSignedOutSuccessfully()
         {
             _mainPage.accoutDialog.OpenAccountDialog(testData.GetVariable<string>("email"));
             _mainPage.accoutDialog.SwitchToAccountFrame();
