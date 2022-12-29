@@ -3,37 +3,34 @@ using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail.Dialogs.Message
 {
-    public class MessageDialog : BasePage
+    public class MessageDialog : MessageDialogElements
     {
-        public readonly MessageDialogElements messageDialogElements;
-        public MessageDialog()
-        {
-            messageDialogElements = new MessageDialogElements();
-        }
-        public void To(params string[] addressTo)
+        public MessageDialog(IWebDriver driver): base(driver) { }
+
+        public void MailTo(params string[] addressTo)
         {
             string receivers = string.Join(",", addressTo);
-            messageDialogElements.To.SendKeys(receivers);
+            To.SendKeys(receivers);
         }
 
-        public void Subject(string addressTo)
+        public void MailSubject(string addressTo)
         {
-            messageDialogElements.Subject.SendKeys(addressTo);
+            Subject.SendKeys(addressTo);
         }
 
-        public void Body(string addressTo)
+        public void MailBody(string addressTo)
         {
-            messageDialogElements.Body.SendKeys(addressTo);
+            Body.SendKeys(addressTo);
         }
 
         public void Send()
         {
-            messageDialogElements.SendButton.Click();
+            SendButton.Click();
         }
 
         public void CloseAllMailDialogs()
         {
-            foreach (IWebElement saveAndCloseButton in messageDialogElements.SaveAndCloseButtons)
+            foreach (IWebElement saveAndCloseButton in SaveAndCloseButtons)
             {
                 saveAndCloseButton.Click();
             }

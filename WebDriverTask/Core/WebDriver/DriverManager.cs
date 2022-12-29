@@ -4,33 +4,31 @@ using OpenQA.Selenium.Support.UI;
 using System.Diagnostics.CodeAnalysis;
 using WebDriverTask.Core.Browser;
 using WebDriverTask.Core.Browser.Configuration;
+using WebDriverTask.Core.Extensions;
 
 namespace WebDriverTask.Core.WebDriver
 {
-    public class DriverManager : BrowserBuilder
+    public class DriverManager : Driver
     {
         IWebDriver webDriver { get; set; }
-        private BrowserSetting _browserSetting { get; set; }
+        public DriverManager() { }
 
-        public DriverManager() : base() { }
-
-        public IWebDriver GetDriverInstance()
+        public IWebDriver GetWebDriver()
         {
-            return GetDriver();
+            return webDriver;
         }
 
-        public DriverManager BuildDriver(BrowserType browserType)
+        private void SetWebDriver()
         {
-            Build(browserType);
             webDriver = GetDriver();
-            webDriver?.Manage().Timeouts().ImplicitWait.Add(TimeSpan.FromSeconds(5));
-            webDriver?.Manage().Window.Maximize();
-            return this;
         }
 
-        public void AddArgumentsToBrowser([DisallowNull] params string[] arguments)
+        public void BuildDriver(BrowserType browserType)
         {
-            _browserSetting?.AddArguments(arguments);
+            SetUpDriver(browserType);
+            SetWebDriver();
+            webDriver?.WaitPageToLoad();
+            webDriver?.MaximizeBrowser();
         }
 
         public void QuitDriver()
@@ -42,12 +40,6 @@ namespace WebDriverTask.Core.WebDriver
         public void CloseDriver()
         {
             webDriver?.Close();
-        }
-
-        public void ClearAllCookies()
-        {
-            if (webDriver != null)
-                webDriver!.Manage().Cookies.DeleteAllCookies();
         }
     }
 }

@@ -7,6 +7,12 @@ namespace WebDriverTask.Pages.Gmail.Folders
 {
     public class DraftsFolder : MessageDialog
     {
+        IWebDriver webDriver { get; set; }
+        public DraftsFolder(IWebDriver driver): base(driver)
+        {
+            webDriver = driver;
+        }
+
         public string PathToDraftMails { get; private set; } = "//span[text()='Draft']/ancestor::tr";
         public string FolderSpecificIdendifierIfNoMailExists { get; private set; } = "td[text()=\"You don't have any saved drafts.\"]";
         private string _pathToSpecificDraftMails => "//span[text()='{0}']";
@@ -15,7 +21,7 @@ namespace WebDriverTask.Pages.Gmail.Folders
 
         public List<IWebElement> GetMails()
         {
-            DraftMails = DriverInstance().FindElements(By.XPath(PathToDraftMails)).ToList();
+            DraftMails = webDriver.FindElements(By.XPath(PathToDraftMails)).ToList();
             return DraftMails;
         }
 
@@ -35,7 +41,7 @@ namespace WebDriverTask.Pages.Gmail.Folders
 
         public bool isMailBoxEmpty()
         {
-            return DriverInstance().isElementDisplayed(By.XPath(FolderSpecificIdendifierIfNoMailExists));
+            return webDriver.isElementDisplayed(By.XPath(FolderSpecificIdendifierIfNoMailExists));
         }
 
         private void SetFolderName(IWebElement element)
@@ -45,7 +51,7 @@ namespace WebDriverTask.Pages.Gmail.Folders
 
         public bool VerifyPageOpened()
         {
-            return DriverInstance().Title.Contains(FolderName, StringComparison.OrdinalIgnoreCase);
+            return webDriver.Title.Contains(FolderName, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

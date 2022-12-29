@@ -1,18 +1,16 @@
-﻿using WebDriverTask.Core.Extensions;
+﻿using OpenQA.Selenium;
+using WebDriverTask.Core.Extensions;
 using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail.Logout
 {
-    public class LogoutPage: BasePage
+    public class LogoutPage: LogoutPageElements
     {
-        readonly LogoutPageElements _logoutPageElements;
-        public LogoutPage()
-        {
-            _logoutPageElements = new LogoutPageElements();
-        }
+        public LogoutPage(IWebDriver driver): base(driver) { }
+
         public bool isLogoutPageDisplayed()
         {
-            return _logoutPageElements.ChooseAnAccout.isElementDisplayed();
+            return ChooseAnAccout.isElementDisplayed();
         }
     }
 }

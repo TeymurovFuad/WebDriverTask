@@ -9,29 +9,30 @@ namespace WebDriverTask.Tests.TestConfig
 {
     public abstract class Hooks
     {
-        private string? _url { get; set; }
-        private bool _isFailed;
-
         private BrowserType _browserType { get; set; }
         protected IWebDriver webDriver { get; set; }
         protected TestData testData { get; set; }
         protected DriverManager driverManager { get; set; }
+
+        private bool _isFailed;
+        private string? _url { get; set; }
         public bool StopOnFail { private get; set; }
 
         protected Hooks(BrowserType browserType, string? url=null)
         {
+            _url = url;
+            _browserType = browserType;
             testData = new TestData();
             driverManager = new DriverManager();
-            webDriver = driverManager.BuildDriver(browserType).GetDriverInstance();
-            _browserType = browserType;
-            _url = url;
+            driverManager.BuildDriver(browserType);
+            webDriver = driverManager.GetWebDriver();
         }
 
         [OneTimeSetUp]
         public void ClassSetUp()
         {
             if (!string.IsNullOrEmpty(_url))
-                driverManager.GetDriverInstance().GoToUrl(_url);
+                driverManager.GetWebDriver().GoToUrl(_url);
         }
 
         [SetUp]

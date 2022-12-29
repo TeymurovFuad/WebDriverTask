@@ -52,7 +52,7 @@ namespace WebDriverTask.Tests
         public void OpenDialogToComposeNewMail()
         {
             _mainPage.ComposeNewMail();
-            IWebElement messageDialog = _mainPage.messageDialog.messageDialogElements.GetMailDialog();
+            IWebElement messageDialog = _mainPage.messageDialog.GetMailDialog();
             Assert.IsTrue(messageDialog.isElementDisplayed());
         }
 
@@ -61,11 +61,11 @@ namespace WebDriverTask.Tests
         public void FillFieldsInMessageDialogAndCloseDialog(string someMailAddress, string someSubject, string someBody)
         {
             someSubject += StringHelper.GenerateUUID();
-            _mainPage.messageDialog.To(someMailAddress);
-            _mainPage.messageDialog.Subject(someSubject);
-            _mainPage.messageDialog.Body(someBody);
+            _mainPage.messageDialog.MailTo(someMailAddress);
+            _mainPage.messageDialog.MailSubject(someSubject);
+            _mainPage.messageDialog.MailBody(someBody);
             _mainPage.messageDialog.CloseAllMailDialogs();
-            IWebElement messageDialog = _mainPage.messageDialog.messageDialogElements.GetMailDialog();
+            IWebElement messageDialog = _mainPage.messageDialog.GetMailDialog();
             Assert.IsFalse(messageDialog.isElementDisplayed());
 
             testData.SetVariable("to", someMailAddress);
@@ -85,7 +85,7 @@ namespace WebDriverTask.Tests
         {
             _mainPage.messageDialog.CloseAllMailDialogs();
             _mainPage.draftsFolder.GetMailFromTable(testData.GetVariable<string>("subject"))!.Click();
-            _mainPage.messageDialog.messageDialogElements.SendButton.Click();
+            _mainPage.messageDialog.SendButton.Click();
             Assert.IsNull(_mainPage.draftsFolder.GetMailFromTable(testData.GetVariable<string>("subject")));
         }
 
