@@ -1,79 +1,45 @@
 ﻿
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using System.Diagnostics.CodeAnalysis;
 using WebDriverTask.Core.Browser;
 using WebDriverTask.Core.Browser.Configuration;
+using WebDriverTask.Core.Extensions;
 
 namespace WebDriverTask.Core.WebDriver
 {
-    public class DriverManager: BrowserBuilder
+    public class DriverManager : Driver
     {
-        private static IWebDriver? driver = null;
+        IWebDriver webDriver { get; set; }
+        public DriverManager() { }
 
-        public DriverManager() : base() { }
-
-        public IWebDriver Instance()
+        public IWebDriver GetWebDriver()
         {
-            driver = GetDriver();
-            return driver;
+            return webDriver;
         }
 
-        public DriverManager BuildDriver(BrowserType browser)
+        private void SetWebDriver()
         {
-            if(driver == null)
-            {
-                Build(browser);
-                driver = GetDriver();
-                driver.Manage().Timeouts().ImplicitWait.Add(TimeSpan.FromSeconds(5));
-                driver.Manage().Window.Maximize();
-            }
-            return this;
+            webDriver = GetDriver();
         }
 
-        public void AddArgumentsToDriver(params string[] arguments)
+        public void BuildDriver(BrowserType browserType)
         {
-            AddArguments(arguments);
+            SetUpDriver(browserType);
+            SetWebDriver();
+            webDriver?.WaitPageToLoad();
+            webDriver?.MaximizeBrowser();
         }
 
-        public static void QuitDriver()
+        public void QuitDriver()
         {
-            driver!.Quit();
-            driver.Dispose();
-            driver = null;
-        }
-        public static void CloseDriver()
-        {
-            Close();
+            webDriver?.Quit();
+            webDriver?.Dispose();
         }
 
-        public static void ClearAllCookies()
+        public void CloseDriver()
         {
-            if (driver != null)
-                driver!.Manage().Cookies.DeleteAllCookies();
-        }
-
-        public static void WaitPageToLoad(int secondsToWait = 5)
-        {
-            if (secondsToWait > 0 && driver != null)
-                driver!.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(secondsToWait);
-        }
-
-        public static void WaitUntilElementDisplayed(IWebElement element, int waitTimeInSeconds = 5)
-        {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitTimeInSeconds));
-            wait.Until(c => element.Displayed);
-        }
-
-        public static void WaintUntilUrlChanged(string previousUrl, int waitTimeInSeconds = 5)
-        {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitTimeInSeconds));
-            wait.Until(c => c.Url != previousUrl);
-        }
-
-        public static bool WaitUntilElementIsInteractable(IWebElement element, int waitTimeInSeconds = 5)
-        {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitTimeInSeconds));
-            return wait.Until(c => element.Displayed && element.Enabled);
+            webDriver?.Close();
         }
     }
 }

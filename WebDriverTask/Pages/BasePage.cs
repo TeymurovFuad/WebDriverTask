@@ -1,17 +1,22 @@
 ﻿using OpenQA.Selenium;
-using SeleniumExtras.PageObjects;
 using System.Reflection;
+using WebDriverTask.Core.Extensions;
 using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages
 {
-    public class BasePage : DriverManager
+    public abstract class BasePage
     {
-        protected BasePage() { }
+        private IWebDriver webDriver;
+
+        protected IWebDriver GetDriverInstance()
+        {
+            return webDriver;
+        }
 
         public void ClickElement(IWebElement element, bool condition = true)
         {
-            if (condition && isElementDisplayed(element))
+            if (condition && element.isElementDisplayed())
             {
                 bool success = false;
                 int retry = 5;
@@ -19,7 +24,7 @@ namespace WebDriverTask.Pages
                 {
                     try
                     {
-                        WaitUntilElementIsInteractable(element);
+                        webDriver.WaitUntilElementIsInteractable(element);
                         element.Click();
                         success = true;
                     }
@@ -32,59 +37,11 @@ namespace WebDriverTask.Pages
             }
         }
 
-        public void SendValuesToElement(IWebElement element, string value)
-        {
-            if (isElementDisplayed(element))
-                element.SendKeys(value);
-        }
-
-        public void WaitPageLoad(int seconds = 5)
-        {
-            GetDriver().Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
-        }
-
-        public static bool isElementDisplayed(IWebElement element)
-        {
-            try
-            {
-                WaitUntilElementDisplayed(element);
-                return element.Displayed;
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
-        }
-
-        public static bool isElementDisplayed(By locator)
-        {
-            try
-            {
-                return GetDriver().FindElements(locator).Count > 0;
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
-        }
-
-        public static bool isElementDisplayed(By locator, IWebElement parent)
-        {
-            try
-            {
-                return parent.FindElements(locator).Count > 0;
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
-        }
-
         public void HandleAlert(bool accept)
         {
             try
             {
-                IAlert alert = GetDriver().SwitchTo().Alert();
+                IAlert alert = webDriver.SwitchTo().Alert();
                 if (accept)
                 {
                     alert.Accept();
@@ -93,7 +50,7 @@ namespace WebDriverTask.Pages
                 {
                     alert.Dismiss();
                 }
-                GetDriver().SwitchTo().DefaultContent();
+                webDriver.SwitchTo().DefaultContent();
             }
             catch (NoAlertPresentException e)
             {
@@ -103,23 +60,7 @@ namespace WebDriverTask.Pages
 
         public string IgnoreCaseInXPath(string partOrXpathToBeIgnored, string? property = "text()")
         {
-            return $"contains(translate({property}, {partOrXpathToBeIgnored.ToLower()}, {partOrXpathToBeIgnored.ToUpper()}), {partOrXpathToBeIgnored})";
-        }
-
-        public string GetLocatorFromFindsByAttribute<T>(IWebElement element) where T : class
-        {
-            string locator = string.Empty;
-            MemberInfo memberInfo = typeof(T).GetMember(element.GetType().Name)[0];
-            if (memberInfo.GetCustomAttribute(typeof(FindsByAttribute)) is FindsByAttribute findsByAttribute)
-            {
-                locator = findsByAttribute.Using;
-            }
-            return locator;
-        }
-
-        public static string GetPageTitle()
-        {
-            return GetDriver().Title;
+            return $"contains(translate({property}, {partOrXpathToBeIgnored.ToLower()}, {partOrXpathToBeIgnored.Capitalise()}), {partOrXpathToBeIgnored})";
         }
     }
 }

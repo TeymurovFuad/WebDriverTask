@@ -1,11 +1,16 @@
-﻿namespace WebDriverTask.Pages.Gmail.Logout
+﻿using OpenQA.Selenium;
+using WebDriverTask.Core.Extensions;
+using WebDriverTask.Core.WebDriver;
+
+namespace WebDriverTask.Pages.Gmail.Logout
 {
-    public class LogotuPage: MainPage
+    public class LogoutPage: LogoutPageElements
     {
-        public static bool isLogoutPageDisplayed()
+        public LogoutPage(IWebDriver driver): base(driver) { }
+
+        public bool isLogoutPageDisplayed()
         {
-            WaitUntilElementDisplayed(LogoutPageElements.ChooseAnAccout);
-            return isElementDisplayed(LogoutPageElements.ChooseAnAccout);
+            return ChooseAnAccout.isElementDisplayed();
         }
     }
 }

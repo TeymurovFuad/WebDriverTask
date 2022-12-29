@@ -1,62 +1,53 @@
 ﻿using OpenQA.Selenium;
-using SeleniumExtras.PageObjects;
 using WebDriverTask.Core.Extensions;
+using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail.Login
 {
-    public class LoginPage: MainPage
+    public class LoginPage: LoginPageElements
     {
-        public LoginPage()
+        IWebDriver webDriver { get; set; }
+        public LoginPage(IWebDriver driver): base(driver)
         {
-            //PageFactory
+            webDriver = driver;
         }
 
         public void SkipHelpToWorkBetterPage()
         {
             //Temporary workaround
-            WaitUntilElementDisplayed(LoginPageElements.HelpWorkBetterText);
-            if (WaitUntilElementIsInteractable(LoginPageElements.HelpWorkBetterText))
-            {
-                try
-                {
-                    LoginPageElements.NotNowButtonOnHelpWorkBetterPage.Click();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
+            webDriver.WaitUntilElementIsInteractable(HelpWorkBetterText);
+            NotNowButtonOnHelpWorkBetterPage.Click();
         }
 
-        public static bool isLanguageChooserDropDownExpanded()
+        public bool isLanguageChooserDropDownExpanded()
         {
-            IWebElement dropDownElement = LoginPageElements.DropDownToChooseLanguage.FindElement(By.XPath(LoginPageElements.subPathToCheckDropDownStatus));
+            IWebElement dropDownElement = DropDownToChooseLanguage.FindElement(By.XPath(subPathToCheckDropDownStatus));
             string attributeValue = dropDownElement.GetAttribute("aria-expanded");
             return bool.TryParse(attributeValue, out bool isExpanded) && isExpanded;
         }
 
-        public static void ToggleLanguageChooserDropDown()
+        public void ToggleLanguageChooserDropDown()
         {
-            WaitUntilElementIsInteractable(LoginPageElements.DropDownToChooseLanguage);
-            LoginPageElements.DropDownToChooseLanguage.Click();
+            webDriver.WaitUntilElementIsInteractable(DropDownToChooseLanguage);
+            DropDownToChooseLanguage.Click();
         }
 
-        public static string GetValueOfCurrentSelectedLanguage()
+        public string GetValueOfCurrentSelectedLanguage()
         {
-            string? languageValue = LoginPageElements.CurrentLanguage.FindElement(By.XPath(LoginPageElements.subPathToRetreiveLanguageText)).Text;
+            string? languageValue = CurrentLanguage.FindElement(By.XPath(subPathToRetreiveLanguageText)).Text;
             return languageValue ?? string.Empty;
         }
 
-        public static string GetValueOfLanguage(IWebElement language)
+        public string GetValueOfLanguage(IWebElement language)
         {
-            return language.FindElement(By.XPath(LoginPageElements.subPathToRetreiveLanguageText)).Text;
+            return language.FindElement(By.XPath(subPathToRetreiveLanguageText)).Text;
         }
 
-        public static void ChangeLanguage(string languageToChange)
+        public void ChangeLanguage(string languageToChange)
         {
             if (!GetValueOfCurrentSelectedLanguage().Contains(languageToChange, StringComparison.InvariantCultureIgnoreCase))
             {
-                foreach (IWebElement language in LoginPageElements.AllLanguagesFromDropDown)
+                foreach (IWebElement language in AllLanguagesFromDropDown)
                 {
                     if (GetValueOfLanguage(language).Contains(languageToChange, StringComparison.InvariantCultureIgnoreCase))
                     {
@@ -67,22 +58,22 @@ namespace WebDriverTask.Pages.Gmail.Login
             }
         }
 
-        public static void FillEmail(string email)
+        public void FillEmail(string email)
         {
-            WaitUntilElementIsInteractable(LoginPageElements.EmailField);
-            LoginPageElements.EmailField.SendKeys(email);
+            webDriver.WaitUntilElementIsInteractable(EmailField);
+            EmailField.SendKeys(email);
         }
 
-        public static void FillPassword(string password)
+        public void FillPassword(string password)
         {
-            WaitUntilElementIsInteractable(LoginPageElements.PasswordField);
-            LoginPageElements.PasswordField.SendKeys(password);
+            webDriver.WaitUntilElementIsInteractable(PasswordField);
+            PasswordField.SendKeys(password);
         }
 
-        public static void ClickNext()
+        public void ClickNext()
         {
-            LoginPageElements.NextButton.Click();
-            WaitPageToLoad();
+            NextButton.Click();
+            webDriver.WaitPageToLoad();
         }
     }
 }
