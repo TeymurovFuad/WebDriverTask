@@ -1,4 +1,6 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using WebDriverTask.Core.CustomExceptions;
 using WebDriverTask.Core.Extensions;
 
 namespace WebDriverTask.Pages
@@ -12,33 +14,16 @@ namespace WebDriverTask.Pages
         {
             webDriver = driver;
         }
-        
-
-        protected IWebDriver GetDriverInstance()
-        {
-            return webDriver;
-        }
 
         public void ClickElement(IWebElement element, bool condition = true)
         {
-            if (condition && element.isElementDisplayed())
+            if (webDriver.WaitUntilElementIsInteractable(element))
             {
-                bool success = false;
-                int retry = 5;
-                do
-                {
-                    try
-                    {
-                        webDriver.WaitUntilElementIsInteractable(element);
-                        element.Click();
-                        success = true;
-                    }
-                    catch (StaleElementReferenceException)
-                    {
-                        success = false;
-                    }
-                    retry--;
-                } while (!success && retry > 0);
+                element.Click();
+            }
+            else
+            {
+                throw new ElementException("Not able to click an element");
             }
         }
 
@@ -60,15 +45,13 @@ namespace WebDriverTask.Pages
 
         public bool isAlertExists()
         {
-            try
+            WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromMilliseconds(1500));
+            wait.Until(a => alert = webDriver.SwitchTo().Alert());
+            if(alert!=null)
             {
-                alert = webDriver.SwitchTo().Alert();
                 return true;
             }
-            catch(NoAlertPresentException noAlertException)
-            {
-                return false;
-            }
+            return false;
         }
 
         public string IgnoreCaseInXPath(string partOrXpathToBeIgnored, string? property = "text()")
