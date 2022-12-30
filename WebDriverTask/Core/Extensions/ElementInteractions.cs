@@ -72,17 +72,18 @@ namespace WebDriverTask.Core.Extensions
 
         public static string GetLocatorType(this By locator)
         {
-            return StringifyLocatory(locator).ToString().Split(new char[] { ':' }, 2).ToList()[0];
+            return StringifyLocator(locator).First();
         }
 
         public static string GetLocatorValue(this By locator)
         {
-            return StringifyLocatory(locator).ToString().Split(new char[] { ':' }, 2).ToList()[1];
+            return StringifyLocator(locator).Reverse().First();
         }
 
-        private static string StringifyLocatory(By locator)
+        private static string[] StringifyLocator(By locator)
         {
-            return locator.ToString().Split('.')[1];
+            //{By.locatorType: locatoryValue}
+            return locator.ToString().Replace("By.", "").Split(new char[] {':'});
         }
     }
 }
