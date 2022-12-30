@@ -8,6 +8,9 @@ namespace WebDriverTask.Pages
     public abstract class BasePage
     {
         private IWebDriver webDriver;
+        private IAlert alert;
+
+        
 
         protected IWebDriver GetDriverInstance()
         {
@@ -37,24 +40,32 @@ namespace WebDriverTask.Pages
             }
         }
 
-        public void HandleAlert(bool accept)
+        public void AlerDismiss()
+        {
+            if (isAlertExists())
+            {
+                alert.Dismiss();
+            }
+        }
+
+        public void AlertAccept()
+        {
+            if (isAlertExists())
+            {
+                alert.Accept();
+            }
+        }
+
+        public bool isAlertExists()
         {
             try
             {
-                IAlert alert = webDriver.SwitchTo().Alert();
-                if (accept)
-                {
-                    alert.Accept();
-                }
-                else
-                {
-                    alert.Dismiss();
-                }
-                webDriver.SwitchTo().DefaultContent();
+                alert = webDriver.SwitchTo().Alert();
+                return true;
             }
-            catch (NoAlertPresentException e)
+            catch(NoAlertPresentException noAlertException)
             {
-                Console.WriteLine(e.Message);
+                return false;
             }
         }
 
