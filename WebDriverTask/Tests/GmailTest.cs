@@ -65,7 +65,7 @@ namespace WebDriverTask.Tests
             _mainPage.messageDialog.MailSubject(someSubject);
             _mainPage.messageDialog.MailBody(someBody);
             _mainPage.messageDialog.CloseAllMailDialogs();
-            Assert.IsTrue(_mainPage.messageDialog.AllMailDialogs().Count == 0);
+            Assert.IsTrue(_mainPage.messageDialog.AllMailDialogs().Count == 0)
 
             testData.SetVariable("to", someMailAddress);
             testData.SetVariable("subject", someSubject);
