@@ -1,9 +1,6 @@
 ﻿
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-using System.Diagnostics.CodeAnalysis;
 using WebDriverTask.Core.Browser;
-using WebDriverTask.Core.Browser.Configuration;
 using WebDriverTask.Core.Extensions;
 
 namespace WebDriverTask.Core.WebDriver

@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using WebDriverTask.Core.Extensions;
 using WebDriverTask.Core.Helpers;
-using WebDriverTask.Core.WebDriver;
 using WebDriverTask.Pages.Gmail.Dialogs.Message;
 
 namespace WebDriverTask.Pages.Gmail.Folders

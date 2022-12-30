@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail.Dialogs.Message
 {

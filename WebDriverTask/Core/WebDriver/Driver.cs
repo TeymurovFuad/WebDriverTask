@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System.ComponentModel;
 using WebDriverTask.Core.Browser;
 using WebDriverTask.Core.Browser.Configuration;
 using WebDriverTask.Core.CustomExceptions;

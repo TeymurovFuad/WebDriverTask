@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
-using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Core.Browser.Configuration
 {
