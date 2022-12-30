@@ -13,22 +13,22 @@ namespace WebDriverTask.Pages.Gmail.Folders
             webDriver = driver;
         }
 
-        public string FolderSpecificIdendifierIfNoMailExists { get; set; } = "td[text()='No sent messages! ']";
+        public By FolderSpecificIdendifierIfNoMailExists { get; set; } = By.XPath("td[text()='No sent messages! ']");
         public string FolderName { get; private set; }
-        public string pathToMails = "//div[text()='To: ']/ancestor::tr";
-        private string _pathToSpecificMail = "//span[text()='{0}']";
+        public By pathToMails = By.XPath("//div[text()='To: ']/ancestor::tr");
+        private By _pathToSpecificMail = By.XPath("//span[text()='{0}']");
 
         public List<IWebElement> GetMails()
         {
-            webDriver.isElementDisplayed(By.XPath(pathToMails));
-            List<IWebElement> sentMails = webDriver.FindElements(By.XPath(pathToMails)).ToList();
+            webDriver.isElementDisplayed(pathToMails);
+            List<IWebElement> sentMails = webDriver.FindElements(pathToMails).ToList();
             return sentMails;
         }
 
         public IWebElement? GetMailFromTable(string byBodyOrSubject)
         {
             GetMails();
-            string path = StringHelper.FormatString(_pathToSpecificMail, byBodyOrSubject)!;
+            string path = StringHelper.FormatString(_pathToSpecificMail.GetLocatorValue(), byBodyOrSubject)!;
             foreach (IWebElement sentMail in GetMails())
             {
                 if (sentMail.isContainsChild(By.XPath(path)))
@@ -41,7 +41,7 @@ namespace WebDriverTask.Pages.Gmail.Folders
 
         public bool isMailBoxEmpty()
         {
-            return webDriver.isElementDisplayed(By.XPath(FolderSpecificIdendifierIfNoMailExists));
+            return webDriver.isElementDisplayed(FolderSpecificIdendifierIfNoMailExists);
         }
 
         private void SetFolderName(IWebElement element)

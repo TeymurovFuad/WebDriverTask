@@ -13,22 +13,22 @@ namespace WebDriverTask.Pages.Gmail.Folders
             webDriver = driver;
         }
 
-        public string PathToDraftMails { get; private set; } = "//span[text()='Draft']/ancestor::tr";
-        public string FolderSpecificIdendifierIfNoMailExists { get; private set; } = "td[text()=\"You don't have any saved drafts.\"]";
-        private string _pathToSpecificDraftMails => "//span[text()='{0}']";
+        public By PathToDraftMails { get; private set; } = By.XPath("//span[text()='Draft']/ancestor::tr");
+        public By FolderSpecificIdendifierIfNoMailExists { get; private set; } = By.XPath("td[text()=\"You don't have any saved drafts.\"]");
+        private By _pathToSpecificDraftMails => By.XPath("//span[text()='{0}']");
         public List<IWebElement> DraftMails { get; private set; }
         public string FolderName { get; private set; }
 
         public List<IWebElement> GetMails()
         {
-            DraftMails = webDriver.FindElements(By.XPath(PathToDraftMails)).ToList();
+            DraftMails = webDriver.FindElements(PathToDraftMails).ToList();
             return DraftMails;
         }
 
         public IWebElement? GetMailFromTable(string bySubjectOrBody)
         {
             GetMails();
-            string path = StringHelper.FormatString(_pathToSpecificDraftMails, bySubjectOrBody)!;
+            string path = StringHelper.FormatString(_pathToSpecificDraftMails.GetLocatorValue(), bySubjectOrBody)!;
             foreach (IWebElement draftMail in DraftMails)
             {
                 if(draftMail.isContainsChild(By.XPath(path)))
@@ -41,7 +41,7 @@ namespace WebDriverTask.Pages.Gmail.Folders
 
         public bool isMailBoxEmpty()
         {
-            return webDriver.isElementDisplayed(By.XPath(FolderSpecificIdendifierIfNoMailExists));
+            return webDriver.isElementDisplayed(FolderSpecificIdendifierIfNoMailExists);
         }
 
         private void SetFolderName(IWebElement element)

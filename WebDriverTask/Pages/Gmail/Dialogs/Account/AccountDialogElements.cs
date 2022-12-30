@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using WebDriverTask.Core.Extensions;
 using WebDriverTask.Core.Helpers;
 
 namespace WebDriverTask.Pages.Gmail.Dialogs.Account
@@ -11,17 +12,17 @@ namespace WebDriverTask.Pages.Gmail.Dialogs.Account
             webDriver = driver;
         }
 
-        public readonly string AccountIFrameXPath = "//iframe[@name='account']";
-        public IWebElement AccountIFrame => webDriver.FindElements(By.XPath(AccountIFrameXPath)).First();
+        public readonly By AccountIFrameLocator = By.XPath("//iframe[@name='account']");
+        public IWebElement AccountIFrame => webDriver.FindElement(AccountIFrameLocator);
 
-        public readonly string SingOutButtonXPath = "//a[contains(@href, 'Logout')]";
-        public IWebElement SignOutButton => webDriver.FindElements(By.XPath(SingOutButtonXPath)).First();
+        public readonly By SingOutButtonLocator = By.XPath("//a[contains(@href, 'Logout')]");
+        public IWebElement SignOutButton => webDriver.FindElement(SingOutButtonLocator);
 
-        private string _openAccountDialogButtonXPath = "//a[contains(@aria-label, '{0}') and contains(@href, 'SignOut')]";
+        private readonly By _openAccountDialogButtonLocator = By.XPath("//a[contains(@aria-label, '{0}') and contains(@href, 'SignOut')]");
 
         public IWebElement OpenAccountDialogButton(string email)
         {
-            string formattedPath = StringHelper.FormatString(_openAccountDialogButtonXPath, email)!;
+            string formattedPath = StringHelper.FormatString(_openAccountDialogButtonLocator.GetLocatorValue(), email)!;
             return webDriver.FindElement(By.XPath(formattedPath));
         }
     }

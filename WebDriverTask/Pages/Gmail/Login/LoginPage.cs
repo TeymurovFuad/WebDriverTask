@@ -20,7 +20,7 @@ namespace WebDriverTask.Pages.Gmail.Login
 
         public bool isLanguageChooserDropDownExpanded()
         {
-            IWebElement dropDownElement = DropDownToChooseLanguage.FindElement(By.XPath(subPathToCheckDropDownStatus));
+            IWebElement dropDownElement = DropDownToChooseLanguage.FindElement(subPathToCheckDropDownStatus);
             string attributeValue = dropDownElement.GetAttribute("aria-expanded");
             return bool.TryParse(attributeValue, out bool isExpanded) && isExpanded;
         }
@@ -33,13 +33,13 @@ namespace WebDriverTask.Pages.Gmail.Login
 
         public string GetValueOfCurrentSelectedLanguage()
         {
-            string? languageValue = CurrentLanguage.FindElement(By.XPath(subPathToRetreiveLanguageText)).Text;
-            return languageValue ?? string.Empty;
+            webDriver.WaitUntilElementDisplayed(CurrentLanguage);
+            return CurrentLanguage.FindElement(subPathToRetreiveLanguageText).Text;
         }
 
         public string GetValueOfLanguage(IWebElement language)
         {
-            return language.FindElement(By.XPath(subPathToRetreiveLanguageText)).Text;
+            return language.FindElement(subPathToRetreiveLanguageText).Text;
         }
 
         public void ChangeLanguage(string languageToChange)
@@ -56,6 +56,7 @@ namespace WebDriverTask.Pages.Gmail.Login
                 }
             }
         }
+
 
         public void FillEmail(string email)
         {
