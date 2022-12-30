@@ -15,7 +15,7 @@ namespace WebDriverTask.Pages.Gmail.Dialogs.Account
         public IWebElement AccountIFrame => webDriver.FindElements(By.XPath(AccountIFrameXPath)).First();
 
         public readonly string SingOutButtonXPath = "//a[contains(@href, 'Logout')]";
-        public IWebElement SingOutButton => webDriver.FindElements(By.XPath(SingOutButtonXPath)).First();
+        public IWebElement SignOutButton => webDriver.FindElements(By.XPath(SingOutButtonXPath)).First();
 
         private string _openAccountDialogButtonXPath = "//a[contains(@aria-label, '{0}') and contains(@href, 'SignOut')]";
 

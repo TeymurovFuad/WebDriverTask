@@ -101,7 +101,7 @@ namespace WebDriverTask.Tests
         {
             _mainPage.accoutDialog.OpenAccountDialog(testData.GetVariable<string>("email"));
             _mainPage.accoutDialog.SwitchToAccountFrame();
-            _mainPage.accoutDialog.ClickSignoutButton();
+            _mainPage.accoutDialog.ClickSignOut();
             webDriver.WaitPageToLoad();
             Assert.IsTrue(_mainPage.logoutPage.isLogoutPageDisplayed());
         }

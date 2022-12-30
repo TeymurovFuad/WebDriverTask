@@ -26,17 +26,9 @@ namespace WebDriverTask.Pages.Gmail.Dialogs.Account
             webDriver.SwitchToFrame(AccountIFrame);
         }
 
-        public void ClickSignoutButton()
+        public void ClickSignOut()
         {
-            IWebElement signoutButton = SingOutButton;
-            if (signoutButton.isElementDisplayed())
-            {
-                signoutButton.Click();
-            }
-            else
-            {
-                throw new Exception("Error on click signout button");
-            }
+            ClickElement(SignOutButton);
         }
     }
 }
