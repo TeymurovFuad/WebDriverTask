@@ -10,8 +10,6 @@ namespace WebDriverTask.Pages
         private IWebDriver webDriver;
         private IAlert alert;
 
-        
-
         protected IWebDriver GetDriverInstance()
         {
             return webDriver;
