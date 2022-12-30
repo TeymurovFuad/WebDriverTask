@@ -5,28 +5,31 @@ namespace WebDriverTask.Core.Extensions
 {
     public static class DriverInteractions
     {
-        public static void WaitPageToLoad(this IWebDriver driver, int secondsToWait = 5)
+        public static void WaitPageToLoad(this IWebDriver driver, int secondsToWait=5)
         {
             if (secondsToWait > 0 && driver != null)
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(secondsToWait);
         }
 
-        public static bool WaitUntilElementDisplayed(this IWebDriver driver, IWebElement element, int waitTimeInSeconds = 5)
+        private static WebDriverWait Wait(IWebDriver driver, int waitTimeInSeconds=5)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitTimeInSeconds));
-            return wait.Until(c => element.Displayed);
+            return wait;
         }
 
-        public static bool WaintUntilUrlChanged(this IWebDriver driver, string previousUrl, int waitTimeInSeconds = 5)
+        public static bool WaitUntilElementDisplayed(this IWebDriver driver, IWebElement element)
         {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitTimeInSeconds));
-            return wait.Until(c => c.Url != previousUrl);
+            return Wait(driver).Until(c => element.Displayed);
         }
 
-        public static bool WaitUntilElementIsInteractable(this IWebDriver driver, IWebElement element, int waitTimeInSeconds = 5)
+        public static bool WaintUntilUrlChanged(this IWebDriver driver, string previousUrl)
         {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitTimeInSeconds));
-            return wait.Until(c => element.Displayed && element.Enabled);
+            return Wait(driver).Until(c => c.Url != previousUrl);
+        }
+
+        public static bool WaitUntilElementIsInteractable(this IWebDriver driver, IWebElement element)
+        {
+            return Wait(driver).Until(c => element.Displayed && element.Enabled);
         }
 
         public static string GetUrl(this IWebDriver driver)
