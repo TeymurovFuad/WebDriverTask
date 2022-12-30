@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using System.Diagnostics.CodeAnalysis;
 
 namespace WebDriverTask.Core.Extensions
@@ -21,17 +22,38 @@ namespace WebDriverTask.Core.Extensions
 
         public static bool isElementDisplayed(this IWebElement element)
         {
-            return element.Displayed;
+            try
+            {
+                return element.Displayed;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public static bool isElementDisplayed(this IWebDriver driver, By locator)
         {
-            return driver.FindElements(locator).Count > 0;
+            try
+            {
+                return driver.FindElements(locator).Count > 0;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public static bool isContainsChild(this IWebElement parent, By childLocator)
         {
-            return parent.FindElements(childLocator).Count > 0;
+            try
+            {
+                return parent.FindElements(childLocator).Count > 0;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public static void HandleAlert(this IWebDriver driver, bool accept)
