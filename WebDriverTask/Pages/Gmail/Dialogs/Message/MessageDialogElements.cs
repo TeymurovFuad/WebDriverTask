@@ -6,7 +6,7 @@ namespace WebDriverTask.Pages.Gmail.Dialogs.Message
     public class MessageDialogElements : BasePage
     {
         IWebDriver webDriver { get; set; }
-        public MessageDialogElements(IWebDriver driver)
+        public MessageDialogElements(IWebDriver driver): base(driver)
         {
             webDriver = driver;
         }

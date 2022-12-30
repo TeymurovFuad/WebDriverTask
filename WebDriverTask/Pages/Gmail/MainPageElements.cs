@@ -7,7 +7,8 @@ namespace WebDriverTask.Pages.Gmail
     public class MainPageElements: BasePage
     {
         IWebDriver webDriver { get; set; }
-        public MainPageElements(IWebDriver driver)
+        
+        public MainPageElements(IWebDriver driver): base(driver)
         {
             webDriver = driver;
         }

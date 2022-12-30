@@ -8,6 +8,10 @@ namespace WebDriverTask.Pages
         private IWebDriver webDriver;
         private IAlert alert;
 
+        public BasePage(IWebDriver driver)
+        {
+            webDriver = driver;
+        }
         
 
         protected IWebDriver GetDriverInstance()

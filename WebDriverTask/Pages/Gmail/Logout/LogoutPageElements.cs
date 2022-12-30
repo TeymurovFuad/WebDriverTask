@@ -5,7 +5,7 @@ namespace WebDriverTask.Pages.Gmail.Logout
     public class LogoutPageElements: BasePage
     {
         IWebDriver webDriver { get; set; }
-        public LogoutPageElements(IWebDriver driver)
+        public LogoutPageElements(IWebDriver driver): base(driver)
         {
             webDriver = driver;
         }
