@@ -7,22 +7,28 @@ namespace WebDriverTask.Core.Browser
 {
     public sealed class Firefox
     {
+        bool isRemote;
+
         private IWebDriver driver;
         private FirefoxOptions _firefoxOptions;
         public Firefox()
         {
-            driver = new FirefoxDriver();
             _firefoxOptions = new FirefoxOptions();
         }
 
         public IWebDriver GetDriver()
         {
+            if (!isRemote)
+            {
+                driver = new FirefoxDriver();
+            }
             return driver;
         }
 
         public Firefox ConfigureRemoteDriver()
         {
             driver = new RemoteWebDriver(new Uri("http://localhost:5566/wd/hub"), _firefoxOptions.ToCapabilities());
+            isRemote = true;
             return this;
         }
 
