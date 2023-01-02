@@ -1,6 +1,8 @@
 ﻿using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 using WebDriverTask.Core.Browser;
 using WebDriverTask.Core.Extensions;
 using WebDriverTask.Core.WebDriver;
@@ -11,8 +13,11 @@ namespace WebDriverTask.Tests.TestConfig
     {
         private BrowserType _browserType { get; set; }
         protected IWebDriver webDriver { get; set; }
-        protected TestData testData { get; set; }
-        protected DriverManager driverManager { get; set; }
+        protected TestData testData;
+        protected DriverManager driverManager;
+        protected ChromeOptions chromeOptions;
+        protected FirefoxOptions firefoxOptions;
+        protected DriverOptions driverOptions;
 
         private bool _isFailed;
         private string? _url { get; set; }
@@ -24,13 +29,13 @@ namespace WebDriverTask.Tests.TestConfig
             _browserType = browserType;
             testData = new TestData();
             driverManager = new DriverManager();
-            driverManager.BuildDriver(browserType);
-            webDriver = driverManager.GetWebDriver();
         }
 
         [OneTimeSetUp]
         public void ClassSetUp()
         {
+            driverManager.BuildDriver(_browserType, driverOptions);
+            webDriver = driverManager.GetWebDriver();
             if (!string.IsNullOrEmpty(_url))
                 driverManager.GetWebDriver().GoToUrl(_url);
         }

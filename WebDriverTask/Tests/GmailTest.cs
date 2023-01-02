@@ -5,6 +5,7 @@ using WebDriverTask.Pages.Gmail;
 using WebDriverTask.Core.Helpers;
 using OpenQA.Selenium;
 using WebDriverTask.Core.Extensions;
+using OpenQA.Selenium.Chrome;
 
 namespace WebDriverTask.Tests
 {
@@ -12,11 +13,13 @@ namespace WebDriverTask.Tests
     public class GmailTest: Hooks
     {
         private MainPage _mainPage;
+        private ChromeOptions _chromeOptions;
         private static string _url = "https://mail.google.com/";
 
-        public GmailTest() : base(browserType: BrowserType.Chrome, url: _url)
+        public GmailTest() : base(browserType: BrowserType.RemoteFirefox, url: _url)
         {
             _mainPage = new MainPage(webDriver);
+            _chromeOptions = new ChromeOptions();
             StopOnFail= true;
         }
 
@@ -46,6 +49,7 @@ namespace WebDriverTask.Tests
             _mainPage.loginPage.FillPassword(password);
             _mainPage.loginPage.ClickNext();
             testData.SetVariable("email", email);
+            Assert.IsTrue(webDriver.Title.StartsWith("Inbox"));
         }
 
         [Test, Order(4)]

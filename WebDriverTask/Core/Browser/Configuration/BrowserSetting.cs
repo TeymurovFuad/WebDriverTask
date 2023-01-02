@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 
@@ -11,6 +12,11 @@ namespace WebDriverTask.Core.Browser.Configuration
         public BrowserSetting(IWebDriver driver, BrowserType browserType)
         {
             _driver = driver;
+            _browserType = browserType;
+        }
+
+        public BrowserSetting(BrowserType browserType)
+        {
             _browserType = browserType;
         }
 

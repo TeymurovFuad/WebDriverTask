@@ -3,6 +3,8 @@
     public enum BrowserType
     {
         Firefox,
-        Chrome
+        Chrome,
+        RemoteChrome,
+        RemoteFirefox
     }
 }

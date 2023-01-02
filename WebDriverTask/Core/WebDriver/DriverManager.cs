@@ -20,9 +20,9 @@ namespace WebDriverTask.Core.WebDriver
             webDriver = GetDriver();
         }
 
-        public void BuildDriver(BrowserType browserType)
+        public void BuildDriver(BrowserType browserType, DriverOptions driverOptions)
         {
-            SetUpDriver(browserType);
+            SetUpDriver(browserType, driverOptions);
             SetWebDriver();
             webDriver?.WaitPageToLoad();
             webDriver?.MaximizeBrowser();
