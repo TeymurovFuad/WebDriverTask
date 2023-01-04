@@ -15,8 +15,6 @@ namespace WebDriverTask.Tests.TestConfig
         protected IWebDriver webDriver { get; set; }
         protected TestData testData;
         protected DriverManager driverManager;
-        protected ChromeOptions chromeOptions;
-        protected FirefoxOptions firefoxOptions;
         protected DriverOptions driverOptions;
 
         private bool _isFailed;
@@ -29,13 +27,13 @@ namespace WebDriverTask.Tests.TestConfig
             _browserType = browserType;
             testData = new TestData();
             driverManager = new DriverManager();
+            driverManager.BuildDriver(_browserType, driverOptions);
+            webDriver = driverManager.GetWebDriver();
         }
 
         [OneTimeSetUp]
         public void ClassSetUp()
         {
-            driverManager.BuildDriver(_browserType, driverOptions);
-            webDriver = driverManager.GetWebDriver();
             if (!string.IsNullOrEmpty(_url))
                 driverManager.GetWebDriver().GoToUrl(_url);
         }

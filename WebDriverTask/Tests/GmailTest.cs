@@ -13,13 +13,13 @@ namespace WebDriverTask.Tests
     public class GmailTest: Hooks
     {
         private MainPage _mainPage;
-        private ChromeOptions _chromeOptions;
         private static string _url = "https://mail.google.com/";
 
         public GmailTest() : base(browserType: BrowserType.RemoteFirefox, url: _url)
         {
+            driverOptions = new ChromeOptions();
+            //driverOptions.BrowserName(CapabilityType.BrowserName, "chrome");
             _mainPage = new MainPage(webDriver);
-            _chromeOptions = new ChromeOptions();
             StopOnFail= true;
         }
 
@@ -49,7 +49,7 @@ namespace WebDriverTask.Tests
             _mainPage.loginPage.FillPassword(password);
             _mainPage.loginPage.ClickNext();
             testData.SetVariable("email", email);
-            Assert.IsTrue(webDriver.Title.StartsWith("Inbox"));
+            Assert.IsTrue(_mainPage.isTitleDisplayed("inbox"));
         }
 
         [Test, Order(4)]
