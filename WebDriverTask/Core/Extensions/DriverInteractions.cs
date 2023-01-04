@@ -22,6 +22,12 @@ namespace WebDriverTask.Core.Extensions
             return Wait(driver).Until(c => element.Displayed);
         }
 
+        public static bool WaitUntilPageContainsTitle(this IWebDriver driver, IWebElement element, string title)
+        {
+            string pageTitle = driver.Title ?? element.Text;
+            return Wait(driver).Until(c => pageTitle.Contains(title, StringComparison.CurrentCultureIgnoreCase));
+        }
+
         public static bool WaintUntilUrlChanged(this IWebDriver driver, string previousUrl)
         {
             return Wait(driver).Until(c => c.Url != previousUrl);
@@ -50,6 +56,18 @@ namespace WebDriverTask.Core.Extensions
         public static void GoToUrl(this IWebDriver driver, string url)
         {
             driver.Navigate().GoToUrl(url);
+        }
+
+        public static IWebElement GetElement(this IWebDriver driver, By locator)
+        {
+            IWebElement element = driver.FindElement(locator);
+            return element;
+        }
+
+        public static List<IWebElement> GetElements(this IWebDriver driver, By locator)
+        {
+            List<IWebElement> elements = driver.FindElements(locator).ToList();
+            return elements;
         }
     }
 }
