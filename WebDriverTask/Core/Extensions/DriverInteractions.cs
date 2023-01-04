@@ -5,7 +5,7 @@ namespace WebDriverTask.Core.Extensions
 {
     public static class DriverInteractions
     {
-        public static void WaitPageToLoad(this IWebDriver driver, int secondsToWait=5)
+        public static void WaitPageToLoad(this IWebDriver driver, int secondsToWait=5, Action? exceptedAction=null)
         {
             if (secondsToWait > 0 && driver != null)
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(secondsToWait);
@@ -22,10 +22,9 @@ namespace WebDriverTask.Core.Extensions
             return Wait(driver).Until(c => element.Displayed);
         }
 
-        public static bool WaitUntilPageContainsTitle(this IWebDriver driver, IWebElement element, string title)
+        public static bool WaitUntilPageContainsTitle(this IWebDriver driver, string expectedTitle)
         {
-            string pageTitle = driver.Title ?? element.Text;
-            return Wait(driver).Until(c => pageTitle.Contains(title, StringComparison.CurrentCultureIgnoreCase));
+            return Wait(driver).Until(c => driver.Title.Contains(expectedTitle, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public static bool WaintUntilUrlChanged(this IWebDriver driver, string previousUrl)

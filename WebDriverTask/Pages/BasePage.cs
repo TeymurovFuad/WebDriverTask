@@ -61,7 +61,7 @@ namespace WebDriverTask.Pages
 
         public bool isTitleDisplayed(string title)
         {
-            return _webDriver.WaitUntilPageContainsTitle(Title, title);
+            return _webDriver.WaitUntilPageContainsTitle(expectedTitle: title);
         }
     }
 }
