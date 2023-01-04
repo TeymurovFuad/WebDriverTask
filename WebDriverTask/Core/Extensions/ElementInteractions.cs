@@ -36,7 +36,7 @@ namespace WebDriverTask.Core.Extensions
         {
             try
             {
-                return driver.FindElements(locator).Count > 0;
+                return driver.GetElements(locator).Count > 0;
             }
             catch
             {
@@ -48,7 +48,7 @@ namespace WebDriverTask.Core.Extensions
         {
             try
             {
-                return parent.FindElements(childLocator).Count > 0;
+                return parent.GetElements(childLocator).Count > 0;
             }
             catch
             {

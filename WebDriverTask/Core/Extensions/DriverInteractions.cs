@@ -64,9 +64,21 @@ namespace WebDriverTask.Core.Extensions
             return element;
         }
 
+        public static IWebElement GetElement(this IWebElement parent, By locator)
+        {
+            IWebElement element = parent.FindElement(locator);
+            return element;
+        }
+
         public static List<IWebElement> GetElements(this IWebDriver driver, By locator)
         {
             List<IWebElement> elements = driver.FindElements(locator).ToList();
+            return elements;
+        }
+
+        public static List<IWebElement> GetElements(this IWebElement parent, By locator)
+        {
+            List<IWebElement> elements = parent.FindElements(locator).ToList();
             return elements;
         }
     }

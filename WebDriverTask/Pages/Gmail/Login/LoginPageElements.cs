@@ -15,26 +15,26 @@ namespace WebDriverTask.Pages.Gmail.Login
         private readonly string HelpToWorkBetterText = "If you’d like, take a few moments to help Google work better for you";
 
         public readonly By EmailFieldId = By.Id("identifierId");
-        public IWebElement EmailField => webDriver.FindElement(EmailFieldId);
+        public IWebElement EmailField => webDriver.GetElement(EmailFieldId);
 
         public readonly By PasswordFieldLocator = By.XPath("//input[@type='password' and @name='Passwd']");
-        public IWebElement PasswordField => webDriver.FindElement(PasswordFieldLocator);
+        public IWebElement PasswordField => webDriver.GetElement(PasswordFieldLocator);
 
         public By HelpWorkBetterTextLocator => By.XPath($"//div[text()={HelpToWorkBetterText}]");
-        public IWebElement HelpWorkBetterText => webDriver.FindElement(HelpWorkBetterTextLocator);
+        public IWebElement HelpWorkBetterText => webDriver.GetElement(HelpWorkBetterTextLocator);
 
         public readonly By NotNowButtonOnHelpWorkBetterPageLocator = By.XPath($"//*[text()='Not Now']");
-        public IWebElement NotNowButtonOnHelpWorkBetterPage => webDriver.FindElement(NotNowButtonOnHelpWorkBetterPageLocator);
+        public IWebElement NotNowButtonOnHelpWorkBetterPage => webDriver.GetElement(NotNowButtonOnHelpWorkBetterPageLocator);
 
         public readonly By DropDownToChooseLanguageId = By.Id("lang-chooser");
-        public IWebElement DropDownToChooseLanguage => webDriver.FindElement(DropDownToChooseLanguageId);
+        public IWebElement DropDownToChooseLanguage => webDriver.GetElement(DropDownToChooseLanguageId);
 
         public readonly By AllLanguagesFromDropDownLocator = By.XPath("//ul[@role='listbox']/li");
-        public List<IWebElement> AllLanguagesFromDropDown => webDriver.FindElements(AllLanguagesFromDropDownLocator).ToList();
-        public IWebElement CurrentLanguage => webDriver.FindElement(By.XPath($"{AllLanguagesFromDropDownLocator.GetLocatorValue()}[@aria-selected='true']"));
+        public List<IWebElement> AllLanguagesFromDropDown => webDriver.GetElements(AllLanguagesFromDropDownLocator).ToList();
+        public IWebElement CurrentLanguage => webDriver.GetElement(By.XPath($"{AllLanguagesFromDropDownLocator.GetLocatorValue()}[@aria-selected='true']"));
 
         public readonly string NextButtonLocator = "//button[span[contains(text(), 'Next')]]";
-        public IWebElement NextButton => webDriver.FindElement(By.XPath(NextButtonLocator));
+        public IWebElement NextButton => webDriver.GetElement(By.XPath(NextButtonLocator));
 
         private IWebElement LanguageFromDropDown { get; set; }
 
@@ -48,7 +48,7 @@ namespace WebDriverTask.Pages.Gmail.Login
 
             foreach (IWebElement element in AllLanguagesFromDropDown)
             {
-                if (element.FindElement(By.XPath(xpathToLanguage)).Displayed)
+                if (element.GetElement(By.XPath(xpathToLanguage)).Displayed)
                 {
                     LanguageFromDropDown = element;
                     break;

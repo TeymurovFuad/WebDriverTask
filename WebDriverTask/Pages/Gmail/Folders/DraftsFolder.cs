@@ -21,7 +21,7 @@ namespace WebDriverTask.Pages.Gmail.Folders
 
         public List<IWebElement> GetMails()
         {
-            DraftMails = webDriver.FindElements(PathToDraftMails).ToList();
+            DraftMails = webDriver.GetElements(PathToDraftMails).ToList();
             return DraftMails;
         }
 
@@ -46,7 +46,7 @@ namespace WebDriverTask.Pages.Gmail.Folders
 
         private void SetFolderName(IWebElement element)
         {
-            FolderName = element.FindElement(By.XPath("//a")).Text;
+            FolderName = element.GetElement(By.XPath("//a")).Text;
         }
 
         public bool VerifyPageOpened()

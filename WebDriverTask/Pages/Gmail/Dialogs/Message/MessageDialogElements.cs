@@ -17,42 +17,42 @@ namespace WebDriverTask.Pages.Gmail.Dialogs.Message
         private readonly By _allMailDialogsLocator = By.XPath("//h2[div[text()='Compose:']]");
 
         public readonly By ToLocator = By.XPath("//div[@name='to']//input");
-        public IWebElement To => webDriver.FindElement(ToLocator);
+        public IWebElement To => webDriver.GetElement(ToLocator);
 
         public readonly By SubjectLocator = By.XPath("//input[@name='subjectbox']");
-        public IWebElement Subject => webDriver.FindElement(SubjectLocator);
+        public IWebElement Subject => webDriver.GetElement(SubjectLocator);
 
         public readonly By BodyLocator = By.XPath("//div[@aria-label='Message Body']");
-        public IWebElement Body => webDriver.FindElement(BodyLocator);
+        public IWebElement Body => webDriver.GetElement(BodyLocator);
 
         public readonly By SendButtonLocator = By.XPath("//div[@role='button' and text()='Send']");
-        public IWebElement SendButton => webDriver.FindElement(SendButtonLocator);
+        public IWebElement SendButton => webDriver.GetElement(SendButtonLocator);
 
         public readonly By SaveAndCloseButtonsLocator = By.XPath("//img[@aria-label='Save & close']");
-        public List<IWebElement> SaveAndCloseButtons => webDriver.FindElements(SaveAndCloseButtonsLocator).ToList();
+        public List<IWebElement> SaveAndCloseButtons => webDriver.GetElements(SaveAndCloseButtonsLocator).ToList();
 
 
         public List<IWebElement> MailDialogsByHeader(string dialogHeader)
         {
             string pathToDialog = StringHelper.FormatString(_mailDialogByHeaderLocator.GetLocatorValue(), dialogHeader)!;
-            return webDriver.FindElements(By.XPath(pathToDialog)).ToList();
+            return webDriver.GetElements(By.XPath(pathToDialog)).ToList();
         }
 
         public List<IWebElement> NewMailDialogs()
         {
             string pathToDialog = StringHelper.FormatString(_mailDialogByHeaderLocator.GetLocatorValue(), _newMailDialogHeader)!;
-            return webDriver.FindElements(By.XPath(pathToDialog)).ToList();
+            return webDriver.GetElements(By.XPath(pathToDialog)).ToList();
         }
 
         public List<IWebElement> AllMailDialogs()
         {
-            return webDriver.FindElements(_allMailDialogsLocator).ToList();
+            return webDriver.GetElements(_allMailDialogsLocator).ToList();
         }
 
         public IWebElement GetMailDialog(string? mailSubject=null)
         {
             string pathToSpecifiedMessageDialog = StringHelper.FormatString(_mailDialogByHeaderLocator.GetLocatorValue(), mailSubject ?? _newMailDialogHeader)!;
-            return webDriver.FindElement(By.XPath(pathToSpecifiedMessageDialog));
+            return webDriver.GetElement(By.XPath(pathToSpecifiedMessageDialog));
         }
     }
 }

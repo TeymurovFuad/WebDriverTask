@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebDriverTask.Core.Extensions;
 
 namespace WebDriverTask.Pages
 {
@@ -16,6 +17,6 @@ namespace WebDriverTask.Pages
         }
 
         public static By TitleLocator => By.XPath("html/head/title");
-        public IWebElement Title => _webDriver.FindElement(TitleLocator);
+        public IWebElement Title => _webDriver.GetElement(TitleLocator);
     }
 }

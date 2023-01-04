@@ -13,17 +13,17 @@ namespace WebDriverTask.Pages.Gmail.Dialogs.Account
         }
 
         public readonly By AccountIFrameLocator = By.XPath("//iframe[@name='account']");
-        public IWebElement AccountIFrame => webDriver.FindElement(AccountIFrameLocator);
+        public IWebElement AccountIFrame => webDriver.GetElement(AccountIFrameLocator);
 
         public readonly By SingOutButtonLocator = By.XPath("//a[contains(@href, 'Logout')]");
-        public IWebElement SignOutButton => webDriver.FindElement(SingOutButtonLocator);
+        public IWebElement SignOutButton => webDriver.GetElement(SingOutButtonLocator);
 
         private readonly By _openAccountDialogButtonLocator = By.XPath("//a[contains(@aria-label, '{0}') and contains(@href, 'SignOut')]");
 
         public IWebElement OpenAccountDialogButton(string email)
         {
             string formattedPath = StringHelper.FormatString(_openAccountDialogButtonLocator.GetLocatorValue(), email)!;
-            return webDriver.FindElement(By.XPath(formattedPath));
+            return webDriver.GetElement(By.XPath(formattedPath));
         }
     }
 }
