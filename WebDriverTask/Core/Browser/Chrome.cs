@@ -11,6 +11,7 @@ namespace WebDriverTask.Core.Browser
         bool isRemote;
 
         private IWebDriver driver { get; set; }
+        private RemoteWebDriver _remoteWebDriver;
         private ChromeOptions _chromeOptions;
 
         public Chrome()
@@ -24,12 +25,12 @@ namespace WebDriverTask.Core.Browser
             {
                 driver = new ChromeDriver();
             }
-            return driver;
+            return _remoteWebDriver;
         }
 
         public IBrowser ConfigureRemoteDriver()
         {
-            driver = new RemoteWebDriver(new Uri("http://localhost:5566/wd/hub"), _chromeOptions.ToCapabilities());
+            _remoteWebDriver = new RemoteWebDriver(new Uri("http://localhost:5566/wd/hub"), _chromeOptions.ToCapabilities());
             isRemote = true;
             return this;
         }

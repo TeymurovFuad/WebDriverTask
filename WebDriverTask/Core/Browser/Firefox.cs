@@ -11,6 +11,7 @@ namespace WebDriverTask.Core.Browser
         bool isRemote;
 
         private IWebDriver driver;
+        private RemoteWebDriver _remoteWebDriver;
         private FirefoxOptions _firefoxOptions;
         public Firefox()
         {
@@ -23,12 +24,12 @@ namespace WebDriverTask.Core.Browser
             {
                 driver = new FirefoxDriver();
             }
-            return driver;
+            return _remoteWebDriver;
         }
 
         public IBrowser ConfigureRemoteDriver()
         {
-            driver = new RemoteWebDriver(new Uri("http://localhost:5566/wd/hub"), _firefoxOptions.ToCapabilities());
+            _remoteWebDriver = new RemoteWebDriver(new Uri("http://localhost:5566/wd/hub"), _firefoxOptions.ToCapabilities());
             isRemote = true;
             return this;
         }
