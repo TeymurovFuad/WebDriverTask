@@ -5,19 +5,19 @@ using WebDriverTask.Core.Extensions;
 
 namespace WebDriverTask.Pages
 {
-    public abstract class BasePage
+    public abstract class BasePage: BasePageElements
     {
-        private IWebDriver webDriver;
+        private IWebDriver _webDriver;
         private IAlert alert;
 
-        public BasePage(IWebDriver driver)
+        public BasePage(IWebDriver driver): base(driver)
         {
-            webDriver = driver;
+            _webDriver = driver;
         }
 
         public void ClickElement(IWebElement element, bool condition = true)
         {
-            if (webDriver.WaitUntilElementIsInteractable(element))
+            if (_webDriver.WaitUntilElementIsInteractable(element))
             {
                 element.Click();
             }
@@ -45,8 +45,8 @@ namespace WebDriverTask.Pages
 
         public bool isAlertExists()
         {
-            WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromMilliseconds(1500));
-            wait.Until(a => alert = webDriver.SwitchTo().Alert());
+            WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromMilliseconds(1500));
+            wait.Until(a => alert = _webDriver.SwitchTo().Alert());
             if(alert!=null)
             {
                 return true;
@@ -57,6 +57,11 @@ namespace WebDriverTask.Pages
         public string IgnoreCaseInXPath(string partOrXpathToBeIgnored, string? property = "text()")
         {
             return $"contains(translate({property}, {partOrXpathToBeIgnored.ToLower()}, {partOrXpathToBeIgnored.Capitalise()}), {partOrXpathToBeIgnored})";
+        }
+
+        public bool isTitleDisplayed(string title)
+        {
+            return _webDriver.WaitUntilPageContainsTitle(Title, title);
         }
     }
 }
