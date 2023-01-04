@@ -2,10 +2,11 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Chrome;
+using WebDriverTask.Core.Browser.Configuration;
 
 namespace WebDriverTask.Core.Browser
 {
-    public sealed class Firefox
+    public sealed class Firefox: IBrowser
     {
         bool isRemote;
 
@@ -25,14 +26,14 @@ namespace WebDriverTask.Core.Browser
             return driver;
         }
 
-        public Firefox ConfigureRemoteDriver()
+        public IBrowser ConfigureRemoteDriver()
         {
             driver = new RemoteWebDriver(new Uri("http://localhost:5566/wd/hub"), _firefoxOptions.ToCapabilities());
             isRemote = true;
             return this;
         }
 
-        public Firefox SetOptions(FirefoxOptions? options)
+        public IBrowser SetOptions(FirefoxOptions? options)
         {
             if (options != null)
             {
@@ -41,7 +42,7 @@ namespace WebDriverTask.Core.Browser
             return this;
         }
 
-        public Firefox SetOptions(DriverOptions? options)
+        public IBrowser SetOptions(DriverOptions? options)
         {
             if (options != null)
             {

@@ -2,14 +2,15 @@
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
+using WebDriverTask.Core.Browser.Configuration;
 
 namespace WebDriverTask.Core.Browser
 {
-    public sealed class Chrome
+    public sealed class Chrome: IBrowser
     {
         bool isRemote;
 
-        private IWebDriver driver;
+        private IWebDriver driver { get; set; }
         private ChromeOptions _chromeOptions;
 
         public Chrome()
@@ -26,14 +27,14 @@ namespace WebDriverTask.Core.Browser
             return driver;
         }
 
-        public Chrome ConfigureRemoteDriver()
+        public IBrowser ConfigureRemoteDriver()
         {
             driver = new RemoteWebDriver(new Uri("http://localhost:5566/wd/hub"), _chromeOptions.ToCapabilities());
             isRemote = true;
             return this;
         }
 
-        public Chrome SetOptions(ChromeOptions? options)
+        public IBrowser SetOptions(ChromeOptions? options)
         {
             if (options != null)
             {
@@ -42,11 +43,11 @@ namespace WebDriverTask.Core.Browser
             return this;
         }
 
-        public Chrome SetOptions(DriverOptions? options)
+        public IBrowser SetOptions(DriverOptions? options)
         {
             if (options != null)
             {
-                _chromeOptions = (ChromeOptions)options;
+                _chromeOptions = options as ChromeOptions;
             }
             return this;
         }
