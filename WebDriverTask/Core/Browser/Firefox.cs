@@ -23,6 +23,7 @@ namespace WebDriverTask.Core.Browser
             if (!isRemote)
             {
                 driver = new FirefoxDriver();
+                return driver;
             }
             return _remoteWebDriver;
         }

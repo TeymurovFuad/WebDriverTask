@@ -24,6 +24,7 @@ namespace WebDriverTask.Core.Browser
             if (!isRemote)
             {
                 driver = new ChromeDriver();
+                return driver;
             }
             return _remoteWebDriver;
         }
