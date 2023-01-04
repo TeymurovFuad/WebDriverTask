@@ -17,7 +17,7 @@ namespace WebDriverTask.Core.Browser.Configuration
             firefox = new Firefox();
         }
 
-        protected IWebDriver CreateBrowser(BrowserType browserType, DriverOptions? options)
+        protected IWebDriver CreateBrowser(BrowserType browserType, DriverOptions? options=null)
         {
             IWebDriver driver;
             _browserType = browserType;
