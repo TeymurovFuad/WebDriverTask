@@ -66,7 +66,7 @@ namespace WebDriverTask.Tests
             _mainPage.messageDialog.MailSubject(someSubject);
             _mainPage.messageDialog.MailBody(someBody);
             _mainPage.messageDialog.CloseAllMailDialogs();
-            Assert.IsTrue(_mainPage.messageDialog.AllMailDialogs().Count == 0);
+            Assert.IsTrue(_mainPage.messageDialog.AllMailDialogs.Count == 0);
 
             testData.SetVariable("to", someMailAddress);
             testData.SetVariable("subject", someSubject);
@@ -77,7 +77,7 @@ namespace WebDriverTask.Tests
         public void VerifyCreatedMessageExistsInDrafts()
         {
             _mainPage.GoToDrafts();
-            object? mail = _mainPage.draftsFolder.GetMailFromTable(testData.GetVariable<string>("subject"));
+            object? mail = _mainPage.draftsFolder.GetDraftMailsByValue(testData.GetVariable<string>("subject"));
             Assert.IsNotNull(mail);
         }
 
@@ -85,16 +85,16 @@ namespace WebDriverTask.Tests
         public void SendMailFromDraftAndVerifyMailDissapearedFromDraftFolder()
         {
             _mainPage.messageDialog.CloseAllMailDialogs();
-            _mainPage.draftsFolder.GetMailFromTable(testData.GetVariable<string>("subject"))!.Click();
+            _mainPage.draftsFolder.GetDraftMailByValue(testData.GetVariable<string>("subject"))!.JsClick(webDriver);
             _mainPage.messageDialog.SendButton.Click();
-            Assert.IsNull(_mainPage.draftsFolder.GetMailFromTable(testData.GetVariable<string>("subject")));
+            Assert.IsNull(_mainPage.draftsFolder.GetDraftMailsByValue(testData.GetVariable<string>("subject")));
         }
 
         [Test, Order(8)]
         public void GoToSentMailsFolderAndVerifyThatMailIsThere()
         {
             _mainPage.GoToSent();
-            Assert.IsNotNull(_mainPage.sentFolder.GetMailFromTable(testData.GetVariable<string>("subject")));
+            Assert.IsNotNull(_mainPage.sentFolder.GetSentMailBySubject(testData.GetVariable<string>("subject")));
         }
 
         [Test, Order(9)]

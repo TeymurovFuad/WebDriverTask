@@ -28,31 +28,7 @@ namespace WebDriverTask.Pages.Gmail
         public readonly By SentFolderLocator = By.XPath("//div[@data-tooltip='Sent']");
         public IWebElement SentFolder => webDriver.GetElement(SentFolderLocator);
 
-        private By _pathToMailContainingTable = By.XPath("//table[tbody[position()=1]//{0}]");
-        private readonly By _pathToSpecificMail = By.XPath("/span[text()='{0}']//ancestor::tr");
-
-        public IWebElement GetTableContainingMails(string folderSpecificIdentifier)
-        {
-            IWebElement tableOfMails = webDriver.GetElement(By.XPath($"//table[tbody[position()=1]//{folderSpecificIdentifier}]"));
-            return tableOfMails;
-        }
-
-        public string GetXPathToTableContainingMails(string folderSpecificIdentifier)
-        {
-            return StringHelper.FormatString(_pathToMailContainingTable.GetLocatorValue(), folderSpecificIdentifier)!;
-        }
-
-        public string PathToSpecificMail(string subjectOrBody)
-        {
-            return StringHelper.FormatString(_pathToSpecificMail.GetLocatorType(), subjectOrBody);
-        }
-
-        public IWebElement SpecificMailFromTable(string subjectOrBody)
-        {
-            string pathToMail = PathToSpecificMail(subjectOrBody);
-            IWebElement mail = webDriver.GetElement(By.XPath(pathToMail));
-            webDriver.WaitUntilElementIsInteractable(mail);
-            return mail;
-        }
+        public By GetTableContainingMailsLocator(string folderSpecificIdentifier) => By.XPath($"//table[tbody[position()=1]//{folderSpecificIdentifier}]");
+        public IWebElement GetTableContainingMails(string folderSpecificIdentifier) => webDriver.GetElement(GetTableContainingMailsLocator(folderSpecificIdentifier));
     }
 }

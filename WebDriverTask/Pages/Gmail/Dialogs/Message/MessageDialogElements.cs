@@ -15,6 +15,7 @@ namespace WebDriverTask.Pages.Gmail.Dialogs.Message
         private const string _newMailDialogHeader = "New Message";
         private readonly By _mailDialogByHeaderLocator = By.XPath("//h2[div[text()='Compose:'] and div/span[text()='{0}']]");
         private readonly By _allMailDialogsLocator = By.XPath("//h2[div[text()='Compose:']]");
+        public List<IWebElement> AllMailDialogs => webDriver.GetElements(_allMailDialogsLocator);
 
         public readonly By ToLocator = By.XPath("//div[@name='to']//input");
         public IWebElement To => webDriver.GetElement(ToLocator);
@@ -42,11 +43,6 @@ namespace WebDriverTask.Pages.Gmail.Dialogs.Message
         {
             string pathToDialog = StringHelper.FormatString(_mailDialogByHeaderLocator.GetLocatorValue(), _newMailDialogHeader)!;
             return webDriver.GetElements(By.XPath(pathToDialog)).ToList();
-        }
-
-        public List<IWebElement> AllMailDialogs()
-        {
-            return webDriver.GetElements(_allMailDialogsLocator).ToList();
         }
 
         public IWebElement GetMailDialog(string? mailSubject=null)

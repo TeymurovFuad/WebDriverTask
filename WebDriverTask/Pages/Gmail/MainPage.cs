@@ -2,7 +2,8 @@
 using WebDriverTask.Core.Extensions;
 using WebDriverTask.Pages.Gmail.Dialogs.Account;
 using WebDriverTask.Pages.Gmail.Dialogs.Message;
-using WebDriverTask.Pages.Gmail.Folders;
+using WebDriverTask.Pages.Gmail.Folders.Drafts;
+using WebDriverTask.Pages.Gmail.Folders.Sent;
 using WebDriverTask.Pages.Gmail.Login;
 using WebDriverTask.Pages.Gmail.Logout;
 

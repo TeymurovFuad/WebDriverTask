@@ -12,14 +12,14 @@ namespace WebDriverTask.Tests
     [TestFixture]
     public class GmailTest: Hooks
     {
-        private MainPage _mainPage;
+        protected MainPage mainPage;
         private static string _url = "https://mail.google.com/";
 
-        public GmailTest() : base(browserType: BrowserType.RemoteFirefox, url: _url)
+        public GmailTest() : base(browserType: BrowserType.Chrome, url: _url)
         {
             driverOptions = new ChromeOptions();
             //driverOptions.BrowserName(CapabilityType.BrowserName, "chrome");
-            _mainPage = new MainPage(webDriver);
+            mainPage = new MainPage(webDriver);
             StopOnFail= true;
         }
 
@@ -34,9 +34,9 @@ namespace WebDriverTask.Tests
         [TestCase("english")]
         public void ChangePageLanguageToEnglishAndVerifyItChanged(string expectedLanguage)
         {
-            _mainPage.loginPage.ToggleLanguageChooserDropDown();
-            _mainPage.loginPage.ChangeLanguage(expectedLanguage);
-            string actualLanguage = _mainPage.loginPage.GetValueOfCurrentSelectedLanguage();
+            mainPage.loginPage.ToggleLanguageChooserDropDown();
+            mainPage.loginPage.ChangeLanguage(expectedLanguage);
+            string actualLanguage = mainPage.loginPage.GetValueOfCurrentSelectedLanguage();
             Assert.That(actualLanguage.Contains(expectedLanguage, StringComparison.CurrentCultureIgnoreCase), Is.True);
         }
 
@@ -44,19 +44,19 @@ namespace WebDriverTask.Tests
         [TestCase("qy54313@gmail.com", "Aa123456____")]
         public void FillUsernameAndPasswordAndLogin(string email, string password)
         {
-            _mainPage.loginPage.FillEmail(email);
-            _mainPage.loginPage.ClickNext();
-            _mainPage.loginPage.FillPassword(password);
-            _mainPage.loginPage.ClickNext();
+            mainPage.loginPage.FillEmail(email);
+            mainPage.loginPage.ClickNext();
+            mainPage.loginPage.FillPassword(password);
+            mainPage.loginPage.ClickNext();
             testData.SetVariable("email", email);
-            Assert.IsTrue(_mainPage.isTitleDisplayed("inbox"));
+            Assert.IsTrue(mainPage.isTitleDisplayed("inbox"));
         }
 
         [Test, Order(4)]
         public void OpenDialogToComposeNewMail()
         {
-            _mainPage.ComposeNewMail();
-            IWebElement messageDialog = _mainPage.messageDialog.GetMailDialog();
+            mainPage.ComposeNewMail();
+            IWebElement messageDialog = mainPage.messageDialog.GetMailDialog();
             Assert.IsTrue(messageDialog.isElementDisplayed());
         }
 
@@ -65,11 +65,12 @@ namespace WebDriverTask.Tests
         public void FillFieldsInMessageDialogAndCloseDialog(string someMailAddress, string someSubject, string someBody)
         {
             someSubject += StringHelper.GenerateUUID();
-            _mainPage.messageDialog.MailTo(someMailAddress);
-            _mainPage.messageDialog.MailSubject(someSubject);
-            _mainPage.messageDialog.MailBody(someBody);
-            _mainPage.messageDialog.CloseAllMailDialogs();
-            Assert.IsTrue(_mainPage.messageDialog.AllMailDialogs().Count == 0);
+            mainPage.messageDialog.MailTo(someMailAddress);
+            mainPage.messageDialog.MailSubject(someSubject);
+            mainPage.messageDialog.MailBody(someBody);
+            mainPage.messageDialog.CloseAllMailDialogs();
+            Thread.Sleep(2000);
+            Assert.IsTrue(mainPage.messageDialog.AllMailDialogs.Count == 0);
 
             testData.SetVariable("to", someMailAddress);
             testData.SetVariable("subject", someSubject);
@@ -79,35 +80,35 @@ namespace WebDriverTask.Tests
         [Test, Order(6)]
         public void VerifyCreatedMessageExistsInDrafts()
         {
-            _mainPage.GoToDrafts();
-            object? mail = _mainPage.draftsFolder.GetMailFromTable(testData.GetVariable<string>("subject"));
-            Assert.IsNotNull(mail);
+            mainPage.GoToDrafts();
+            Assert.IsNotNull(mainPage.draftsFolder.GetDraftMailsByValue(testData.GetVariable<string>("subject")));
         }
 
         [Test, Order(7)]
         public void SendMailFromDraftAndVerifyMailDissapearedFromDraftFolder()
         {
-            _mainPage.messageDialog.CloseAllMailDialogs();
-            _mainPage.draftsFolder.GetMailFromTable(testData.GetVariable<string>("subject"))!.Click();
-            _mainPage.messageDialog.SendButton.Click();
-            Assert.IsNull(_mainPage.draftsFolder.GetMailFromTable(testData.GetVariable<string>("subject")));
+            mainPage.messageDialog.CloseAllMailDialogs();
+            mainPage.draftsFolder.GetDraftMailByValue(testData.GetVariable<string>("subject"))!.JsClick(webDriver);
+            mainPage.messageDialog.SendButton.JsClick(webDriver);
+            Assert.IsFalse(mainPage.draftsFolder.GetDraftMailByValue(testData.GetVariable<string>("subject")).isElementDisplayed());
         }
 
         [Test, Order(8)]
         public void GoToSentMailsFolderAndVerifyThatMailIsThere()
         {
-            _mainPage.GoToSent();
-            Assert.IsNotNull(_mainPage.sentFolder.GetMailFromTable(testData.GetVariable<string>("subject")));
+            mainPage.GoToSent();
+            mainPage.draftsFolder.isDraftsOpened();
+            Assert.IsNotNull(mainPage.sentFolder.GetSentMailBySubject(testData.GetVariable<string>("subject")));
         }
 
         [Test, Order(9)]
         public void SignOutAndVerifyUserSignedOutSuccessfully()
         {
-            _mainPage.accoutDialog.OpenAccountDialog(testData.GetVariable<string>("email"));
-            _mainPage.accoutDialog.SwitchToAccountFrame();
-            _mainPage.accoutDialog.ClickSignOut();
+            mainPage.accoutDialog.OpenAccountDialog(testData.GetVariable<string>("email"));
+            mainPage.accoutDialog.SwitchToAccountFrame();
+            mainPage.accoutDialog.ClickSignOut();
             webDriver.WaitPageToLoad();
-            Assert.IsTrue(_mainPage.logoutPage.isLogoutPageDisplayed());
+            Assert.IsTrue(mainPage.logoutPage.isLogoutPageDisplayed());
         }
     }
 }
