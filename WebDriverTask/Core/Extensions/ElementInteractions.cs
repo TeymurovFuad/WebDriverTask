@@ -1,19 +1,12 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using System.Diagnostics.CodeAnalysis;
+using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Core.Extensions
 {
     public static class BaseInteractions
     {
-        public static void ClickElement<TDriver>(this IWebElement element, [AllowNull] bool condition)
-            where TDriver : IWebDriver, new()
-        {
-            TDriver driver = new();
-            driver.WaitUntilElementIsInteractable(element);
-            element.Click();
-        }
-
         public static void SendValuesToElement(this IWebElement element, string value)
         {
             if (element.isElementDisplayed())
@@ -84,6 +77,53 @@ namespace WebDriverTask.Core.Extensions
         {
             //{By.locatorType: locatoryValue}
             return locator.ToString().Replace("By.", "").Split(new char[] {':'}, 2);
+        }
+
+        public static void ClickElement(this IWebElement element, IWebDriver driver)
+        {
+            element.Click();
+        }
+
+        public static void JsClick(this IWebDriver driver, By locator)
+        {
+            IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
+            jsExecutor.ExecuteScript("arguments[0].click();");
+        }
+
+        public static void JsClick(this IWebElement element, IWebDriver driver)
+        {
+            IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
+            jsExecutor.ExecuteScript("arguments[0].click();", element);
+        }
+
+        public static void JsClick(this IWebDriver driver, string locatorValue, string locatoryType)
+        {
+            IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
+            string? xPath = null;
+            switch (locatoryType.ToLower())
+            {
+                case "id":
+                    locatoryType = "Id";
+                    break;
+                case "css":
+                case "classname":
+                    locatoryType = "ClassName";
+                    break;
+                case "tag":
+                case "tagname":
+                    locatoryType = "TagName";
+                    break;
+                case "name":
+                    locatoryType = "Name";
+                    break;
+                case "xpath":
+                    xPath = $"$x('{locatorValue}')[0]";
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+            string locator = $"document.GetElementBy{locatoryType}({locatorValue})";
+            jsExecutor.ExecuteScript($"{xPath??locator}.click()");
         }
     }
 }
