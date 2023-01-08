@@ -28,6 +28,15 @@ namespace WebDriverTask.Pages.Gmail
         public readonly By SentFolderLocator = By.XPath("//div[@data-tooltip='Sent']");
         public IWebElement SentFolder => webDriver.GetElement(SentFolderLocator);
 
+        public readonly By TrashFolderLocator = By.XPath("//div[@data-tooltip='Trash']");
+        public IWebElement TrashFolder => webDriver.GetElement(TrashFolderLocator);
+
+        public readonly By MoreButtonLocator = By.XPath("//span[text()='More']");
+        public IWebElement MoreButton => webDriver.GetElement(MoreButtonLocator);
+
+        public readonly By LessButtonLocator = By.XPath("//span[text()='Less']");
+        public IWebElement LessButton => webDriver.GetElement(LessButtonLocator);
+
         public By GetTableContainingMailsLocator(string folderSpecificIdentifier) => By.XPath($"//table[tbody[position()=1]//{folderSpecificIdentifier}]");
         public IWebElement GetTableContainingMails(string folderSpecificIdentifier) => webDriver.GetElement(GetTableContainingMailsLocator(folderSpecificIdentifier));
     }
