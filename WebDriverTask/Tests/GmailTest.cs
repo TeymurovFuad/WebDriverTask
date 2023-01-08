@@ -9,6 +9,8 @@ using OpenQA.Selenium.Chrome;
 
 namespace WebDriverTask.Tests
 {
+    //[TestFixtureSource(typeof(TestClassDataProvider), "TestCases")]
+    //[Parallelizable(ParallelScope.Fixtures)]
     [TestFixture]
     public class GmailTest: Hooks
     {
@@ -89,7 +91,7 @@ namespace WebDriverTask.Tests
         {
             mainPage.messageDialog.CloseAllMailDialogs();
             mainPage.draftsFolder.GetDraftMailByValue(testData.GetVariable<string>("subject"))!.JsClick(webDriver);
-            mainPage.messageDialog.SendButton.JsClick(webDriver);
+            mainPage.messageDialog.SendButton.Click();
             Assert.IsFalse(mainPage.draftsFolder.GetDraftMailByValue(testData.GetVariable<string>("subject")).isElementDisplayed());
         }
 
@@ -97,18 +99,29 @@ namespace WebDriverTask.Tests
         public void GoToSentMailsFolderAndVerifyThatMailIsThere()
         {
             mainPage.GoToSent();
-            mainPage.draftsFolder.isDraftsOpened();
-            Assert.IsNotNull(mainPage.sentFolder.GetSentMailBySubject(testData.GetVariable<string>("subject")));
+            mainPage.sentFolder.isSentOpened();
+            IWebElement? mail = mainPage.sentFolder.GetSentMailBySubject(testData.GetVariable<string>("subject"));
+            Assert.NotNull(mail);
         }
 
         [Test, Order(9)]
+        public void DeleteMailFromSentUsingActionsAndVerifyMailtDeleted()
+        {
+            string subject = testData.GetVariable<string>("subject");
+            IWebElement? mail = mainPage.sentFolder.FindSentMailBySubjectOrBody(subject);
+            webDriver.CreateActions().ContextClick(mail).Perform();
+            webDriver.CreateActions().Click(mainPage.mailContextMenu.DeleteItem).Perform();
+            Assert.IsFalse(webDriver.isElementDisplayed(mail));
+        }
+
+        [Test, Order(10)]
         public void SignOutAndVerifyUserSignedOutSuccessfully()
         {
             mainPage.accoutDialog.OpenAccountDialog(testData.GetVariable<string>("email"));
             mainPage.accoutDialog.SwitchToAccountFrame();
             mainPage.accoutDialog.ClickSignOut();
-            webDriver.WaitPageToLoad();
-            Assert.IsTrue(mainPage.logoutPage.isLogoutPageDisplayed());
+            bool loggedOut = webDriver.WaitUntilElementDisplayed(mainPage.logoutPage.ChooseAnAccout).isDisplayed;
+            Assert.IsTrue(loggedOut);
         }
     }
 }
