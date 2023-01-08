@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using System.Diagnostics.CodeAnalysis;
 using WebDriverTask.Core.WebDriver;
 
@@ -30,6 +31,18 @@ namespace WebDriverTask.Core.Extensions
             try
             {
                 return driver.GetElements(locator).Count > 0;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static bool isElementDisplayed(this IWebDriver driver, IWebElement element)
+        {
+            try
+            {
+                return element.Displayed;
             }
             catch
             {
@@ -87,7 +100,7 @@ namespace WebDriverTask.Core.Extensions
         public static void JsClick(this IWebDriver driver, By locator)
         {
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
-            jsExecutor.ExecuteScript("arguments[0].click();");
+            jsExecutor.ExecuteScript($"$x({locator.GetLocatorValue()})[0].click();");
         }
 
         public static void JsClick(this IWebElement element, IWebDriver driver)
@@ -124,6 +137,24 @@ namespace WebDriverTask.Core.Extensions
             }
             string locator = $"document.GetElementBy{locatoryType}({locatorValue})";
             jsExecutor.ExecuteScript($"{xPath??locator}.click()");
+        }
+
+
+        public static ((int x, int y) position, (int width, int height) size, (int left, int right) leftRight, (int top, int bottom) topBottom) 
+            GetElementOffset(this IWebDriver driver, IWebElement element)
+        {
+            int x, y, width, height, left, right, top, bottom;
+            IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
+            Dictionary<string, object> rect = (Dictionary<string, object>)jsExecutor.ExecuteScript("return arguments[0].getBoundingClientRect();", element);
+            x = Convert.ToInt32(rect["x"]);
+            y = Convert.ToInt32(rect["y"]);
+            width = Convert.ToInt32(rect["width"]);
+            height = Convert.ToInt32(rect["height"]);
+            left = Convert.ToInt32(rect["left"]);
+            right = Convert.ToInt32(rect["right"]);
+            top = Convert.ToInt32(rect["top"]);
+            bottom = Convert.ToInt32(rect["bottom"]);
+            return ((x, y), (width, height), (left, right), (top, bottom));
         }
     }
 }
