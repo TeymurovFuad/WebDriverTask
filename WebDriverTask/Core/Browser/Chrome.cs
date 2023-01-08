@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
 using WebDriverTask.Core.Browser.Configuration;
 
 namespace WebDriverTask.Core.Browser
@@ -49,7 +48,7 @@ namespace WebDriverTask.Core.Browser
         {
             if (options != null)
             {
-                _chromeOptions = options as ChromeOptions;
+                _chromeOptions = (ChromeOptions)options;
             }
             return this;
         }

@@ -3,10 +3,10 @@ using WebDriverTask.Core.Extensions;
 
 namespace WebDriverTask.Pages.Gmail.Dialogs.Account
 {
-    public class AccoutDialog : AccountDialogElements
+    public class AccountDialog : AccountDialogElements, IPage
     {
         IWebDriver webDriver { get; set; }
-        public AccoutDialog(IWebDriver driver): base(driver)
+        public AccountDialog(IWebDriver driver): base(driver)
         {
             webDriver = driver;
         }

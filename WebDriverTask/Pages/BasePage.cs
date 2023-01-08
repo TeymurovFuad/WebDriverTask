@@ -7,17 +7,17 @@ namespace WebDriverTask.Pages
 {
     public abstract class BasePage: BasePageElements
     {
-        private IWebDriver _webDriver;
+        protected IWebDriver webDriver { get; set; }
         private IAlert alert;
 
         public BasePage(IWebDriver driver): base(driver)
         {
-            _webDriver = driver;
+            webDriver = driver;
         }
 
         public void ClickElement(IWebElement element, bool condition = true)
         {
-            if (_webDriver.WaitUntilElementIsInteractable(element)!=null)
+            if (webDriver.WaitUntilElementIsInteractable(element)!=null)
             {
                 element.Click();
             }
@@ -45,8 +45,8 @@ namespace WebDriverTask.Pages
 
         public bool isAlertExists()
         {
-            WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromMilliseconds(1500));
-            wait.Until(a => alert = _webDriver.SwitchTo().Alert());
+            WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromMilliseconds(1500));
+            wait.Until(a => alert = webDriver.SwitchTo().Alert());
             if(alert!=null)
             {
                 return true;
@@ -61,7 +61,7 @@ namespace WebDriverTask.Pages
 
         public bool isTitleDisplayed(string title)
         {
-            return _webDriver.WaitUntilPageContainsTitle(expectedTitle: title);
+            return webDriver.WaitUntilPageContainsTitle(expectedTitle: title);
         }
     }
 }

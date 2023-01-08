@@ -17,10 +17,10 @@ namespace WebDriverTask.Tests
         protected MainPage mainPage;
         private static string _url = "https://mail.google.com/";
 
+
         public GmailTest() : base(browserType: BrowserType.Chrome, url: _url)
         {
             driverOptions = new ChromeOptions();
-            //driverOptions.BrowserName(CapabilityType.BrowserName, "chrome");
             mainPage = new MainPage(webDriver);
             StopOnFail= true;
         }

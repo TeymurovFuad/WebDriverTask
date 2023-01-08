@@ -1,13 +1,11 @@
-﻿using NUnit.Framework;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using WebDriverTask.Core.Extensions;
-using WebDriverTask.Core.WebDriver;
 
 namespace WebDriverTask.Pages.Gmail.Dialogs.Message
 {
-    public class MessageDialog : MessageDialogElements
+    public class MessageDialog : MessageDialogElements, IPage
     {
-        IWebDriver webDriver;
+        IWebDriver webDriver { get; set; }
         public MessageDialog(IWebDriver driver): base(driver)
         {
             webDriver= driver;

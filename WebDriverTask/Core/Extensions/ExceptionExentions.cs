@@ -1,13 +1,4 @@
-﻿using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WebDriverTask.Core.Extensions
+﻿namespace WebDriverTask.Core.Extensions
 {
     public static class ExceptionExentions
     {

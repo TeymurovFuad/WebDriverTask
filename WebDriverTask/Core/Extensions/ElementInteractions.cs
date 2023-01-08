@@ -1,8 +1,4 @@
-﻿using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
-using System.Diagnostics.CodeAnalysis;
-using WebDriverTask.Core.WebDriver;
+﻿using OpenQA.Selenium;
 
 namespace WebDriverTask.Core.Extensions
 {

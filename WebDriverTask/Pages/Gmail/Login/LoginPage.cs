@@ -3,7 +3,7 @@ using WebDriverTask.Core.Extensions;
 
 namespace WebDriverTask.Pages.Gmail.Login
 {
-    public class LoginPage: LoginPageElements
+    public class LoginPage: LoginPageElements, IPage
     {
         IWebDriver webDriver { get; set; }
         public LoginPage(IWebDriver driver): base(driver)

@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium;
 using WebDriverTask.Core.Extensions;
-using WebDriverTask.Core.Helpers;
 
 namespace WebDriverTask.Pages.Gmail.Dialogs.Message
 {
@@ -12,8 +11,14 @@ namespace WebDriverTask.Pages.Gmail.Dialogs.Message
             webDriver = driver;
         }
 
-        private const string _newMailDialogHeader = "New Message";
-        private readonly By _mailDialogByHeaderLocator = By.XPath("//h2[div[text()='Compose:'] and div/span[text()='{0}']]");
+        public readonly string newMailDialogHeader = "New Message";
+        public List<IWebElement> newMailDialogs => webDriver.GetElements(MailDialogsByHeaderLocator(newMailDialogHeader));
+
+        public By MailDialogsByHeaderLocator(string subject) => By.XPath($"//h2[div[text()='Compose:'] and div/span[text()='{subject}']]");
+        public List<IWebElement> MailDialogsByHeader(string subject) => webDriver.JsGetElements(MailDialogsByHeaderLocator(subject));
+
+        public IWebElement GetMailDialog(string? subject=null) => webDriver.GetElement(MailDialogsByHeaderLocator(subject??newMailDialogHeader));
+
         private readonly By _allMailDialogsLocator = By.XPath("//h2[div[text()='Compose:']]");
         public List<IWebElement> AllMailDialogs => webDriver.GetElements(_allMailDialogsLocator);
 
@@ -31,24 +36,5 @@ namespace WebDriverTask.Pages.Gmail.Dialogs.Message
 
         public readonly By SaveAndCloseButtonsLocator = By.XPath("//img[@aria-label='Save & close']");
         public List<IWebElement> SaveAndCloseButtons => webDriver.GetElements(SaveAndCloseButtonsLocator).ToList();
-
-
-        public List<IWebElement> MailDialogsByHeader(string dialogHeader)
-        {
-            string pathToDialog = StringHelper.FormatString(_mailDialogByHeaderLocator.GetLocatorValue(), dialogHeader)!;
-            return webDriver.GetElements(By.XPath(pathToDialog)).ToList();
-        }
-
-        public List<IWebElement> NewMailDialogs()
-        {
-            string pathToDialog = StringHelper.FormatString(_mailDialogByHeaderLocator.GetLocatorValue(), _newMailDialogHeader)!;
-            return webDriver.GetElements(By.XPath(pathToDialog)).ToList();
-        }
-
-        public IWebElement GetMailDialog(string? mailSubject=null)
-        {
-            string pathToSpecifiedMessageDialog = StringHelper.FormatString(_mailDialogByHeaderLocator.GetLocatorValue(), mailSubject ?? _newMailDialogHeader)!;
-            return webDriver.GetElement(By.XPath(pathToSpecifiedMessageDialog));
-        }
     }
 }
