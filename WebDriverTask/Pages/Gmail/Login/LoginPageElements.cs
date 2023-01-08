@@ -14,41 +14,41 @@ namespace WebDriverTask.Pages.Gmail.Login
 
         private readonly string HelpToWorkBetterText = "If you’d like, take a few moments to help Google work better for you";
 
-        public readonly string EmailFieldId = "identifierId";
-        public IWebElement EmailField => webDriver.FindElements(By.Id(EmailFieldId)).First();
+        public readonly By EmailFieldId = By.Id("identifierId");
+        public IWebElement EmailField => webDriver.GetElement(EmailFieldId);
 
-        public readonly string PasswordFieldXPath = "//input[@type='password' and @name='Passwd']";
-        public IWebElement PasswordField => webDriver.FindElements(By.XPath(PasswordFieldXPath)).First();
+        public readonly By PasswordFieldLocator = By.XPath("//input[@type='password' and @name='Passwd']");
+        public IWebElement PasswordField => webDriver.GetElement(PasswordFieldLocator);
 
-        public string HelpWorkBetterTextXPath => $"//div[text()={HelpToWorkBetterText}]";
-        public IWebElement HelpWorkBetterText => webDriver.FindElements(By.XPath(HelpWorkBetterTextXPath)).First();
+        public By HelpWorkBetterTextLocator => By.XPath($"//div[text()={HelpToWorkBetterText}]");
+        public IWebElement HelpWorkBetterText => webDriver.GetElement(HelpWorkBetterTextLocator);
 
-        public readonly string NotNowButtonOnHelpWorkBetterPageXPath = $"//*[text()='Not Now']";
-        public IWebElement NotNowButtonOnHelpWorkBetterPage => webDriver.FindElements(By.XPath(NotNowButtonOnHelpWorkBetterPageXPath)).First();
+        public readonly By NotNowButtonOnHelpWorkBetterPageLocator = By.XPath($"//*[text()='Not Now']");
+        public IWebElement NotNowButtonOnHelpWorkBetterPage => webDriver.GetElement(NotNowButtonOnHelpWorkBetterPageLocator);
 
-        public readonly string DropDownToChooseLanguageId = "lang-chooser";
-        public IWebElement DropDownToChooseLanguage => webDriver.FindElement(By.Id(DropDownToChooseLanguageId));
+        public readonly By DropDownToChooseLanguageId = By.Id("lang-chooser");
+        public IWebElement DropDownToChooseLanguage => webDriver.GetElement(DropDownToChooseLanguageId);
 
-        public readonly string AllLanguagesFromDropDownXPath = "//ul[@role='listbox']/li";
-        public List<IWebElement> AllLanguagesFromDropDown => webDriver.FindElements(By.XPath(AllLanguagesFromDropDownXPath)).ToList();
-        public IWebElement CurrentLanguage => webDriver.FindElements(By.XPath($"{AllLanguagesFromDropDownXPath}[@aria-selected='true']")).First();
+        public readonly By AllLanguagesFromDropDownLocator = By.XPath("//ul[@role='listbox']/li");
+        public List<IWebElement> AllLanguagesFromDropDown => webDriver.GetElements(AllLanguagesFromDropDownLocator).ToList();
+        public IWebElement CurrentLanguage => webDriver.GetElement(By.XPath($"{AllLanguagesFromDropDownLocator.GetLocatorValue()}[@aria-selected='true']"));
 
-        public readonly string NextButtonXPath = "//button[span[contains(text(), 'Next')]]";
-        public IWebElement NextButton => webDriver.FindElements(By.XPath(NextButtonXPath)).First();
+        public readonly string NextButtonLocator = "//button[span[contains(text(), 'Next')]]";
+        public IWebElement NextButton => webDriver.GetElement(By.XPath(NextButtonLocator));
 
         private IWebElement LanguageFromDropDown { get; set; }
 
-        public readonly string pathToSpecificLanguageFromDropdown = "//span[contains(text(), {0})]";
-        public readonly string subPathToRetreiveLanguageText = "./span/span";
-        public readonly string subPathToCheckDropDownStatus = "//div[@aria-expanded]";
+        public readonly By pathToSpecificLanguageFromDropdown = By.XPath("//span[contains(text(), {0})]");
+        public readonly By subPathToRetreiveLanguageText = By.XPath("./span/span");
+        public readonly By subPathToCheckDropDownStatus = By.XPath("//div[@aria-expanded]");
 
         public IWebElement FindSpecificLanguageFromDropDown(string language)
         {
-            string xpathToLanguage = StringHelper.FormatString(pathToSpecificLanguageFromDropdown, language.Capitalise())!;
+            string xpathToLanguage = StringHelper.FormatString(pathToSpecificLanguageFromDropdown.GetLocatorValue(), language.Capitalise())!;
 
             foreach (IWebElement element in AllLanguagesFromDropDown)
             {
-                if (element.FindElement(By.XPath(xpathToLanguage)).Displayed)
+                if (element.GetElement(By.XPath(xpathToLanguage)).Displayed)
                 {
                     LanguageFromDropDown = element;
                     break;

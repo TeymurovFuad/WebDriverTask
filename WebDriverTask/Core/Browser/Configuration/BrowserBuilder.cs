@@ -1,12 +1,14 @@
-﻿namespace WebDriverTask.Core.Browser.Configuration
+﻿using OpenQA.Selenium;
+
+namespace WebDriverTask.Core.Browser.Configuration
 {
     public abstract class BrowserBuilder : BrowserFactory
     {
         protected BrowserBuilder() { }
 
-        protected void Build(BrowserType browserType)
+        protected void Build(BrowserType browserType, DriverOptions driverOptions)
         {
-            CreateBrowser(browserType);
+            CreateBrowser(browserType, driverOptions);
         }
     }
 }

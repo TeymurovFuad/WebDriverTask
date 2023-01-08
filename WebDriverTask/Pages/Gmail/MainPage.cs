@@ -1,8 +1,10 @@
 ﻿using OpenQA.Selenium;
 using WebDriverTask.Core.Extensions;
+using WebDriverTask.Pages.Gmail.ContextMenu.Mail;
 using WebDriverTask.Pages.Gmail.Dialogs.Account;
 using WebDriverTask.Pages.Gmail.Dialogs.Message;
-using WebDriverTask.Pages.Gmail.Folders;
+using WebDriverTask.Pages.Gmail.Folders.Drafts;
+using WebDriverTask.Pages.Gmail.Folders.Sent;
 using WebDriverTask.Pages.Gmail.Login;
 using WebDriverTask.Pages.Gmail.Logout;
 
@@ -17,6 +19,7 @@ namespace WebDriverTask.Pages.Gmail
         public readonly AccoutDialog accoutDialog;
         public readonly LoginPage loginPage;
         public readonly LogoutPage logoutPage;
+        public readonly MailContextMenu mailContextMenu;
 
         public MainPage(IWebDriver driver) : base(driver)
         {
@@ -27,6 +30,29 @@ namespace WebDriverTask.Pages.Gmail
             loginPage = new LoginPage(driver);
             logoutPage = new LogoutPage(driver);
             draftsFolder = new DraftsFolder(driver);
+            mailContextMenu = new MailContextMenu(driver);
+        }
+
+        public void ClickMore()
+        {
+            MoreButton.Click();
+        }
+
+        public void ClickLess()
+        {
+            LessButton.Click();
+        }
+
+        public void ToggleMore()
+        {
+            try
+            {
+                ClickMore();
+            }
+            catch(ElementNotInteractableException)
+            {
+                ClickLess();
+            }
         }
 
         public void ComposeNewMail()
@@ -47,12 +73,20 @@ namespace WebDriverTask.Pages.Gmail
 
         public void GoToDrafts()
         {
+            webDriver.WaitUntilElementDisplayed(DraftsFolder);
             DraftsFolder.Click();
         }
 
         public void GoToSent()
         {
+            webDriver.WaitUntilElementDisplayed(SentFolder);
             SentFolder.Click();
+        }
+
+        public void GoToTrash()
+        {
+            webDriver.WaitUntilElementDisplayed(TrashFolder);
+            TrashFolder.Click();
         }
     }
 }

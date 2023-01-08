@@ -21,6 +21,8 @@ HOME TASK
 •	If current SUT does not allow to implement any Actions – add some pages for Yandex Disk and implement some Actions on it (such as drag-n-drop (delete a file dragging to the trash bin), context menu actions, multi-selecting files, etc)
 2.	Add at least 2 implementation of JavaScript Executor usage (for example: implement element highlighter, JS Executor based clicker or element finder);
 3.	Set up Selenium Grid with at least two nodes and run all your test suites on the grid. (Run tests with Firefox and Chrome)
+to start hub => java -jar hub.jar -role hub
+to start node => java -jar gridNode.jar -role webdriver -hub http://localhost:4444/grid/register -port 5566
 BONUS TASK
 •	At least one node in Selenium Grid is launched on non-Windows platform. (In case you don’t have access to appropriate physical machines use Virtual Box or create a free demo Sauce Labs account).
 •	Make your tests cross-browser.

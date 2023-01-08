@@ -13,46 +13,31 @@ namespace WebDriverTask.Pages.Gmail
             webDriver = driver;
         }
 
-        public readonly string FoldersButtonContainerXPath = "//div[h2[text()='Labels'] and //a[text()='Inbox']][1]";
-        public IWebElement FoldersButtonContainer => webDriver.FindElements(By.XPath(FoldersButtonContainerXPath)).First();
+        public readonly By FoldersButtonContainerLocator = By.XPath("//div[h2[text()='Labels'] and //a[text()='Inbox']][1]");
+        public IWebElement FoldersButtonContainer => webDriver.GetElement(FoldersButtonContainerLocator);
 
-        public readonly string ComposeButtonXPath = "//div[text()='Compose']";
-        public IWebElement ComposeButton => webDriver.FindElements(By.XPath(ComposeButtonXPath)).First();
+        public readonly By ComposeButtonLocator = By.XPath("//div[text()='Compose']");
+        public IWebElement ComposeButton => webDriver.GetElement(ComposeButtonLocator);
 
-        public readonly string InboxFolderXPath = "//div[@data-tooltip='Inbox']";
-        public IWebElement InboxFolder => webDriver.FindElements(By.XPath(InboxFolderXPath)).First();
+        public readonly By InboxFolderLocator = By.XPath("//div[@data-tooltip='Inbox']");
+        public IWebElement InboxFolder => webDriver.GetElement(InboxFolderLocator);
 
-        public readonly string DraftsFolderXPath = "//div[@data-tooltip='Drafts']";
-        public IWebElement DraftsFolder => webDriver.FindElements(By.XPath(DraftsFolderXPath)).First();
+        public readonly By DraftsFolderLocator = By.XPath("//div[@data-tooltip='Drafts']");
+        public IWebElement DraftsFolder => webDriver.GetElement(DraftsFolderLocator);
 
-        public readonly string SentFolderXPath = "//div[@data-tooltip='Sent']";
-        public IWebElement SentFolder => webDriver.FindElements(By.XPath(SentFolderXPath)).First();
+        public readonly By SentFolderLocator = By.XPath("//div[@data-tooltip='Sent']");
+        public IWebElement SentFolder => webDriver.GetElement(SentFolderLocator);
 
-        private string _pathToMailContainingTable = "//table[tbody[position()=1]//{0}]";
-        private readonly string _pathToSpecificMail = "/span[text()='{0}']//ancestor::tr";
+        public readonly By TrashFolderLocator = By.XPath("//div[@data-tooltip='Trash']");
+        public IWebElement TrashFolder => webDriver.GetElement(TrashFolderLocator);
 
-        public IWebElement GetTableContainingMails(string folderSpecificIdentifier)
-        {
-            IWebElement tableOfMails = webDriver.FindElement(By.XPath($"//table[tbody[position()=1]//{folderSpecificIdentifier}]"));
-            return tableOfMails;
-        }
+        public readonly By MoreButtonLocator = By.XPath("//span[text()='More']");
+        public IWebElement MoreButton => webDriver.GetElement(MoreButtonLocator);
 
-        public string GetXPathToTableContainingMails(string folderSpecificIdentifier)
-        {
-            return StringHelper.FormatString(_pathToMailContainingTable, folderSpecificIdentifier)!;
-        }
+        public readonly By LessButtonLocator = By.XPath("//span[text()='Less']");
+        public IWebElement LessButton => webDriver.GetElement(LessButtonLocator);
 
-        public string PathToSpecificMail(string subjectOrBody)
-        {
-            return StringHelper.FormatString(_pathToSpecificMail, subjectOrBody);
-        }
-
-        public IWebElement SpecificMailFromTable(string subjectOrBody)
-        {
-            string pathToMail = PathToSpecificMail(subjectOrBody);
-            IWebElement mail = webDriver.FindElement(By.XPath(pathToMail));
-            webDriver.WaitUntilElementIsInteractable(mail);
-            return mail;
-        }
+        public By GetTableContainingMailsLocator(string folderSpecificIdentifier) => By.XPath($"//table[tbody[position()=1]//{folderSpecificIdentifier}]");
+        public IWebElement GetTableContainingMails(string folderSpecificIdentifier) => webDriver.GetElement(GetTableContainingMailsLocator(folderSpecificIdentifier));
     }
 }

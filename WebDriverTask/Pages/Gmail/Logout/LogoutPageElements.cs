@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using WebDriverTask.Core.Extensions;
 
 namespace WebDriverTask.Pages.Gmail.Logout
 {
@@ -10,7 +11,7 @@ namespace WebDriverTask.Pages.Gmail.Logout
             webDriver = driver;
         }
 
-        public readonly string ChooseAnAccoutXPath =  "//span[text()='Choose an account']";
-        public IWebElement ChooseAnAccout => webDriver.FindElements(By.XPath(ChooseAnAccoutXPath)).First();
+        public readonly By ChooseAnAccoutLocator =  By.XPath("//span[text()='Choose an account']");
+        public IWebElement ChooseAnAccout => webDriver.GetElement(ChooseAnAccoutLocator);
     }
 }

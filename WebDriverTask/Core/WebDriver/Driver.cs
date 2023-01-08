@@ -20,10 +20,10 @@ namespace WebDriverTask.Core.WebDriver
             return webDriver;
         }
 
-        protected void SetUpDriver(BrowserType browserType)
+        protected void SetUpDriver(BrowserType browserType, DriverOptions driverOptions)
         {
             if(webDriver==null)
-                webDriver = CreateBrowser(browserType);
+                webDriver = CreateBrowser(browserType, driverOptions);
         }
 
         public bool isBuilt()
