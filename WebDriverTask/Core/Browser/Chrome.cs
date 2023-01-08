@@ -49,7 +49,7 @@ namespace WebDriverTask.Core.Browser
         {
             if (options != null)
             {
-                _chromeOptions = options as ChromeOptions;
+                _chromeOptions = (ChromeOptions)options;
             }
             return this;
         }

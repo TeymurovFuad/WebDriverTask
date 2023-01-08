@@ -20,7 +20,7 @@ namespace WebDriverTask.Pages.Gmail.Folders.Sent
         protected readonly string FolderName = "Sent";
 
         public By NoSentMessagesLocator { get; set; } = By.XPath("td[text()='No sent messages! ']");
-        public IWebElement NoSentMessages => webDriver.JsGetElement(NoSentMessagesLocator).element;
+        public IWebElement NoSentMessages => webDriver.JsGetElement(NoSentMessagesLocator);
 
         public By SentMailsLocator => By.XPath("//div[text()='To: ']/ancestor::tr");
         public List<IWebElement> SentMails => webDriver.GetElements(SentMailsLocator);

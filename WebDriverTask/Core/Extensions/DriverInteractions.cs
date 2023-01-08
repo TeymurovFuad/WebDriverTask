@@ -98,7 +98,7 @@ namespace WebDriverTask.Core.Extensions
             return elements;
         }
 
-        public static (IWebElement element, IWebDriver driver) JsGetElement(this IWebDriver driver, By locator)
+        public static IWebElement JsGetElement(this IWebDriver driver, By locator)
         {
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
             IWebElement element;
@@ -139,7 +139,48 @@ namespace WebDriverTask.Core.Extensions
                 script = $"document.GetElementBy{locatorType}({locatorValue})";
                 element = (IWebElement)jsExecutor.ExecuteScript(script);
             }
-            return (element, driver);
+            return element;
+        }
+
+        public static List<IWebElement> JsGetElements(this IWebDriver driver, By locator)
+        {
+            IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
+            List<IWebElement> elements;
+            string locatorValue = locator.GetLocatorValue();
+            string locatorType = locator.GetLocatorType();
+            string? xPath = null;
+            string script;
+            switch (locatorType.ToLower())
+            {
+                case "css":
+                case "classname":
+                    locatorType = "ClassName";
+                    break;
+                case "tag":
+                case "tagname":
+                    locatorType = "TagName";
+                    break;
+                case "name":
+                    locatorType = "Name";
+                    break;
+                case "xpath":
+                    xPath = locatorValue;
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
+            if (xPath != null)
+            {
+                script = $"return document.evaluate(\"{xPath}\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;";
+                elements = (List<IWebElement>)jsExecutor.ExecuteScript(script);
+            }
+            else
+            {
+                script = $"document.GetElementBy{locatorType}({locatorValue})";
+                elements = (List<IWebElement>)jsExecutor.ExecuteScript(script);
+            }
+            return elements;
         }
     }
 }

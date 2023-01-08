@@ -10,23 +10,23 @@ using WebDriverTask.Pages.Gmail.Logout;
 
 namespace WebDriverTask.Pages.Gmail
 {
-    public class MainPage: MainPageElements
+    public class MainPage: MainPageElements, IPage
     {
-        public IWebDriver webDriver { get; private set; }
+        IWebDriver webDriver { get; set; }
         public readonly DraftsFolder draftsFolder;
         public readonly SentFolder sentFolder;
         public readonly MessageDialog messageDialog;
-        public readonly AccoutDialog accoutDialog;
+        public readonly AccountDialog accoutDialog;
         public readonly LoginPage loginPage;
         public readonly LogoutPage logoutPage;
         public readonly MailContextMenu mailContextMenu;
 
         public MainPage(IWebDriver driver) : base(driver)
         {
-            this.webDriver = driver;
+            webDriver = driver;
             sentFolder = new SentFolder(driver);
             messageDialog = new MessageDialog(driver);
-            accoutDialog = new AccoutDialog(driver);
+            accoutDialog = new AccountDialog(driver);
             loginPage = new LoginPage(driver);
             logoutPage = new LogoutPage(driver);
             draftsFolder = new DraftsFolder(driver);

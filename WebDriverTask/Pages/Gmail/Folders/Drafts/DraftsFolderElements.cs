@@ -27,6 +27,6 @@ namespace WebDriverTask.Pages.Gmail.Folders.Drafts
 
         public By GetDraftMailsByValueLocator(string subjectOrBody) => By.XPath($"//span[text()='{subjectOrBody}']");
         public List<IWebElement> GetDraftMailsByValue(string subjectOrBody) => webDriver.GetElements(GetDraftMailsByValueLocator(subjectOrBody));
-        public IWebElement GetDraftMailByValue(string subjectOrBody) => webDriver.JsGetElement(GetDraftMailsByValueLocator(subjectOrBody)).element;
+        public IWebElement GetDraftMailByValue(string subjectOrBody) => webDriver.JsGetElement(GetDraftMailsByValueLocator(subjectOrBody));
     }
 }

@@ -3,9 +3,11 @@ using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
+using System.ComponentModel;
 using WebDriverTask.Core.Browser;
 using WebDriverTask.Core.Extensions;
 using WebDriverTask.Core.WebDriver;
+using WebDriverTask.Pages;
 
 namespace WebDriverTask.Tests.TestConfig
 {
