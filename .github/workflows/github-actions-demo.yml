@@ -19,4 +19,4 @@ jobs:
            ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
       - name: Verify build is successful ⚒️
-        run: dotnet build ./WebDriverTask.sln
+        run: pwd && dotnet build ./WebDriverTask.sln
