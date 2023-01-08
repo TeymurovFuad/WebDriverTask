@@ -11,21 +11,17 @@ namespace WebDriverTask.Core.Extensions
 {
     public static class ExceptionExentions
     {
-        public static WebDriverWait IgnoreExceptionType(this WebDriverWait wait, params Type[] exceptionTypes)
+        public static Action IgnoreActionExceptions(this Action action, params Type[] exceptionTypes)
         {
-            if (exceptionTypes == null)
+            try
             {
-                throw new ArgumentNullException("exceptionTypes", "exceptionTypes cannot be null");
+                action();
             }
-
-            foreach (Type c in exceptionTypes)
+            catch (Exception e) when (exceptionTypes.Contains(e.GetType()))
             {
-                if (!typeof(Exception).IsAssignableFrom(c))
-                {
-                    throw new ArgumentException("All types to be ignored must derive from System.Exception", "exceptionTypes");
-                }
+                action();
             }
-            return wait;
+            return action;
         }
 
         public static Action Try(this Action action)
