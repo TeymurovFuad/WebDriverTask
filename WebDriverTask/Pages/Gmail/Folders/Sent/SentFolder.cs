@@ -22,5 +22,17 @@ namespace WebDriverTask.Pages.Gmail.Folders.Sent
         {
             return webDriver.WaitUntilPageContainsTitle(FolderName);
         }
+
+        public IWebElement? FindSentMailBySubjectOrBody(string subjectOrBody)
+        {
+            foreach(IWebElement sentMail in SentMails)
+            {
+                if (sentMail.isContainsChild(By.XPath($"//span[text()='{subjectOrBody}']")))
+                {
+                    return sentMail;
+                }
+            }
+            return null;
+        }
     }
 }

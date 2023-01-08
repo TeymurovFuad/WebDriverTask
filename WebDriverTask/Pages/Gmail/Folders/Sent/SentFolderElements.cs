@@ -25,8 +25,8 @@ namespace WebDriverTask.Pages.Gmail.Folders.Sent
         public By SentMailsLocator => By.XPath("//div[text()='To: ']/ancestor::tr");
         public List<IWebElement> SentMails => webDriver.GetElements(SentMailsLocator);
 
-        public By GetSentMailsBySubjectLocator(string subjectOrBody) => By.XPath($"//span[text()='{subjectOrBody}']");
-        public List<IWebElement> GetSentMailsBySubject(string subjectObBody) => webDriver.GetElements(GetSentMailsBySubjectLocator(subjectObBody));
-        public IWebElement GetSentMailBySubject(string subjectObBody) => webDriver.GetElement(GetSentMailsBySubjectLocator(subjectObBody));
+        public By SentMailBySubjectLocator(string subjectOrBody) => By.XPath($"//span[text()='{subjectOrBody}']");
+        public List<IWebElement> GetSentMailsBySubject(string subjectObBody) => webDriver.GetElements(SentMailBySubjectLocator(subjectObBody));
+        public IWebElement? GetSentMailBySubject(string subjectObBody) => webDriver.GetElement(SentMailBySubjectLocator(subjectObBody));
     }
 }
