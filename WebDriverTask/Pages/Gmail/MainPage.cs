@@ -35,12 +35,12 @@ namespace WebDriverTask.Pages.Gmail
 
         public void ClickMore()
         {
-            MoreButton.Click();
+            webDriver.WaitUntilElementIsInteractable(MoreButton)?.Click();
         }
 
         public void ClickLess()
         {
-            LessButton.Click();
+            webDriver.WaitUntilElementIsInteractable(LessButton)?.Click();
         }
 
         public void ToggleMore()
@@ -69,6 +69,15 @@ namespace WebDriverTask.Pages.Gmail
         protected bool isMailboxEmpty(By locator)
         {
             return webDriver.isElementDisplayed(locator);
+        }
+
+        public void LogOut(string email)
+        {
+            accoutDialog.OpenAccountDialog(email);
+            accoutDialog.SwitchToAccountFrame();
+            accoutDialog.ClickSignOut();
+            AlertAccept();
+            webDriver.WaitUntilElementDisplayed(logoutPage.ChooseAnAccoutLabel);
         }
 
         public void GoToDrafts()

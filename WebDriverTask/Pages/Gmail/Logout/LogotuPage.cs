@@ -14,7 +14,7 @@ namespace WebDriverTask.Pages.Gmail.Logout
 
         public bool isLogoutPageDisplayed()
         {
-            return ChooseAnAccout.isElementDisplayed();
+            return ChooseAnAccoutLabel.isElementDisplayed();
         }
     }
 }
