@@ -29,7 +29,8 @@ namespace WebDriverTask.Tests
         public void OpenBrowser()
         {
             webDriver.WaitPageToLoad();
-            Assert.IsTrue(webDriver.Title.Contains("gmail", StringComparison.CurrentCultureIgnoreCase));
+            bool pageOpened = webDriver.Title.Contains("gmail", StringComparison.CurrentCultureIgnoreCase);
+            Assert.IsTrue(pageOpened);
         }
 
         [Test, Order(2)]
@@ -39,7 +40,7 @@ namespace WebDriverTask.Tests
             mainPage.loginPage.ToggleLanguageChooserDropDown();
             mainPage.loginPage.ChangeLanguage(expectedLanguage);
             string actualLanguage = mainPage.loginPage.GetValueOfCurrentSelectedLanguage();
-            Assert.That(actualLanguage.Contains(expectedLanguage, StringComparison.CurrentCultureIgnoreCase), Is.True);
+            Assert.IsTrue(actualLanguage.Contains(expectedLanguage, StringComparison.CurrentCultureIgnoreCase));
         }
 
         [Test, Order(3)]
