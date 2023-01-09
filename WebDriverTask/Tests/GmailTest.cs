@@ -110,18 +110,17 @@ namespace WebDriverTask.Tests
         {
             string subject = testData.GetVariable<string>("subject");
             IWebElement? mail = mainPage.sentFolder.FindSentMailBySubjectOrBody(subject);
-            webDriver.CreateActions().ContextClick(mail).Perform();
-            webDriver.CreateActions().Click(mainPage.mailContextMenu.DeleteItem).Perform();
+            mainPage.ToggleMore();
+            IWebElement trashFolder = mainPage.TrashFolder;
+            webDriver.CreateActions().DragAndDrop(mail, trashFolder).Perform();
             Assert.IsFalse(webDriver.isElementDisplayed(mail));
         }
 
         [Test, Order(10)]
         public void SignOutAndVerifyUserSignedOutSuccessfully()
         {
-            mainPage.accoutDialog.OpenAccountDialog(testData.GetVariable<string>("email"));
-            mainPage.accoutDialog.SwitchToAccountFrame();
-            mainPage.accoutDialog.ClickSignOut();
-            bool loggedOut = webDriver.WaitUntilElementDisplayed(mainPage.logoutPage.ChooseAnAccout).isDisplayed;
+            mainPage.LogOut(testData.GetVariable<string>("email"));
+            bool loggedOut = webDriver.WaitUntilElementDisplayed(mainPage.logoutPage.ChooseAnAccoutLabel).isDisplayed;
             Assert.IsTrue(loggedOut);
         }
     }
