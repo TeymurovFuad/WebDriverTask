@@ -41,18 +41,29 @@ namespace WebDriverTask.Tests
             Thread.Sleep(3000);
             mainPage.GoToSent();
             mainPage.ToggleMore();
-            IWebElement source = mainPage.sentFolder.FindSentMailBySubjectOrBody("7fe3a467-c919-4534-bcde-9684770f811b");
+            Thread.Sleep(2000);
+            IWebElement source = mainPage.sentFolder.SentMails[0];
             IWebElement target = mainPage.TrashFolder;
-            (int w, int h) = webDriver.JsGetWindowSize();
-            Point position = source.Location;
-            position = ((ILocatable)target).LocationOnScreenOnceScrolledIntoView;
+            (int w, int h) = webDriver.JsGetViewportSize();
             //webDriver.CreateActions().ContextClick(source).Perform();
             //webDriver.CreateActions().Click(webDriver.GetElement(By.XPath("//div[@role='menuitem']//div[text()='Delete']"))).Perform();
+            (int sx, int sy) = webDriver.JsGetElementOffset(source).position;
+            (int st, int sb) = webDriver.JsGetElementOffset(source).topBottom;
+            (int sl, int sr) = webDriver.JsGetElementOffset(source).leftRight;
             (int x, int y) = webDriver.JsGetElementOffset(target).position;
             (int t, int b) = webDriver.JsGetElementOffset(target).topBottom;
             (int l, int r) = webDriver.JsGetElementOffset(target).leftRight;
-            x = w - l+r/2; y = h-t+b/2;
-            webDriver.CreateActions().SourceElement(source).ClickAndHoldElement().MoveToCoordinates(x, y).ReleaseElement().Perform();
+            //x = w-l+r/2; y = h-t+b/2;
+            webDriver.CreateActions().DragAndDrop(source, target).Perform();
+            //source = mainPage.sentFolder.SentMails[0];
+            webDriver.CreateActions().SourceElement(source);
+            Point position = source.Location;
+            position = ((ILocatable)target).LocationOnScreenOnceScrolledIntoView;
+            webDriver.CreateActions().MoveTo(target: (t, l), source: (st, sl)).Perform();
+            source = mainPage.sentFolder.SentMails[0];
+            webDriver.CreateActions().SourceElement(source);
+            webDriver.CreateActions().MoveToElement(target, 0, 0).Perform();
+            webDriver.CreateActions().ReleaseElement().Perform();
         }
 
         [Test, Order(1)]
@@ -148,7 +159,7 @@ namespace WebDriverTask.Tests
             mainPage.accoutDialog.OpenAccountDialog(testData.GetVariable<string>("email"));
             mainPage.accoutDialog.SwitchToAccountFrame();
             mainPage.accoutDialog.ClickSignOut();
-            bool loggedOut = webDriver.WaitUntilElementDisplayed(mainPage.logoutPage.ChooseAnAccout).isDisplayed;
+            bool loggedOut = webDriver.WaitUntilElementDisplayed(mainPage.logoutPage.ChooseAnAccoutLabel).isDisplayed;
             Assert.IsTrue(loggedOut);
         }
     }
