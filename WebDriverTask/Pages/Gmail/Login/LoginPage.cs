@@ -75,5 +75,13 @@ namespace WebDriverTask.Pages.Gmail.Login
             NextButton.Click();
             webDriver.WaitPageToLoad();
         }
+
+        public void Login(string email, string password)
+        {
+            FillEmail(email);
+            ClickNext();
+            FillPassword(password);
+            ClickNext();
+        }
     }
 }
