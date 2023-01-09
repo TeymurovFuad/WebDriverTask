@@ -137,7 +137,7 @@ namespace WebDriverTask.Core.Extensions
 
 
         public static ((int x, int y) position, (int width, int height) size, (int left, int right) leftRight, (int top, int bottom) topBottom) 
-            GetElementOffset(this IWebDriver driver, IWebElement element)
+            JsGetElementOffset(this IWebDriver driver, IWebElement element)
         {
             int x, y, width, height, left, right, top, bottom;
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
