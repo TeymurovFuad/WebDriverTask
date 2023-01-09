@@ -43,6 +43,15 @@ namespace WebDriverTask.Pages
             }
         }
 
+        public string AlertText()
+        {
+            if (isAlertExists())
+            {
+                return alert.Text;
+            }
+            return string.Empty;
+        }
+
         public bool isAlertExists()
         {
             WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromMilliseconds(1500));

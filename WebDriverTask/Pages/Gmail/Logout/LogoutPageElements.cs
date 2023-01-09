@@ -11,7 +11,7 @@ namespace WebDriverTask.Pages.Gmail.Logout
             webDriver = driver;
         }
 
-        public readonly By ChooseAnAccoutLocator =  By.XPath("//span[text()='Choose an account']");
-        public IWebElement ChooseAnAccout => webDriver.GetElement(ChooseAnAccoutLocator);
+        public readonly By ChooseAnAccoutLabelLocator =  By.XPath("//span[text()='Choose an account']");
+        public IWebElement ChooseAnAccoutLabel => webDriver.GetElement(ChooseAnAccoutLabelLocator);
     }
 }

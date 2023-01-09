@@ -5,6 +5,7 @@ using WebDriverTask.Pages.Gmail;
 using WebDriverTask.Core.Helpers;
 using OpenQA.Selenium;
 using WebDriverTask.Core.Extensions;
+using System.Drawing;
 using OpenQA.Selenium.Chrome;
 
 namespace WebDriverTask.Tests
@@ -12,25 +13,65 @@ namespace WebDriverTask.Tests
     //[TestFixtureSource(typeof(TestClassDataProvider), "TestCases")]
     //[Parallelizable(ParallelScope.Fixtures)]
     [TestFixture]
-    public class GmailTest: Hooks
+    public class GmailTestIndependentCases : Hooks
     {
         protected MainPage mainPage;
         private static string _url = "https://mail.google.com/";
 
 
-        public GmailTest() : base(browserType: BrowserType.Chrome, url: _url)
+        public GmailTestIndependentCases() : base(browserType: BrowserType.Chrome, url: _url)
         {
             driverOptions = new ChromeOptions();
             mainPage = new MainPage(webDriver);
-            StopOnFail= true;
+            StopOnFail = true;
+        }
+
+        [Test]
+        [TestCase("qy54313@gmail.com", "Aa123456____")]
+        public void Login(string email, string password)
+        {
+            webDriver.WaitPageToLoad();
+            mainPage.loginPage.ToggleLanguageChooserDropDown();
+            mainPage.loginPage.ChangeLanguage("english");
+            webDriver.WaitUntilElementDisplayed(mainPage.loginPage.CurrentLanguage);
+            mainPage.loginPage.FillEmail(email);
+            mainPage.loginPage.ClickNext();
+            mainPage.loginPage.FillPassword(password);
+            mainPage.loginPage.ClickNext();
+            Thread.Sleep(3000);
+            mainPage.GoToSent();
+            mainPage.ToggleMore();
+            Thread.Sleep(2000);
+            IWebElement source = mainPage.sentFolder.SentMails[0];
+            IWebElement target = mainPage.TrashFolder;
+            (int w, int h) = webDriver.JsGetViewportSize();
+            //webDriver.CreateActions().ContextClick(source).Perform();
+            //webDriver.CreateActions().Click(webDriver.GetElement(By.XPath("//div[@role='menuitem']//div[text()='Delete']"))).Perform();
+            (int sx, int sy) = webDriver.JsGetElementOffset(source).position;
+            (int st, int sb) = webDriver.JsGetElementOffset(source).topBottom;
+            (int sl, int sr) = webDriver.JsGetElementOffset(source).leftRight;
+            (int x, int y) = webDriver.JsGetElementOffset(target).position;
+            (int t, int b) = webDriver.JsGetElementOffset(target).topBottom;
+            (int l, int r) = webDriver.JsGetElementOffset(target).leftRight;
+            //x = w-l+r/2; y = h-t+b/2;
+            webDriver.CreateActions().DragAndDrop(source, target).Perform();
+            //source = mainPage.sentFolder.SentMails[0];
+            webDriver.CreateActions().SourceElement(source);
+            Point position = source.Location;
+            position = ((ILocatable)target).LocationOnScreenOnceScrolledIntoView;
+            webDriver.CreateActions().MoveTo(target: (t, l), source: (st, sl)).Perform();
+            source = mainPage.sentFolder.SentMails[0];
+            webDriver.CreateActions().SourceElement(source);
+            webDriver.CreateActions().MoveToElement(target, 0, 0).Perform();
+            webDriver.CreateActions().ReleaseElement().Perform();
         }
 
         [Test, Order(1)]
         public void OpenBrowser()
         {
             webDriver.WaitPageToLoad();
-            bool pageOpened = webDriver.Title.Contains("gmail", StringComparison.CurrentCultureIgnoreCase);
-            Assert.IsTrue(pageOpened);
+            bool pageDisplayed = webDriver.Title.Contains("gmail", StringComparison.CurrentCultureIgnoreCase);
+            Assert.IsTrue(pageDisplayed);
         }
 
         [Test, Order(2)]
@@ -40,17 +81,14 @@ namespace WebDriverTask.Tests
             mainPage.loginPage.ToggleLanguageChooserDropDown();
             mainPage.loginPage.ChangeLanguage(expectedLanguage);
             string actualLanguage = mainPage.loginPage.GetValueOfCurrentSelectedLanguage();
-            Assert.IsTrue(actualLanguage.Contains(expectedLanguage, StringComparison.CurrentCultureIgnoreCase));
+            Assert.That(actualLanguage.Contains(expectedLanguage, StringComparison.CurrentCultureIgnoreCase), Is.True);
         }
 
         [Test, Order(3)]
         [TestCase("qy54313@gmail.com", "Aa123456____")]
         public void FillUsernameAndPasswordAndLogin(string email, string password)
         {
-            mainPage.loginPage.FillEmail(email);
-            mainPage.loginPage.ClickNext();
-            mainPage.loginPage.FillPassword(password);
-            mainPage.loginPage.ClickNext();
+            mainPage.loginPage.Login(email, password);
             testData.SetVariable("email", email);
             Assert.IsTrue(mainPage.isTitleDisplayed("inbox"));
         }
@@ -110,16 +148,17 @@ namespace WebDriverTask.Tests
         {
             string subject = testData.GetVariable<string>("subject");
             IWebElement? mail = mainPage.sentFolder.FindSentMailBySubjectOrBody(subject);
-            mainPage.ToggleMore();
-            IWebElement trashFolder = mainPage.TrashFolder;
-            webDriver.CreateActions().DragAndDrop(mail, trashFolder).Perform();
+            webDriver.CreateActions().ContextClick(mail).Perform();
+            webDriver.CreateActions().Click(mainPage.mailContextMenu.DeleteItem).Perform();
             Assert.IsFalse(webDriver.isElementDisplayed(mail));
         }
 
         [Test, Order(10)]
         public void SignOutAndVerifyUserSignedOutSuccessfully()
         {
-            mainPage.LogOut(testData.GetVariable<string>("email"));
+            mainPage.accoutDialog.OpenAccountDialog(testData.GetVariable<string>("email"));
+            mainPage.accoutDialog.SwitchToAccountFrame();
+            mainPage.accoutDialog.ClickSignOut();
             bool loggedOut = webDriver.WaitUntilElementDisplayed(mainPage.logoutPage.ChooseAnAccoutLabel).isDisplayed;
             Assert.IsTrue(loggedOut);
         }
