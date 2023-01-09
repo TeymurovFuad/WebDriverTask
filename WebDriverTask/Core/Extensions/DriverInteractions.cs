@@ -182,5 +182,16 @@ namespace WebDriverTask.Core.Extensions
             }
             return elements;
         }
+
+        public static (int width, int height) JsGetWindowSize(this IWebDriver driver)
+        {
+            IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
+            int width, height;
+            Dictionary<string, object> widthHeight = (Dictionary<string, object>)jsExecutor
+                .ExecuteScript("var width=window.innerWidth; var height=window.innerHeight; return {width:width, height:height};");
+            width = Convert.ToInt32(widthHeight["width"]);
+            height = Convert.ToInt32(widthHeight["height"]);
+            return (width, height);
+        }
     }
 }
