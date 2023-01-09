@@ -193,5 +193,16 @@ namespace WebDriverTask.Core.Extensions
             height = Convert.ToInt32(widthHeight["height"]);
             return (width, height);
         }
+
+        public static (int width, int height) JsGetViewportSize(this IWebDriver driver)
+        {
+            IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
+            int width, height;
+            Dictionary<string, object> widthHeight = (Dictionary<string, object>)jsExecutor
+                .ExecuteScript("var width=document.documentElement.clientWidth; var height=document.documentElement.clientHeight; return {width:width, height:height};");
+            width = Convert.ToInt32(widthHeight["width"]);
+            height = Convert.ToInt32(widthHeight["height"]);
+            return (width, height);
+        }
     }
 }
