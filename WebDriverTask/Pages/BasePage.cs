@@ -54,13 +54,16 @@ namespace WebDriverTask.Pages
 
         public bool isAlertExists()
         {
-            WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromMilliseconds(1500));
-            wait.Until(a => alert = webDriver.SwitchTo().Alert());
-            if(alert!=null)
+            try
             {
+                WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromMilliseconds(1500));
+                wait.Until(a => alert = webDriver.SwitchTo().Alert());
                 return true;
             }
-            return false;
+            catch
+            {
+                return false;
+            }
         }
 
         public string IgnoreCaseInXPath(string partOrXpathToBeIgnored, string? property = "text()")
