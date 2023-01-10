@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace WebDriverTask.Core.Helpers
+namespace WebDriverTask.Utils.Helpers
 {
     public static class StringHelper
     {
@@ -25,7 +25,7 @@ namespace WebDriverTask.Core.Helpers
             string pattern = @"{\\d}";
             Regex regex = new Regex(pattern, RegexOptions.Compiled);
             MatchCollection matchCollection = regex.Matches(target);
-            if(matchCollection.Count > vals.Length)
+            if (matchCollection.Count > vals.Length)
                 return string.Empty;
             return string.Format(target, vals);
         }

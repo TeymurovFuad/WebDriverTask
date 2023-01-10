@@ -1,17 +1,18 @@
 ﻿using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium;
+using WebDriverTask.Core.Extensions;
 
-namespace WebDriverTask.Core.Extensions
+namespace WebDriverTask.Utils.Extensions
 {
     public static class DriverInteractions
     {
-        public static void WaitPageToLoad(this IWebDriver driver, int secondsToWait=5, Action? exceptedAction=null)
+        public static void WaitPageToLoad(this IWebDriver driver, int secondsToWait = 5, Action? exceptedAction = null)
         {
             if (secondsToWait > 0 && driver != null)
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(secondsToWait);
         }
 
-        private static WebDriverWait Wait(IWebDriver driver, int waitTimeInSeconds=5)
+        private static WebDriverWait Wait(IWebDriver driver, int waitTimeInSeconds = 5)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitTimeInSeconds));
             return wait;

@@ -1,5 +1,5 @@
 ﻿using OpenQA.Selenium;
-using WebDriverTask.Core.Extensions;
+using WebDriverTask.Utils.Extensions;
 
 namespace WebDriverTask.Pages
 {

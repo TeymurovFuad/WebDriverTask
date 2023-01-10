@@ -1,5 +1,5 @@
 ﻿using OpenQA.Selenium;
-using WebDriverTask.Core.CustomExceptions;
+using WebDriverTask.Utils.Exceptions;
 
 namespace WebDriverTask.Core.Browser.Configuration
 {

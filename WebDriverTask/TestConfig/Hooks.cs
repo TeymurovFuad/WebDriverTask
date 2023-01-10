@@ -2,8 +2,8 @@
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using WebDriverTask.Core.Browser;
-using WebDriverTask.Core.Extensions;
 using WebDriverTask.Core.WebDriver;
+using WebDriverTask.Utils.Extensions;
 
 namespace WebDriverTask.TestConfig
 {

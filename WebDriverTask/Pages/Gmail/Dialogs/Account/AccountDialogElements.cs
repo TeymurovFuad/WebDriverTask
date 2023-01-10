@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using WebDriverTask.Core.Extensions;
-using WebDriverTask.Core.Helpers;
+using WebDriverTask.Utils.Extensions;
+using WebDriverTask.Utils.Helpers;
 
 namespace WebDriverTask.Pages.Gmail.Dialogs.Account
 {
