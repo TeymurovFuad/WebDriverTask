@@ -1,6 +1,6 @@
-﻿namespace WebDriverTask.Core.CustomExceptions
+﻿namespace WebDriverTask.Utils.Exceptions
 {
-    public class ElementException: Exception
+    public class ElementException : Exception
     {
         public ElementException()
         {

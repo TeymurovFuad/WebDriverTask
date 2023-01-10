@@ -2,10 +2,10 @@
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using WebDriverTask.Core.Browser;
-using WebDriverTask.Core.Extensions;
 using WebDriverTask.Core.WebDriver;
+using WebDriverTask.Utils.Extensions;
 
-namespace WebDriverTask.Tests.TestConfig
+namespace WebDriverTask.TestConfig
 {
     public abstract class Hooks
     {
@@ -19,7 +19,7 @@ namespace WebDriverTask.Tests.TestConfig
         private string? _url { get; set; }
         public bool StopOnFail { private get; set; }
 
-        protected Hooks(BrowserType browserType, string? url=null)
+        protected Hooks(BrowserType browserType, string? url = null)
         {
             _url = url;
             _browserType = browserType;

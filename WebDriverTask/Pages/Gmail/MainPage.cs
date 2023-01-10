@@ -7,6 +7,7 @@ using WebDriverTask.Pages.Gmail.Folders.Drafts;
 using WebDriverTask.Pages.Gmail.Folders.Sent;
 using WebDriverTask.Pages.Gmail.Login;
 using WebDriverTask.Pages.Gmail.Logout;
+using WebDriverTask.Utils.Extensions;
 
 namespace WebDriverTask.Pages.Gmail
 {

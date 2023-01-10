@@ -1,6 +1,6 @@
-﻿namespace WebDriverTask.Core.CustomExceptions
+﻿namespace WebDriverTask.Utils.Exceptions
 {
-    public class DriverException: Exception
+    public class DriverException : Exception
     {
         public DriverException()
         {

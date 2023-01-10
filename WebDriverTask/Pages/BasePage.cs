@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using WebDriverTask.Core.CustomExceptions;
-using WebDriverTask.Core.Extensions;
+using WebDriverTask.Utils.Exceptions;
+using WebDriverTask.Utils.Extensions;
 
 namespace WebDriverTask.Pages
 {

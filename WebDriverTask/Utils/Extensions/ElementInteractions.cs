@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using WebDriverTask.Utils.Extensions;
 
 namespace WebDriverTask.Core.Extensions
 {

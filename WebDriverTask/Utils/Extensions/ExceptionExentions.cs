@@ -1,4 +1,4 @@
-﻿namespace WebDriverTask.Core.Extensions
+﻿namespace WebDriverTask.Utils.Extensions
 {
     public static class ExceptionExentions
     {

@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 
-namespace WebDriverTask.Core.Extensions
+namespace WebDriverTask.Utils.Extensions
 {
     public static class BrowserInteractions
     {

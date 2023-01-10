@@ -1,7 +1,7 @@
 ﻿
 using OpenQA.Selenium;
 using WebDriverTask.Core.Browser;
-using WebDriverTask.Core.Extensions;
+using WebDriverTask.Utils.Extensions;
 
 namespace WebDriverTask.Core.WebDriver
 {
