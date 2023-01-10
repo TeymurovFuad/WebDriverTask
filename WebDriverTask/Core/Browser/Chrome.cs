@@ -41,6 +41,7 @@ namespace WebDriverTask.Core.Browser
             {
                 _chromeOptions = options;
             }
+            _chromeOptions.AddArguments("--no-sandbox", "disable-infobars");
             return this;
         }
 
