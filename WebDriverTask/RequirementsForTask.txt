@@ -35,3 +35,20 @@ ACCEPTANCE CRITERIA
 4.	Selenium Grid is correctly set up. Different capabilities are used during set up.
 5.	There is no code duplication at all.
 6.	Naming and Code Conventions should be followed.
+
+
+MODULE 9: TEST AUTOMATION FRAMEWORKS BASICS (.NET)
+HOME TASK
+Update your automated tests from previous module (WebDriver) with new project structure *:
+
+1.	Create packages for page objects, tests/steps, business objects, utils.
+2.	Create business objects as C# classes and use them in your tests (e.g. user with 2 parameters - name and password).
+3.	Create some utility classes according to the test flow needs.
+BONUS TASK
+Implement your test scenario (or part of it, if it is possible) using some ready-made Selenium wrapper/framework (e.g. Selenide, Serenity, JDI, HtmlElements)
+Logging or screenshotting can be done as well, but will be covered in upcoming module on reporting and analysis topics.
+ACCEPTANCE CRITERIA
+1.	Packages for page objects, tests/steps, business objects, utils are created and contain relevant classes.
+2.	Business objects as dedicated C# classes and used/invoked during the test flow.
+3.	Utility classes are created according to the test flow needs.
+4.	BONUS TASK: Fully functional C# implementation of test scenario using some ready-made Selenium wrapper/framework (e.g. Selenide, Serenity, JDI, HtmlElements) is delivered to a mentor.
