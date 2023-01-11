@@ -1,37 +1,42 @@
-﻿using NUnit.Framework;
+﻿using GmailTest.Pages.Gmail;
+using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using WebDriverTask.Core.Browser;
 using WebDriverTask.Core.Extensions;
 using WebDriverTask.Core.WebDriver;
 
-namespace WebDriverTask.TestConfig
+namespace WebDriverTask.Common.TestConfig
 {
-    public abstract class Hooks
+    public abstract class Hooks: CommonHooks
     {
         private BrowserType _browserType { get; set; }
         protected IWebDriver webDriver { get; set; }
-        protected TestData testData;
-        protected DriverManager driverManager;
-        protected DriverOptions driverOptions;
-
-        private bool _isFailed;
+        protected bool isChained;
+        protected bool _isFailed;
         private string? _url { get; set; }
         public bool StopOnFail { private get; set; }
 
-        protected Hooks(BrowserType browserType, string? url = null)
+        protected TestData testData = new();
+        protected DriverManager driverManager = new();
+        protected DriverOptions driverOptions;
+
+        protected Hooks(): base()
         {
-            _url = url;
+        }
+
+        protected Hooks(BrowserType browserType) : base()
+        {
             _browserType = browserType;
-            testData = new TestData();
-            driverManager = new DriverManager();
-            driverManager.BuildDriver(_browserType, driverOptions);
+            driverManager.BuildDriver(browserType, driverOptions);
             webDriver = driverManager.GetWebDriver();
         }
 
         [OneTimeSetUp]
         public void ClassSetUp()
         {
+            testData = new TestData();
+            driverManager = new DriverManager();
             if (!string.IsNullOrEmpty(_url))
                 driverManager.GetWebDriver().GoToUrl(_url);
         }

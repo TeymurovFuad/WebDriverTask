@@ -1,4 +1,4 @@
-﻿namespace WebDriverTask.TestConfig
+﻿namespace WebDriverTask.Common.TestConfig
 {
     public class TestData
     {

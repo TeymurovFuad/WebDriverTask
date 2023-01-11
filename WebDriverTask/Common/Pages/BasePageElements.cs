@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using WebDriverTask.Core.Extensions;
 
-namespace WebDriverTask.Pages
+namespace WebDriverTask.Common.Pages
 {
     public class BasePageElements
     {

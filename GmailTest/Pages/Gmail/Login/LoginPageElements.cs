@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
+using WebDriverTask.Common.Pages;
 using WebDriverTask.Core.Extensions;
 using WebDriverTask.Core.Helpers;
-using WebDriverTask.Pages;
 
 namespace GmailTest.Pages.Gmail.Login
 {
@@ -49,7 +49,7 @@ namespace GmailTest.Pages.Gmail.Login
 
             foreach (IWebElement element in AllLanguagesFromDropDown)
             {
-                if (element.GetElement(By.XPath(xpathToLanguage)).Displayed)
+                if (element.GetChild(By.XPath(xpathToLanguage)).Displayed)
                 {
                     LanguageFromDropDown = element;
                     break;

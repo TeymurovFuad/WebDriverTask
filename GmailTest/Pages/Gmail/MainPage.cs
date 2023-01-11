@@ -7,7 +7,7 @@ using GmailTest.Pages.Gmail.Folders.Drafts;
 using GmailTest.Pages.Gmail.Folders.Sent;
 using GmailTest.Pages.Gmail.Login;
 using GmailTest.Pages.Gmail.Logout;
-using WebDriverTask.Pages;
+using WebDriverTask.Common.Pages;
 
 namespace GmailTest.Pages.Gmail
 {
@@ -58,13 +58,24 @@ namespace GmailTest.Pages.Gmail
 
         public void ComposeNewMail()
         {
+            ComposeButton.Click();
+        }
+
+        public void ComposeAndFillMail(string receiver, string subject, string body)
+        {
             messageDialog.CloseAllMailDialogs();
             ComposeButton.Click();
+            messageDialog.FillMailData(receiver: receiver, subject: subject, body: body);
         }
 
         public void OpenFolder(IWebElement folder)
         {
             ClickElement(folder);
+        }
+
+        public void OpenExistingMail(string bySubjectOrBody)
+        {
+            Mail(bySubjectOrBody).JsClick(webDriver);
         }
 
         protected bool isMailboxEmpty(By locator)

@@ -4,9 +4,10 @@ using GmailTest.Pages.Gmail;
 using WebDriverTask.Core.Helpers;
 using OpenQA.Selenium;
 using WebDriverTask.Core.Extensions;
-using System.Drawing;
 using OpenQA.Selenium.Chrome;
-using WebDriverTask.TestConfig;
+using WebDriverTask.Common.TestConfig;
+using WebDriverTask.Business;
+using GmailTest.Business;
 
 namespace GmailTest.Tests
 {
@@ -16,137 +17,161 @@ namespace GmailTest.Tests
     public class GmailTestIndependentCases : Hooks
     {
         protected MainPage mainPage;
-        private static string _url = "https://mail.google.com/";
+        private User _user;
+        private Mail _mail;
+        private Page _page;
 
-
-        public GmailTestIndependentCases() : base(browserType: BrowserType.Chrome, url: _url)
+        public GmailTestIndependentCases() : base()
         {
             driverOptions = new ChromeOptions();
+            _user = new(email: "qy54313@gmail.com", password: "Aa123456____");
+            _mail = new(receiver: "someFakeMail@noSuchAddress.pl", subject: StringHelper.GenerateUUID(), body: "SomeTestBody");
+            _page = new(title: "Gmail", language: "English", url: "https://mail.google.com/");
+            StopOnFail = false;
+            isChained= false;
+        }
+
+        [SetUp]
+        protected void TestSetup()
+        {
+            driverManager.BuildDriver(BrowserType.Chrome, driverOptions);
+            webDriver = driverManager.GetWebDriver();
             mainPage = new MainPage(webDriver);
-            StopOnFail = true;
+            webDriver.GoToUrl(_page.Url);
         }
 
         [Test]
-        [TestCase("qy54313@gmail.com", "Aa123456____")]
-        public void Login(string email, string password)
-        {
-            webDriver.WaitPageToLoad();
-            mainPage.loginPage.ToggleLanguageChooserDropDown();
-            mainPage.loginPage.ChangeLanguage("english");
-            webDriver.WaitUntilElementDisplayed(mainPage.loginPage.CurrentLanguage);
-            mainPage.loginPage.FillEmail(email);
-            mainPage.loginPage.ClickNext();
-            mainPage.loginPage.FillPassword(password);
-            mainPage.loginPage.ClickNext();
-            Thread.Sleep(3000);
-            mainPage.GoToSent();
-            mainPage.ToggleMore();
-            Thread.Sleep(2000);
-            IWebElement source = mainPage.sentFolder.SentMails[0];
-            IWebElement target = mainPage.TrashFolder;
-            (int st, int sb) = webDriver.JsGetElementOffset(source).topBottom;
-            (int sl, int sr) = webDriver.JsGetElementOffset(source).leftRight;
-            (int t, int b) = webDriver.JsGetElementOffset(target).topBottom;
-            (int l, int r) = webDriver.JsGetElementOffset(target).leftRight;
-            webDriver.CreateActions().SourceElement(source);
-            webDriver.CreateActions().MoveTo(target: (t, l), source: (st, sl)).Perform();
-        }
-
-        [Test, Order(1)]
         public void OpenBrowser()
         {
             webDriver.WaitPageToLoad();
-            bool pageDisplayed = webDriver.Title.Contains("gmail", StringComparison.CurrentCultureIgnoreCase);
+            bool pageDisplayed = webDriver.Title.Contains(_page.Title, StringComparison.CurrentCultureIgnoreCase);
             Assert.IsTrue(pageDisplayed);
         }
 
-        [Test, Order(2)]
-        [TestCase("english")]
-        public void ChangePageLanguageToEnglishAndVerifyItChanged(string expectedLanguage)
+        [Test]
+        public void ChangePageLanguageToEnglishAndVerifyItChanged()
         {
             mainPage.loginPage.ToggleLanguageChooserDropDown();
-            mainPage.loginPage.ChangeLanguage(expectedLanguage);
+            mainPage.loginPage.ChangeLanguage(_page.Language);
             string actualLanguage = mainPage.loginPage.GetValueOfCurrentSelectedLanguage();
-            Assert.That(actualLanguage.Contains(expectedLanguage, StringComparison.CurrentCultureIgnoreCase), Is.True);
+            Assert.That(actualLanguage.Contains(_page.Language, StringComparison.CurrentCultureIgnoreCase), Is.True);
         }
 
-        [Test, Order(3)]
-        [TestCase("qy54313@gmail.com", "Aa123456____")]
-        public void FillUsernameAndPasswordAndLogin(string email, string password)
+        [Test]
+        public void FillUsernameAndPasswordAndLogin()
         {
-            mainPage.loginPage.Login(email, password);
-            testData.SetVariable("email", email);
+            mainPage.loginPage.ToggleLanguageChooserDropDown();
+            mainPage.loginPage.ChangeLanguage(_page.Language);
+            mainPage.loginPage.Login(_user.Email, _user.Password);
             Assert.IsTrue(mainPage.isTitleDisplayed("inbox"));
         }
 
-        [Test, Order(4)]
+        [Test]
         public void OpenDialogToComposeNewMail()
         {
+            mainPage.loginPage.ToggleLanguageChooserDropDown();
+            mainPage.loginPage.ChangeLanguage(_page.Language);
+            mainPage.loginPage.Login(_user.Email, _user.Password);
             mainPage.ComposeNewMail();
             IWebElement messageDialog = mainPage.messageDialog.GetMailDialog();
             Assert.IsTrue(messageDialog.isElementDisplayed());
         }
 
-        [Test, Order(5)]
-        [TestCase("someFakeMail@noSuchAddress.pl", "", "SomeTestBody ")]
-        public void FillFieldsInMessageDialogAndCloseDialog(string someMailAddress, string someSubject, string someBody)
+        [Test]
+        public void FillFieldsInMessageDialogAndCloseDialog()
         {
-            someSubject += StringHelper.GenerateUUID();
-            mainPage.messageDialog.MailTo(someMailAddress);
-            mainPage.messageDialog.MailSubject(someSubject);
-            mainPage.messageDialog.MailBody(someBody);
-            mainPage.messageDialog.CloseAllMailDialogs();
-            Thread.Sleep(2000);
-            Assert.IsTrue(mainPage.messageDialog.AllMailDialogs.Count == 0);
-
-            testData.SetVariable("to", someMailAddress);
-            testData.SetVariable("subject", someSubject);
-            testData.SetVariable("body", someBody);
+            mainPage.loginPage.ToggleLanguageChooserDropDown();
+            mainPage.loginPage.ChangeLanguage(_page.Language);
+            mainPage.loginPage.Login(_user.Email, _user.Password);
+            mainPage.ComposeNewMail();
+            mainPage.messageDialog.FillMailData(receiver: _mail.Receiver, subject: _mail.Subject, body: _mail.Body);
+            mainPage.messageDialog.CloseMailDialog(subject: _mail.Subject);
+            Assert.IsTrue(mainPage.messageDialog.GetMailDialog(subject: _mail.Subject).Displayed);
         }
 
-        [Test, Order(6)]
-        public void VerifyCreatedMessageExistsInDrafts()
+        [Test]
+        public void CreateMailVerifyCreatedMailExistsInDrafts()
         {
+            mainPage.loginPage.ToggleLanguageChooserDropDown();
+            mainPage.loginPage.ChangeLanguage(_page.Language);
+            mainPage.loginPage.Login(_user.Email, _user.Password);
+            mainPage.ComposeNewMail();
+            mainPage.messageDialog.FillMailData(receiver: _mail.Receiver, subject: _mail.Subject, body: _mail.Body);
+            mainPage.messageDialog.CloseMailDialog(subject: _mail.Subject);
             mainPage.GoToDrafts();
-            Assert.IsNotNull(mainPage.draftsFolder.GetDraftMailsByValue(testData.GetVariable<string>("subject")));
+            bool isMailExists = webDriver.isElementDisplayed(mainPage.Mail(_mail.Subject));
+            Assert.IsTrue(isMailExists);
         }
 
-        [Test, Order(7)]
+        [Test]
         public void SendMailFromDraftAndVerifyMailDissapearedFromDraftFolder()
         {
-            mainPage.messageDialog.CloseAllMailDialogs();
-            mainPage.draftsFolder.GetDraftMailByValue(testData.GetVariable<string>("subject"))!.JsClick(webDriver);
+            mainPage.loginPage.ToggleLanguageChooserDropDown();
+            mainPage.loginPage.ChangeLanguage(_page.Language);
+            mainPage.loginPage.Login(_user.Email, _user.Password);
+            mainPage.ComposeNewMail();
+            mainPage.messageDialog.FillMailData(receiver: _mail.Receiver, subject: _mail.Subject, body: _mail.Body);
+            mainPage.messageDialog.CloseMailDialog(subject: _mail.Subject);
+            mainPage.GoToDrafts();
+            mainPage.OpenExistingMail(_mail.Subject);
             mainPage.messageDialog.SendButton.Click();
-            Assert.IsFalse(mainPage.draftsFolder.GetDraftMailByValue(testData.GetVariable<string>("subject")).isElementDisplayed());
+            Assert.IsFalse(mainPage.Mail(_mail.Subject).isElementDisplayed());
         }
 
-        [Test, Order(8)]
+        [Test]
         public void GoToSentMailsFolderAndVerifyThatMailIsThere()
         {
+            mainPage.loginPage.ToggleLanguageChooserDropDown();
+            mainPage.loginPage.ChangeLanguage(_page.Language);
+            mainPage.loginPage.Login(_user.Email, _user.Password);
+            mainPage.ComposeNewMail();
+            mainPage.messageDialog.FillMailData(receiver: _mail.Receiver, subject: _mail.Subject, body: _mail.Body);
+            mainPage.messageDialog.CloseMailDialog(subject: _mail.Subject);
+            mainPage.GoToDrafts();
+            mainPage.OpenExistingMail(_mail.Subject);
+            mainPage.messageDialog.SendButton.Click();
             mainPage.GoToSent();
-            mainPage.sentFolder.isSentOpened();
-            IWebElement? mail = mainPage.sentFolder.GetSentMailBySubject(testData.GetVariable<string>("subject"));
+            IWebElement? mail = mainPage.sentFolder.FindSentMailBySubjectOrBody(_mail.Subject);
             Assert.NotNull(mail);
         }
 
-        [Test, Order(9)]
+        [Test]
         public void DeleteMailFromSentUsingActionsAndVerifyMailtDeleted()
         {
-            string subject = testData.GetVariable<string>("subject");
-            IWebElement? mail = mainPage.sentFolder.FindSentMailBySubjectOrBody(subject);
-            webDriver.CreateActions().ContextClick(mail).Perform();
-            webDriver.CreateActions().Click(mainPage.mailContextMenu.DeleteItem).Perform();
-            Assert.IsFalse(webDriver.isElementDisplayed(mail));
+            mainPage.loginPage.ToggleLanguageChooserDropDown();
+            mainPage.loginPage.ChangeLanguage(_page.Language);
+            mainPage.loginPage.Login(_user.Email, _user.Password);
+            mainPage.ComposeNewMail();
+            mainPage.messageDialog.FillMailData(receiver: _mail.Receiver, subject: _mail.Subject, body: _mail.Body);
+            mainPage.messageDialog.CloseMailDialog(subject: _mail.Subject);
+            webDriver.WaintUntilUrlChanged(() => mainPage.GoToDrafts());
+            mainPage.OpenExistingMail(_mail.Subject);
+            mainPage.messageDialog.SendButton.Click();
+            webDriver.WaintUntilUrlChanged(() => mainPage.GoToSent());
+            mainPage.ToggleMore();
+            IWebElement mail = mainPage.sentFolder.FindSentMailBySubjectOrBody(_mail.Subject)!;
+            IWebElement trash = mainPage.TrashFolder;
+            webDriver.CreateActions().DragAndDrop(source: mail, target: trash).Perform();
+            Assert.IsFalse(webDriver.isElementDisplayed(mainPage.Mail(_mail.Subject)));
         }
 
-        [Test, Order(10)]
+        [Test]
         public void SignOutAndVerifyUserSignedOutSuccessfully()
         {
-            mainPage.accoutDialog.OpenAccountDialog(testData.GetVariable<string>("email"));
+            mainPage.loginPage.ToggleLanguageChooserDropDown();
+            mainPage.loginPage.ChangeLanguage(_page.Language);
+            mainPage.loginPage.Login(_user.Email, _user.Password);
+            mainPage.accoutDialog.OpenAccountDialog(_user.Email);
             mainPage.accoutDialog.SwitchToAccountFrame();
             mainPage.accoutDialog.ClickSignOut();
             bool loggedOut = webDriver.WaitUntilElementDisplayed(mainPage.logoutPage.ChooseAnAccoutLabel).isDisplayed;
             Assert.IsTrue(loggedOut);
+        }
+
+        [TearDown]
+        protected void TestTearDown()
+        {
+            driverManager.QuitDriver();
         }
     }
 }

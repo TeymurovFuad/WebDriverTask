@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
+using WebDriverTask.Common.Pages;
 using WebDriverTask.Core.Extensions;
-using WebDriverTask.Pages;
 
 namespace GmailTest.Pages.Gmail.Login
 {
@@ -21,7 +21,7 @@ namespace GmailTest.Pages.Gmail.Login
 
         public bool isLanguageChooserDropDownExpanded()
         {
-            IWebElement dropDownElement = DropDownToChooseLanguage.GetElement(subPathToCheckDropDownStatus);
+            IWebElement dropDownElement = DropDownToChooseLanguage.GetChild(subPathToCheckDropDownStatus);
             string attributeValue = dropDownElement.GetAttribute("aria-expanded");
             return bool.TryParse(attributeValue, out bool isExpanded) && isExpanded;
         }
@@ -35,12 +35,12 @@ namespace GmailTest.Pages.Gmail.Login
         public string GetValueOfCurrentSelectedLanguage()
         {
             webDriver.WaitUntilElementDisplayed(CurrentLanguage);
-            return CurrentLanguage.GetElement(subPathToRetreiveLanguageText).Text;
+            return CurrentLanguage.GetChild(subPathToRetreiveLanguageText).Text;
         }
 
         public string GetValueOfLanguage(IWebElement language)
         {
-            return language.GetElement(subPathToRetreiveLanguageText).Text;
+            return language.GetChild(subPathToRetreiveLanguageText).Text;
         }
 
         public void ChangeLanguage(string languageToChange)
@@ -83,6 +83,7 @@ namespace GmailTest.Pages.Gmail.Login
             ClickNext();
             FillPassword(password);
             ClickNext();
+            webDriver.WaitPageToLoad();
         }
     }
 }

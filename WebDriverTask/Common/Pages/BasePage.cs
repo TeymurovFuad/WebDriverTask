@@ -3,21 +3,21 @@ using OpenQA.Selenium.Support.UI;
 using WebDriverTask.Core.CustomExceptions;
 using WebDriverTask.Core.Extensions;
 
-namespace WebDriverTask.Pages
+namespace WebDriverTask.Common.Pages
 {
-    public abstract class BasePage: BasePageElements
+    public abstract class BasePage : BasePageElements
     {
         protected IWebDriver webDriver { get; set; }
         private IAlert alert;
 
-        public BasePage(IWebDriver driver): base(driver)
+        public BasePage(IWebDriver driver) : base(driver)
         {
             webDriver = driver;
         }
 
         public void ClickElement(IWebElement element, bool condition = true)
         {
-            if (webDriver.WaitUntilElementIsInteractable(element)!=null)
+            if (webDriver.WaitUntilElementIsInteractable(element) != null)
             {
                 element.Click();
             }

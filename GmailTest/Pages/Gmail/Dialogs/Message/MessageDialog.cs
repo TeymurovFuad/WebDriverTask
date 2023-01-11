@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
+using WebDriverTask.Common.Pages;
 using WebDriverTask.Core.Extensions;
-using WebDriverTask.Pages;
 
 namespace GmailTest.Pages.Gmail.Dialogs.Message
 {
@@ -15,7 +15,7 @@ namespace GmailTest.Pages.Gmail.Dialogs.Message
         public void MailTo(params string[] addressTo)
         {
             string receivers = string.Join(",", addressTo);
-            webDriver.WaitUntilElementIsInteractable(To);
+            webDriver.WaitUntilElementDisplayed(ToLocator);
             To.SendKeys(receivers);
         }
 
@@ -34,12 +34,30 @@ namespace GmailTest.Pages.Gmail.Dialogs.Message
             SendButton.Click();
         }
 
+        public void FillMailData(string receiver, string subject, string body)
+        {
+            MailTo(receiver);
+            MailSubject(subject);
+            MailBody(body);
+        }
+
+        public void CloseMailDialog(string subject)
+        {
+            try
+            {
+                webDriver.JsClick(SaveAndCloseButton(subject));
+            }
+            catch(NoSuchElementException)
+            {
+                SaveAndCloseButton(subject).Click();
+            }
+        }
+
         public void CloseAllMailDialogs()
         {
             foreach (IWebElement saveAndCloseButton in SaveAndCloseButtons)
             {
                 saveAndCloseButton.Click();
-                webDriver.WaitUntilElementHidden(saveAndCloseButton);
             }
         }
     }

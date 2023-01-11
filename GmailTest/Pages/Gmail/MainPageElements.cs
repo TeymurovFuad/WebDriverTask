@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
+using WebDriverTask.Common.Pages;
 using WebDriverTask.Core.Extensions;
-using WebDriverTask.Pages;
 
 namespace GmailTest.Pages.Gmail
 {
@@ -36,6 +36,9 @@ namespace GmailTest.Pages.Gmail
 
         public readonly By LessButtonLocator = By.XPath("//span[text()='Less']");
         public IWebElement LessButton => webDriver.GetElement(LessButtonLocator);
+
+        public By MailLocator(string subjectOrBody) => By.XPath($"//span[text()='{subjectOrBody}']");
+        public IWebElement Mail(string subjectOrBody) => webDriver.JsGetElement(MailLocator(subjectOrBody));
 
         public By GetTableContainingMailsLocator(string folderSpecificIdentifier) => By.XPath($"//table[tbody[position()=1]//{folderSpecificIdentifier}]");
         public IWebElement GetTableContainingMails(string folderSpecificIdentifier) => webDriver.GetElement(GetTableContainingMailsLocator(folderSpecificIdentifier));

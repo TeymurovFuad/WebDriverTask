@@ -4,9 +4,10 @@ using GmailTest.Pages.Gmail;
 using WebDriverTask.Core.Helpers;
 using OpenQA.Selenium;
 using WebDriverTask.Core.Extensions;
-using System.Drawing;
 using OpenQA.Selenium.Chrome;
-using WebDriverTask.TestConfig;
+using WebDriverTask.Common.TestConfig;
+using GmailTest.Business;
+using WebDriverTask.Business;
 
 namespace GmailTest.Tests
 {
@@ -19,16 +20,25 @@ namespace GmailTest.Tests
         private static string _url = "https://mail.google.com/";
 
 
-        public MailSendTest() : base(browserType: BrowserType.Chrome, url: _url)
+        public MailSendTest() : base(browserType: BrowserType.RemoteFirefox)
         {
             driverOptions = new ChromeOptions();
-            mainPage = new MainPage(webDriver);
             StopOnFail= true;
+            mainPage = new MainPage(webDriver);
+        }
+
+        [OneTimeSetUp]
+        public void ClassSetup()
+        {
+
+            isChained = true;
+            StopOnFail = true;
         }
 
         [Test, Order(1)]
         public void OpenBrowser()
         {
+            webDriver.GoToUrl(_url);
             webDriver.WaitPageToLoad();
             bool pageOpened = webDriver.Title.Contains("gmail", StringComparison.CurrentCultureIgnoreCase);
             Assert.IsTrue(pageOpened);
