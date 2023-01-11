@@ -14,12 +14,24 @@ namespace WebDriverTask.Core.Extensions
         private static WebDriverWait Wait(IWebDriver driver, int waitTimeInSeconds=5)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitTimeInSeconds));
+            wait.IgnoreExceptionTypes(typeof(StaleElementReferenceException), typeof(NoSuchElementException));
             return wait;
         }
 
         public static (IWebElement element, IWebDriver driver, bool isDisplayed) WaitUntilElementDisplayed(this IWebDriver webDriver, IWebElement webElement)
         {
             bool displayed = Wait(webDriver).Until(c => webElement.Displayed);
+            return (webElement, webDriver, displayed);
+        }
+
+        public static (IWebElement? element, IWebDriver driver, bool isDisplayed) WaitUntilElementDisplayed(this IWebDriver webDriver, By locator)
+        {
+            IWebElement? webElement=null;
+            bool displayed = Wait(webDriver).Until(c => webDriver.GetElement(locator).Displayed);
+            if (displayed)
+            {
+                webElement = webDriver.GetElement(locator);
+            }
             return (webElement, webDriver, displayed);
         }
 
@@ -41,6 +53,13 @@ namespace WebDriverTask.Core.Extensions
 
         public static bool WaintUntilUrlChanged(this IWebDriver driver, string previousUrl)
         {
+            return Wait(driver).Until(c => c.Url != previousUrl);
+        }
+
+        public static bool WaintUntilUrlChanged(this IWebDriver driver, Action action)
+        {
+            string previousUrl = driver.Url;
+            action();
             return Wait(driver).Until(c => c.Url != previousUrl);
         }
 
@@ -80,7 +99,7 @@ namespace WebDriverTask.Core.Extensions
             return element;
         }
 
-        public static IWebElement GetElement(this IWebElement parent, By locator)
+        public static IWebElement GetChild(this IWebElement parent, By locator)
         {
             IWebElement element = parent.FindElement(locator);
             return element;
