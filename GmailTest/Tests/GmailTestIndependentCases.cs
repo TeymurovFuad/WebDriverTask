@@ -83,7 +83,7 @@ namespace GmailTest.Tests
             mainPage.ComposeNewMail();
             mainPage.messageDialog.FillMailData(receiver: mail.Receiver, subject: mail.Subject, body: mail.Body);
             mainPage.messageDialog.CloseAllMailDialogs();
-            Assert.IsTrue(mainPage.messageDialog.GetMailDialog(mail.Subject).isElementDisplayed());
+            Assert.IsFalse(mainPage.messageDialog.GetMailDialog(mail.Subject).isElementDisplayed());
         }
 
         [Test]
@@ -125,7 +125,7 @@ namespace GmailTest.Tests
             mainPage.messageDialog.FillMailData(receiver: mail.Receiver, subject: mail.Subject, body: mail.Body);
             mainPage.messageDialog.CloseAllMailDialogs();
             mainPage.GoToDrafts();
-            mainPage.OpenExistingMail(mail.Subject);
+            mainPage.draftsFolder.GetDraftMailByValue(mail.Subject).Click();
             mainPage.messageDialog.SendButton.Click();
             mainPage.GoToSent();
             IWebElement? sentMail = mainPage.sentFolder.GetSentMailBySubject(base.mail.Subject);
@@ -146,7 +146,7 @@ namespace GmailTest.Tests
             mainPage.messageDialog.SendButton.Click();
             mainPage.GoToSent();
             mainPage.ToggleMore();
-            webDriver.CreateActions().ContextClick(mainPage.Mail(mail.Subject)).Perform();
+            webDriver.CreateActions().ContextClick(mainPage.sentFolder.GetSentMailBySubject(mail.Subject)).Perform();
             webDriver.CreateActions().Click(mainPage.mailContextMenu.DeleteItem).Perform();
             bool isDisplayed = webDriver.isElementDisplayed(mainPage.sentFolder.MailDialogsByHeaderLocator(base.mail.Subject));
             Assert.IsFalse(isDisplayed);

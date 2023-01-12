@@ -20,7 +20,7 @@ namespace GmailTest.Pages.Gmail.Folders.Drafts
         public By DraftMailsLocator { get; private set; } = By.XPath("//span[text()='Draft']/ancestor::tr");
         public List<IWebElement> DraftMails => webDriver.GetElements(DraftMailsLocator);
 
-        public By GetDraftMailsByValueLocator(string subjectOrBody) => By.XPath($"//span[text()='{subjectOrBody}']");
+        public By GetDraftMailsByValueLocator(string subjectOrBody) => By.XPath($"{DraftMailsLocator.GetLocatorValue()}//span[text()='{subjectOrBody}' and parent::span]");
         public List<IWebElement> GetDraftMailsByValue(string subjectOrBody) => webDriver.GetElements(GetDraftMailsByValueLocator(subjectOrBody));
         public IWebElement GetDraftMailByValue(string subjectOrBody) => webDriver.JsGetElement(GetDraftMailsByValueLocator(subjectOrBody));
     }

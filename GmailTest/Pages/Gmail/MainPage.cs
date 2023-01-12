@@ -58,8 +58,9 @@ namespace GmailTest.Pages.Gmail
 
         public void ComposeNewMail()
         {
+            webDriver.WaitUntilElementIsInteractable(ComposeButtonLocator); 
             ComposeButton.Click();
-            webDriver.WaitUntilElementIsInteractable(ComposeButtonLocator);
+            webDriver.WaitUntilElementDisplayed(messageDialog.NewMailDialogsByHeaderLocator);
         }
 
         public void ComposeAndFillMail(string receiver, string subject, string body)
@@ -95,19 +96,19 @@ namespace GmailTest.Pages.Gmail
 
         public void GoToDrafts()
         {
-            webDriver.WaitUntilElementDisplayed(DraftsFolderLocator);
+            webDriver.WaitUntilElementIsInteractable(DraftsFolderLocator);
             webDriver.WaintUntilUrlChanged(() => DraftsFolder.Click());
         }
 
         public void GoToSent()
         {
-            webDriver.WaitUntilElementDisplayed(SentFolderLocator);
+            webDriver.WaitUntilElementIsInteractable(SentFolderLocator);
             webDriver.WaintUntilUrlChanged(() => SentFolder.Click());
         }
 
         public void GoToTrash()
         {
-            webDriver.WaitUntilElementDisplayed(TrashFolderLocator);
+            webDriver.WaitUntilElementIsInteractable(TrashFolderLocator);
             webDriver.WaintUntilUrlChanged(() => TrashFolder.Click());
         }
     }
