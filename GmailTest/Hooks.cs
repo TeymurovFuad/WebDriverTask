@@ -1,7 +1,9 @@
-﻿using GmailTest.Pages.Gmail;
+﻿using GmailTest.Business;
+using GmailTest.Pages.Gmail;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
+using WebDriverTask.Business;
 using WebDriverTask.Core.Browser;
 using WebDriverTask.Core.Extensions;
 using WebDriverTask.Core.WebDriver;
@@ -17,6 +19,9 @@ namespace WebDriverTask.Common.TestConfig
         private string? _url { get; set; }
         public bool StopOnFail { private get; set; }
 
+        protected User user;
+        protected Mail mail;
+        protected Page page;
         protected TestData testData = new();
         protected DriverManager driverManager = new();
         protected DriverOptions driverOptions;
