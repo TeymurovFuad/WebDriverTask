@@ -140,7 +140,7 @@ namespace GmailTest.Tests
             mainPage.messageDialog.FillMailData(receiver: mail.Receiver, subject: mail.Subject, body: mail.Body);
             mainPage.messageDialog.CloseMailDialog(subject: mail.Subject);
             mainPage.GoToDrafts();
-            mainPage.OpenExistingMail(mail.Subject);
+            mainPage.draftsFolder.GetDraftMailByValue(mail.Subject);
             mainPage.messageDialog.SendButton.Click();
             mainPage.GoToSent();
             mainPage.ToggleMore();
