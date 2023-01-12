@@ -2,7 +2,7 @@
 using System.Collections;
 using WebDriverTask.Core.Browser;
 
-namespace WebDriverTask.Tests.TestConfig
+namespace WebDriverTask.TestConfig
 {
     public class TestClassDataProvider
     {
