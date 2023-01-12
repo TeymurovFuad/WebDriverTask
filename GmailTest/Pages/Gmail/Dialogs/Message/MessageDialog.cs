@@ -15,7 +15,7 @@ namespace GmailTest.Pages.Gmail.Dialogs.Message
         public void MailTo(params string[] addressTo)
         {
             string receivers = string.Join(",", addressTo);
-            webDriver.WaitUntilElementDisplayed(ToLocator);
+            webDriver.WaitUntilElementIsInteractable(ToLocator);
             To.SendKeys(receivers);
         }
 

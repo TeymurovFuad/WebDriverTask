@@ -12,13 +12,14 @@ namespace GmailTest.Pages.Gmail.Dialogs.Message
             webDriver = driver;
         }
 
-        public readonly string newMailDialogHeader = "New Message";
-        public List<IWebElement> newMailDialogs => webDriver.GetElements(MailDialogsByHeaderLocator(newMailDialogHeader));
+        public By NewMailDialogsByHeaderLocator => By.XPath($"//h2[div[text()='Compose:'] and div/span[text()='New Message']]"); 
+        public List<IWebElement> newMailDialogs => webDriver.GetElements(NewMailDialogsByHeaderLocator);
+        public IWebElement NewMailDialog => webDriver.JsGetElement(NewMailDialogsByHeaderLocator);
 
         public By MailDialogsByHeaderLocator(string subject) => By.XPath($"//h2[div[text()='Compose:'] and div/span[text()='{subject}']]");
         public List<IWebElement> MailDialogsByHeader(string subject) => webDriver.JsGetElements(MailDialogsByHeaderLocator(subject));
 
-        public IWebElement GetMailDialog(string? subject=null) => webDriver.JsGetElement(MailDialogsByHeaderLocator(subject??newMailDialogHeader));
+        public IWebElement GetMailDialog(string subject) => webDriver.JsGetElement(MailDialogsByHeaderLocator(subject));
 
         private readonly By _allMailDialogsLocator = By.XPath("//h2[div[text()='Compose:']]");
         public List<IWebElement> AllMailDialogs => webDriver.GetElements(_allMailDialogsLocator);

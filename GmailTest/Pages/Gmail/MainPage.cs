@@ -36,12 +36,12 @@ namespace GmailTest.Pages.Gmail
 
         public void ClickMore()
         {
-            webDriver.WaitUntilElementIsInteractable(MoreButton)?.Click();
+            webDriver.WaitAndReturnUntilElementIsInteractable(MoreButton)?.Click();
         }
 
         public void ClickLess()
         {
-            webDriver.WaitUntilElementIsInteractable(LessButton)?.Click();
+            webDriver.WaitAndReturnUntilElementIsInteractable(LessButton)?.Click();
         }
 
         public void ToggleMore()
@@ -58,7 +58,9 @@ namespace GmailTest.Pages.Gmail
 
         public void ComposeNewMail()
         {
+            webDriver.WaitUntilElementIsInteractable(ComposeButtonLocator); 
             ComposeButton.Click();
+            webDriver.WaitUntilElementDisplayed(messageDialog.NewMailDialogsByHeaderLocator);
         }
 
         public void ComposeAndFillMail(string receiver, string subject, string body)
@@ -89,25 +91,25 @@ namespace GmailTest.Pages.Gmail
             accoutDialog.SwitchToAccountFrame();
             accoutDialog.ClickSignOut();
             AlertAccept();
-            webDriver.WaitUntilElementDisplayed(logoutPage.ChooseAnAccoutLabel);
+            webDriver.WaitUntilElementDisplayed(logoutPage.ChooseAnAccoutLabelLocator);
         }
 
         public void GoToDrafts()
         {
-            webDriver.WaitUntilElementDisplayed(DraftsFolder);
-            DraftsFolder.Click();
+            webDriver.WaitUntilElementIsInteractable(DraftsFolderLocator);
+            webDriver.WaintUntilUrlChanged(() => DraftsFolder.Click());
         }
 
         public void GoToSent()
         {
-            webDriver.WaitUntilElementDisplayed(SentFolder);
-            SentFolder.Click();
+            webDriver.WaitUntilElementIsInteractable(SentFolderLocator);
+            webDriver.WaintUntilUrlChanged(() => SentFolder.Click());
         }
 
         public void GoToTrash()
         {
-            webDriver.WaitUntilElementDisplayed(TrashFolder);
-            TrashFolder.Click();
+            webDriver.WaitUntilElementIsInteractable(TrashFolderLocator);
+            webDriver.WaintUntilUrlChanged(() => TrashFolder.Click());
         }
     }
 }

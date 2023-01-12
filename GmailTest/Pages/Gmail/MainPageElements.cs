@@ -37,7 +37,7 @@ namespace GmailTest.Pages.Gmail
         public readonly By LessButtonLocator = By.XPath("//span[text()='Less']");
         public IWebElement LessButton => webDriver.GetElement(LessButtonLocator);
 
-        public By MailLocator(string subjectOrBody) => By.XPath($"//span[text()='{subjectOrBody}']");
+        public By MailLocator(string subjectOrBody) => By.XPath($"//span[text()='{subjectOrBody}' and parent::span]");
         public IWebElement Mail(string subjectOrBody) => webDriver.JsGetElement(MailLocator(subjectOrBody));
 
         public By GetTableContainingMailsLocator(string folderSpecificIdentifier) => By.XPath($"//table[tbody[position()=1]//{folderSpecificIdentifier}]");

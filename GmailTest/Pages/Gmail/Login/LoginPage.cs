@@ -15,7 +15,7 @@ namespace GmailTest.Pages.Gmail.Login
         public void SkipHelpToWorkBetterPage()
         {
             //Temporary workaround
-            webDriver.WaitUntilElementIsInteractable(HelpWorkBetterText);
+            webDriver.WaitAndReturnUntilElementIsInteractable(HelpWorkBetterText);
             NotNowButtonOnHelpWorkBetterPage.Click();
         }
 
@@ -28,7 +28,7 @@ namespace GmailTest.Pages.Gmail.Login
 
         public void ToggleLanguageChooserDropDown()
         {
-            webDriver.WaitUntilElementIsInteractable(DropDownToChooseLanguage);
+            webDriver.WaitAndReturnUntilElementIsInteractable(DropDownToChooseLanguage);
             DropDownToChooseLanguage.Click();
         }
 
@@ -61,13 +61,13 @@ namespace GmailTest.Pages.Gmail.Login
 
         public void FillEmail(string email)
         {
-            webDriver.WaitUntilElementIsInteractable(EmailField);
+            webDriver.WaitAndReturnUntilElementIsInteractable(EmailField);
             EmailField.SendKeys(email);
         }
 
         public void FillPassword(string password)
         {
-            webDriver.WaitUntilElementIsInteractable(PasswordField);
+            webDriver.WaitAndReturnUntilElementIsInteractable(PasswordField);
             PasswordField.SendKeys(password);
         }
 
