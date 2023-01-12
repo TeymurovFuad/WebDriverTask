@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using WebDriverTask.Core.Browser;
 using WebDriverTask.Core.Browser.Configuration;
-using WebDriverTask.Core.CustomExceptions;
+using WebDriverTask.Utils.Exceptions;
 
 namespace WebDriverTask.Core.WebDriver
 {
@@ -22,7 +22,7 @@ namespace WebDriverTask.Core.WebDriver
 
         protected void SetUpDriver(BrowserType browserType, DriverOptions driverOptions)
         {
-            if(webDriver==null)
+            //if(webDriver==null)
                 webDriver = CreateBrowser(browserType, driverOptions);
         }
 
