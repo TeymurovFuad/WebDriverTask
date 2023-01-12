@@ -17,7 +17,7 @@ namespace WebDriverTask.Common.Pages
 
         public void ClickElement(IWebElement element, bool condition = true)
         {
-            if (webDriver.WaitUntilElementIsInteractable(element) != null)
+            if (webDriver.WaitAndReturnUntilElementIsInteractable(element) != null)
             {
                 element.Click();
             }

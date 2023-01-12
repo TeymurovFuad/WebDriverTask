@@ -22,19 +22,13 @@ namespace GmailTest.Tests
 
         public MailSendTest() : base(browserType: BrowserType.Chrome)
         {
-            driverOptions = new ChromeOptions();
+            isChained = true;
             StopOnFail = true;
+            driverOptions = new ChromeOptions();
             mainPage = new MainPage(webDriver);
             user = new(email: "qy54313@gmail.com", password: "Aa123456____");
             mail = new(receiver: "someFakeMail@noSuchAddress.pl", subject: StringHelper.GenerateUUID(), body: "SomeTestBody");
             page = new(title: "Gmail", language: "English", url: "https://mail.google.com/");
-        }
-
-        [OneTimeSetUp]
-        public void ClassSetup()
-        {
-            isChained = true;
-            StopOnFail = true;
         }
 
         [Test, Order(1)]
@@ -66,16 +60,16 @@ namespace GmailTest.Tests
         public void OpenDialogToComposeNewMail()
         {
             mainPage.ComposeNewMail();
-            IWebElement messageDialog = mainPage.messageDialog.GetMailDialog();
-            Assert.IsTrue(messageDialog.isElementDisplayed());
+            bool isDisplayed = webDriver.WaitUntilElementDisplayed(mainPage.messageDialog.NewMailDialog).isDisplayed;
+            Assert.IsTrue(isDisplayed);
         }
 
         [Test, Order(5)]
         public void FillFieldsInMessageDialogAndCloseDialog()
         {
             mainPage.messageDialog.FillMailData(receiver: user.Email, subject: mail.Subject, body: mail.Body);
-            mainPage.messageDialog.CloseMailDialog(mail.Subject);
-            Assert.IsTrue(mainPage.messageDialog.GetMailDialog(mail.Subject).isElementDisplayed());
+            mainPage.messageDialog.CloseAllMailDialogs();
+            Assert.IsFalse(mainPage.messageDialog.GetMailDialog(mail.Subject).isElementDisplayed());
         }
 
         [Test, Order(6)]
@@ -90,25 +84,26 @@ namespace GmailTest.Tests
         {
             mainPage.OpenExistingMail(mail.Subject);
             mainPage.messageDialog.SendButton.Click();
-            Assert.IsFalse(mainPage.Mail(mail.Subject).isElementDisplayed());
+            bool isDisplayed = webDriver.isElementDisplayed(mainPage.messageDialog.MailDialogsByHeaderLocator(mail.Subject));
+            Assert.IsFalse(isDisplayed);
         }
 
         [Test, Order(8)]
         public void GoToSentMailsFolderAndVerifyThatMailIsThere()
         {
-            webDriver.WaintUntilUrlChanged(() => mainPage.GoToSent());
+            mainPage.GoToSent();
             IWebElement? sentMail = mainPage.sentFolder.GetSentMailBySubject(mail.Subject);
             Assert.NotNull(sentMail);
         }
 
         [Test, Order(9)]
-        public void DeleteMailFromSentUsingActionsAndVerifyMailtDeleted()
+        public void DeleteMailFromSentAndVerifyDeleted()
         {
             mainPage.ToggleMore();
-            IWebElement sentMail = mainPage.sentFolder.FindSentMailBySubjectOrBody(mail.Subject);
-            IWebElement trashFolder = mainPage.TrashFolder;
-            webDriver.CreateActions().DragAndDrop(sentMail, trashFolder).Perform();
-            Assert.IsFalse(webDriver.isElementDisplayed(sentMail));
+            webDriver.CreateActions().ContextClick(mainPage.Mail(mail.Subject)).Perform();
+            webDriver.CreateActions().Click(mainPage.mailContextMenu.DeleteItem).Perform();
+            bool isDisplayed = webDriver.isElementDisplayed(mainPage.sentFolder.MailDialogsByHeaderLocator(mail.Subject));
+            Assert.IsFalse(isDisplayed);
         }
 
         [Test, Order(10)]

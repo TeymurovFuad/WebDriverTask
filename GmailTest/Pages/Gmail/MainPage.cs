@@ -36,12 +36,12 @@ namespace GmailTest.Pages.Gmail
 
         public void ClickMore()
         {
-            webDriver.WaitUntilElementIsInteractable(MoreButton)?.Click();
+            webDriver.WaitAndReturnUntilElementIsInteractable(MoreButton)?.Click();
         }
 
         public void ClickLess()
         {
-            webDriver.WaitUntilElementIsInteractable(LessButton)?.Click();
+            webDriver.WaitAndReturnUntilElementIsInteractable(LessButton)?.Click();
         }
 
         public void ToggleMore()
@@ -59,6 +59,7 @@ namespace GmailTest.Pages.Gmail
         public void ComposeNewMail()
         {
             ComposeButton.Click();
+            webDriver.WaitUntilElementIsInteractable(ComposeButtonLocator);
         }
 
         public void ComposeAndFillMail(string receiver, string subject, string body)
@@ -89,25 +90,25 @@ namespace GmailTest.Pages.Gmail
             accoutDialog.SwitchToAccountFrame();
             accoutDialog.ClickSignOut();
             AlertAccept();
-            webDriver.WaitUntilElementDisplayed(logoutPage.ChooseAnAccoutLabel);
+            webDriver.WaitUntilElementDisplayed(logoutPage.ChooseAnAccoutLabelLocator);
         }
 
         public void GoToDrafts()
         {
-            webDriver.WaitUntilElementDisplayed(DraftsFolder);
-            DraftsFolder.Click();
+            webDriver.WaitUntilElementDisplayed(DraftsFolderLocator);
+            webDriver.WaintUntilUrlChanged(() => DraftsFolder.Click());
         }
 
         public void GoToSent()
         {
-            webDriver.WaitUntilElementDisplayed(SentFolder);
-            SentFolder.Click();
+            webDriver.WaitUntilElementDisplayed(SentFolderLocator);
+            webDriver.WaintUntilUrlChanged(() => SentFolder.Click());
         }
 
         public void GoToTrash()
         {
-            webDriver.WaitUntilElementDisplayed(TrashFolder);
-            TrashFolder.Click();
+            webDriver.WaitUntilElementDisplayed(TrashFolderLocator);
+            webDriver.WaintUntilUrlChanged(() => TrashFolder.Click());
         }
     }
 }

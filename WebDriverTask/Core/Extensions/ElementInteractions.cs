@@ -26,7 +26,7 @@ namespace WebDriverTask.Core.Extensions
         {
             try
             {
-                return driver.GetElements(locator).Count > 0;
+                return driver.WaitUntilElementDisplayed(locator).isDisplayed;
             }
             catch
             {
@@ -38,7 +38,7 @@ namespace WebDriverTask.Core.Extensions
         {
             try
             {
-                return element.Displayed;
+                return driver.WaitUntilElementDisplayed(element).isDisplayed;
             }
             catch
             {
