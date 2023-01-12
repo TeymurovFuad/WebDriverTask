@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium;
-using System.Drawing;
 
 namespace WebDriverTask.Core.Extensions
 {

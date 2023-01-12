@@ -12,15 +12,27 @@ namespace WebDriverTask.Utils.Extensions
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(secondsToWait);
         }
 
-        private static WebDriverWait Wait(IWebDriver driver, int waitTimeInSeconds = 5)
+        private static WebDriverWait Wait(IWebDriver driver, int waitTimeInSeconds=5, params Type[]? exceptionTypesToIgnore)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitTimeInSeconds));
+            if(exceptionTypesToIgnore?.Length>0)
+                wait.IgnoreExceptionTypes(exceptionTypesToIgnore);
             return wait;
         }
 
-        public static (IWebElement element, IWebDriver driver, bool isDisplayed) WaitUntilElementDisplayed(this IWebDriver webDriver, IWebElement webElement)
+        public static (IWebElement element, IWebDriver driver, bool isDisplayed) 
+            WaitUntilElementDisplayed(this IWebDriver webDriver, IWebElement webElement, params Type[]? ignoreExceptions)
         {
-            bool displayed = Wait(webDriver).Until(c => webElement.Displayed);
+            bool displayed = Wait(webDriver, exceptionTypesToIgnore: ignoreExceptions).Until(c => webElement.Displayed);
+            return (webElement, webDriver, displayed);
+        }
+
+        public static (IWebElement? element, IWebDriver driver, bool isDisplayed) WaitUntilElementDisplayed(this IWebDriver webDriver, By locator)
+        {
+            IWebElement? webElement=null;
+            bool displayed = Wait(webDriver).Until(c => c.GetElement(locator).Displayed);
+            if(displayed)
+                webElement= webDriver.FindElement(locator);
             return (webElement, webDriver, displayed);
         }
 
@@ -37,7 +49,7 @@ namespace WebDriverTask.Utils.Extensions
 
         public static bool WaitUntilPageContainsTitle(this IWebDriver driver, string expectedTitle)
         {
-            return Wait(driver).Until(c => driver.Title.Contains(expectedTitle, StringComparison.InvariantCultureIgnoreCase));
+            return Wait(driver).Until(c => c.Title.Contains(expectedTitle, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public static bool WaintUntilUrlChanged(this IWebDriver driver, string previousUrl)
@@ -45,7 +57,14 @@ namespace WebDriverTask.Utils.Extensions
             return Wait(driver).Until(c => c.Url != previousUrl);
         }
 
-        public static IWebElement? WaitUntilElementIsInteractable(this IWebDriver driver, IWebElement element)
+        public static bool WaintUntilUrlChanged(this IWebDriver driver, Action action)
+        {
+            string previousUrl = driver.Url;
+            action();
+            return Wait(driver).Until(c => c.Url != previousUrl);
+        }
+
+        public static IWebElement? WaitAndReturnUntilElementIsInteractable(this IWebDriver driver, IWebElement element)
         {
             bool interactable = Wait(driver).Until(c => element.Displayed && element.Enabled);
             if (!interactable)
@@ -53,6 +72,15 @@ namespace WebDriverTask.Utils.Extensions
                 return null;
             }
             return element;
+        }
+
+        public static void WaitUntilElementIsInteractable(this IWebDriver driver, By locator)
+        {
+            Wait(driver).Until(c =>
+            {
+                IWebElement element = c.GetElement(locator);
+                return element.Displayed && element.Enabled;
+            });
         }
 
         public static string GetUrl(this IWebDriver driver)
@@ -81,7 +109,7 @@ namespace WebDriverTask.Utils.Extensions
             return element;
         }
 
-        public static IWebElement GetElement(this IWebElement parent, By locator)
+        public static IWebElement GetChild(this IWebElement parent, By locator)
         {
             IWebElement element = parent.FindElement(locator);
             return element;

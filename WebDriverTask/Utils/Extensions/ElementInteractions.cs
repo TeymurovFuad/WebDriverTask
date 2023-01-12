@@ -3,7 +3,7 @@ using WebDriverTask.Utils.Extensions;
 
 namespace WebDriverTask.Core.Extensions
 {
-    public static class BaseInteractions
+    public static class ElementInteractions
     {
         public static void SendValuesToElement(this IWebElement element, string value)
         {
@@ -27,7 +27,7 @@ namespace WebDriverTask.Core.Extensions
         {
             try
             {
-                return driver.GetElements(locator).Count > 0;
+                return driver.WaitUntilElementDisplayed(locator).isDisplayed;
             }
             catch
             {
@@ -39,7 +39,7 @@ namespace WebDriverTask.Core.Extensions
         {
             try
             {
-                return element.Displayed;
+                return driver.WaitUntilElementDisplayed(element).isDisplayed;
             }
             catch
             {
@@ -97,10 +97,18 @@ namespace WebDriverTask.Core.Extensions
         public static void JsClick(this IWebDriver driver, By locator)
         {
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
-            jsExecutor.ExecuteScript($"$x({locator.GetLocatorValue()})[0].click();");
+            string script = $"$x(\"{locator.GetLocatorValue()}\")[0].click();";
+            driver.JsClick(locatorValue: locator.GetLocatorValue(), locatoryType: locator.GetLocatorType());
+            jsExecutor.ExecuteScript(script);
         }
 
         public static void JsClick(this IWebElement element, IWebDriver driver)
+        {
+            IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
+            jsExecutor.ExecuteScript("arguments[0].click();", element);
+        }
+
+        public static void JsClick(this IWebDriver driver, IWebElement element)
         {
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
             jsExecutor.ExecuteScript("arguments[0].click();", element);
@@ -133,7 +141,7 @@ namespace WebDriverTask.Core.Extensions
                     throw new NotImplementedException();
             }
             string locator = $"document.GetElementBy{locatoryType}({locatorValue})";
-            jsExecutor.ExecuteScript($"{xPath??locator}.click()");
+            jsExecutor.ExecuteScript($"{xPath??locator}.click();");
         }
 
 
