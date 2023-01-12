@@ -1,13 +1,11 @@
 ﻿using NUnit.Framework;
 using WebDriverTask.Core.Browser;
 using GmailTest.Pages.Gmail;
-using WebDriverTask.Core.Helpers;
 using OpenQA.Selenium;
 using WebDriverTask.Core.Extensions;
 using OpenQA.Selenium.Chrome;
-using WebDriverTask.Common.TestConfig;
-using WebDriverTask.Business;
-using GmailTest.Business;
+using WebDriverTask.Utils.Extensions;
+using WebDriverTask.Utils.Helpers;
 
 namespace GmailTest.Tests
 {
@@ -25,7 +23,7 @@ namespace GmailTest.Tests
             mail = new(receiver: "someFakeMail@noSuchAddress.pl", subject: StringHelper.GenerateUUID(), body: "SomeTestBody");
             page = new(title: "Gmail", language: "English", url: "https://mail.google.com/");
             StopOnFail = false;
-            isChained= false;
+            isChained = false;
         }
 
         [SetUp]

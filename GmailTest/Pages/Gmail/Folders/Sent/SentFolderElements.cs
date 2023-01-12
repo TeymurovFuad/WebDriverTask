@@ -1,6 +1,6 @@
-﻿using OpenQA.Selenium;
-using WebDriverTask.Core.Extensions;
-using GmailTest.Pages.Gmail.Dialogs.Message;
+﻿using GmailTest.Pages.Gmail.Dialogs.Message;
+using OpenQA.Selenium;
+using WebDriverTask.Utils.Extensions;
 
 namespace GmailTest.Pages.Gmail.Folders.Sent
 {

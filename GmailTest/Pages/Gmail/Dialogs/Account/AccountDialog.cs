@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using WebDriverTask.Common.Pages;
 using WebDriverTask.Core.Extensions;
+using WebDriverTask.Utils.Extensions;
 
 namespace GmailTest.Pages.Gmail.Dialogs.Account
 {

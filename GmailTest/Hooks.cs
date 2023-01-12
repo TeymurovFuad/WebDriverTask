@@ -1,14 +1,14 @@
 ﻿using GmailTest.Business;
-using GmailTest.Pages.Gmail;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using WebDriverTask.Business;
+using WebDriverTask.Common.TestConfig;
 using WebDriverTask.Core.Browser;
-using WebDriverTask.Core.Extensions;
 using WebDriverTask.Core.WebDriver;
+using WebDriverTask.Utils.Extensions;
 
-namespace WebDriverTask.Common.TestConfig
+namespace GmailTest
 {
     public abstract class Hooks: CommonHooks
     {

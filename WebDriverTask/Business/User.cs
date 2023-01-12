@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WebDriverTask.Business
+﻿namespace WebDriverTask.Business
 {
     public partial class User
     {

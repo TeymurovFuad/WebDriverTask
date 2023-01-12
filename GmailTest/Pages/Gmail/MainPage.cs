@@ -8,6 +8,7 @@ using GmailTest.Pages.Gmail.Folders.Sent;
 using GmailTest.Pages.Gmail.Login;
 using GmailTest.Pages.Gmail.Logout;
 using WebDriverTask.Common.Pages;
+using WebDriverTask.Utils.Extensions;
 
 namespace GmailTest.Pages.Gmail
 {

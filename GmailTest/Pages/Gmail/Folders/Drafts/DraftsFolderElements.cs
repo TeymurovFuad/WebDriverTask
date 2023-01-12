@@ -1,6 +1,7 @@
-﻿using OpenQA.Selenium;
+﻿using GmailTest.Pages.Gmail.Dialogs.Message;
+using OpenQA.Selenium;
 using WebDriverTask.Core.Extensions;
-using GmailTest.Pages.Gmail.Dialogs.Message;
+using WebDriverTask.Utils.Extensions;
 
 namespace GmailTest.Pages.Gmail.Folders.Drafts
 {
