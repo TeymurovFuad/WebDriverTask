@@ -15,7 +15,7 @@ namespace WebDriverTask.Core.Browser.Configuration
 
         protected BrowserFactory SetBrowser(BrowserType browserType, DriverOptions? options = null)
         {
-            if (browser != null)
+            if (browser == null)
             {
                 if (browserType != this.browserType)
                 {
