@@ -4,8 +4,9 @@ namespace WebDriverTask.Core.Browser.Configuration
 {
     public interface IBrowser
     {
+        IBrowser GetInstance { get; }
         IWebDriver GetDriver();
-        IBrowser ConfigureRemoteDriver();
+        IWebDriver GetRemoteDriver();
         IBrowser SetOptions(DriverOptions? options);
     }
 

@@ -8,7 +8,7 @@ namespace WebDriverTask.Core.Browser.Configuration
 
         protected void Build(BrowserType browserType, DriverOptions driverOptions)
         {
-            CreateBrowser(browserType, driverOptions);
+            GetDriverInstance(browserType, driverOptions);
         }
     }
 }
