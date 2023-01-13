@@ -4,11 +4,14 @@ namespace WebDriverTask.Core.Browser.Configuration
 {
     public abstract class BrowserBuilder : BrowserFactory
     {
+        private IWebDriver _webDriver;
+
         protected BrowserBuilder() { }
 
-        protected void Build(BrowserType browserType, DriverOptions driverOptions)
+        protected IWebDriver Build(BrowserType browserType, DriverOptions driverOptions)
         {
-            CreateBrowser(browserType, driverOptions);
+            _webDriver = SetBrowser(browserType, driverOptions).GetDriverInstance();
+            return _webDriver;
         }
     }
 }

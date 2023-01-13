@@ -7,40 +7,29 @@ namespace WebDriverTask.Core.Browser
 {
     public sealed class Firefox: IBrowser
     {
-        bool isRemote;
+        private IBrowser? _instance { get; set; } = null;
+        public IBrowser GetInstance => _instance ??= new Firefox();
+        private IWebDriver? driver { get; set; }
+        private RemoteWebDriver _remoteWebDriver { get; set; }
+        private FirefoxOptions _firefoxOptions { get; set; }
 
-        private IWebDriver driver;
-        private RemoteWebDriver _remoteWebDriver;
-        private FirefoxOptions _firefoxOptions;
-        public Firefox()
+        private Firefox()
         {
             _firefoxOptions = new FirefoxOptions();
         }
 
         public IWebDriver GetDriver()
         {
-            if (!isRemote)
-            {
-                driver = new FirefoxDriver();
-                return driver;
-            }
+            if (driver == null && driver?.GetType() == typeof(IWebDriver))
+                driver = new FirefoxDriver(_firefoxOptions);
+            return driver;
+        }
+
+        public IWebDriver GetRemoteDriver()
+        {
+            if (driver == null && driver?.GetType() == typeof(RemoteWebDriver))
+                _remoteWebDriver = new RemoteWebDriver(new Uri("http://localhost:5566/wd/hub"), _firefoxOptions.ToCapabilities());
             return _remoteWebDriver;
-        }
-
-        public IBrowser ConfigureRemoteDriver()
-        {
-            _remoteWebDriver = new RemoteWebDriver(new Uri("http://localhost:5566/wd/hub"), _firefoxOptions.ToCapabilities());
-            isRemote = true;
-            return this;
-        }
-
-        public IBrowser SetOptions(FirefoxOptions? options)
-        {
-            if (options != null)
-            {
-                _firefoxOptions = options;
-            }
-            return this;
         }
 
         public IBrowser SetOptions(DriverOptions? options)
