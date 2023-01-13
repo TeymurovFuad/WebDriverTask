@@ -1,15 +1,14 @@
 ﻿using OpenQA.Selenium;
 using WebDriverTask.Common.Pages;
-using WebDriverTask.Core.Extensions;
 using WebDriverTask.Utils.Extensions;
 
 namespace GmailTest.Pages.Gmail
 {
-    public class MainPageElements: BasePage
+    public class MainPageElements : BasePage
     {
         IWebDriver webDriver { get; set; }
-        
-        public MainPageElements(IWebDriver driver): base(driver)
+
+        public MainPageElements(IWebDriver driver) : base(driver)
         {
             webDriver = driver;
         }

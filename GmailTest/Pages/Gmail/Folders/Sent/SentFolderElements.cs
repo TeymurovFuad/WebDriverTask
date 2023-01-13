@@ -4,10 +4,10 @@ using WebDriverTask.Utils.Extensions;
 
 namespace GmailTest.Pages.Gmail.Folders.Sent
 {
-    public class SentFolderElements: MessageDialog
+    public class SentFolderElements : MessageDialog
     {
         IWebDriver webDriver;
-        public SentFolderElements(IWebDriver driver): base(driver)
+        public SentFolderElements(IWebDriver driver) : base(driver)
         {
             webDriver = driver;
         }

@@ -5,7 +5,7 @@ using WebDriverTask.Utils.Extensions;
 
 namespace GmailTest.Pages.Gmail.Folders.Drafts
 {
-    public class DraftsFolderElements: MessageDialog
+    public class DraftsFolderElements : MessageDialog
     {
         IWebDriver webDriver;
         public DraftsFolderElements(IWebDriver driver) : base(driver)

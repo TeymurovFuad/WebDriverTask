@@ -1,37 +1,57 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
+using WebDriverTask.Core.WebDriver;
 using WebDriverTask.Utils.Exceptions;
 
 namespace WebDriverTask.Core.Browser.Configuration
 {
     public abstract class BrowserFactory
     {
-        private BrowserType _browserType { get; set; }
-        Chrome chrome;
-        Firefox firefox;
+        protected BrowserType browserType { get; private set; }
+        protected IBrowser browser { get; private set; }
+        IWebDriver driver { get; set; }
 
-        protected BrowserFactory() : base()
+        protected BrowserFactory() { }
+
+        protected BrowserFactory SetBrowser(BrowserType browserType, DriverOptions? options = null)
         {
-            chrome = new Chrome();
-            firefox = new Firefox();
+            if (browser != null)
+            {
+                if (browserType != this.browserType)
+                {
+                    switch (browserType)
+                    {
+                        case BrowserType.Chrome:
+                            browser = Chrome.GetInstance.SetOptions(options);
+                            break;
+                        case BrowserType.Firefox:
+                            browser = Firefox.GetInstance.SetOptions(options);
+                            break;
+                        default:
+                            throw new BrowserTypeException($"There is no implementation for a given browser: {browserType.ToString()}", new NotImplementedException());
+                    }
+                }
+                this.browserType = browserType;
+                return this;
+            }
+            throw new BrowserTypeException("Browser type not defined", new NullReferenceException());
         }
 
-        protected IWebDriver CreateBrowser(BrowserType browserType, DriverOptions? options=null)
+        internal IWebDriver GetDriverInstance()
         {
-            IWebDriver driver;
-            _browserType = browserType;
             switch (browserType)
             {
                 case BrowserType.Chrome:
-                    driver = chrome.GetDriver();
+                    driver = browser.GetDriver();
                     break;
                 case BrowserType.Firefox:
-                    driver = firefox.GetDriver();
+                    driver = browser.GetDriver();
                     break;
                 case BrowserType.RemoteChrome:
-                    driver = chrome.SetOptions(options).ConfigureRemoteDriver().GetDriver();
+                    driver = browser.GetRemoteDriver();
                     break;
                 case BrowserType.RemoteFirefox:
-                    driver = firefox.SetOptions(options).ConfigureRemoteDriver().GetDriver();
+                    driver = browser.GetRemoteDriver();
                     break;
                 default:
                     throw new BrowserTypeException($"Wrong browser was passed: {browserType.ToString()}");

@@ -1,5 +1,5 @@
-﻿using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 
 namespace WebDriverTask.Core.Extensions
 {
@@ -36,8 +36,8 @@ namespace WebDriverTask.Core.Extensions
         /// </summary>
         public static Actions MoveTo(this Actions actions, (int top, int left) target, (int top, int left) source)
         {
-            int x = target.top-source.top;
-            int y = target.left-source.left;
+            int x = target.top - source.top;
+            int y = target.left - source.left;
             actions.MoveByOffset(x, y).Perform();
             return actions;
         }

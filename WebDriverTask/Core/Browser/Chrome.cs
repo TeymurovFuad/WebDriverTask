@@ -1,48 +1,35 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Remote;
 using WebDriverTask.Core.Browser.Configuration;
 
 namespace WebDriverTask.Core.Browser
 {
-    public sealed class Chrome: IBrowser
+    public sealed class Chrome : IBrowser
     {
-        bool isRemote;
+        private static IBrowser? _instance { get; set; } = null;
+        public static IBrowser GetInstance => _instance ??= new Chrome();
+        private IWebDriver? driver { get; set; }
+        private RemoteWebDriver _remoteWebDriver { get; set; }
+        private ChromeOptions _chromeOptions { get; set; }
 
-        private IWebDriver driver { get; set; }
-        private RemoteWebDriver _remoteWebDriver;
-        private ChromeOptions _chromeOptions;
-
-        public Chrome()
+        private Chrome()
         {
             _chromeOptions = new ChromeOptions();
         }
 
         public IWebDriver GetDriver()
         {
-            if (!isRemote)
-            {
-                driver = new ChromeDriver();
-                return driver;
-            }
+            if (driver == null)
+                driver = new ChromeDriver(_chromeOptions);
+            return driver;
+        }
+
+        public IWebDriver GetRemoteDriver()
+        {
+            if (driver == null && driver?.GetType() == typeof(RemoteWebDriver))
+                _remoteWebDriver = new RemoteWebDriver(new Uri("http://localhost:5566/wd/hub"), _chromeOptions.ToCapabilities());
             return _remoteWebDriver;
-        }
-
-        public IBrowser ConfigureRemoteDriver()
-        {
-            _remoteWebDriver = new RemoteWebDriver(new Uri("http://localhost:5566/wd/hub"), _chromeOptions.ToCapabilities());
-            isRemote = true;
-            return this;
-        }
-
-        public IBrowser SetOptions(ChromeOptions? options)
-        {
-            if (options != null)
-            {
-                _chromeOptions = options;
-            }
-            _chromeOptions.AddArguments("--no-sandbox", "disable-infobars");
-            return this;
         }
 
         public IBrowser SetOptions(DriverOptions? options)

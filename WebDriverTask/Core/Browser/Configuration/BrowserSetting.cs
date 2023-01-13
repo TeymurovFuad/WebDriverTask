@@ -22,7 +22,7 @@ namespace WebDriverTask.Core.Browser.Configuration
         public void AddArguments(params string[] arguments)
         {
             if (arguments!.Length > 0)
-                {
+            {
                 switch (_browserType)
                 {
                     case BrowserType.Chrome:

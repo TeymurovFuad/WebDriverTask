@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium;
 using WebDriverTask.Common.Pages;
-using WebDriverTask.Core.Extensions;
 using WebDriverTask.Utils.Extensions;
 
 namespace GmailTest.Pages.Gmail.Dialogs.Message
@@ -8,12 +7,12 @@ namespace GmailTest.Pages.Gmail.Dialogs.Message
     public class MessageDialogElements : BasePage
     {
         IWebDriver webDriver { get; set; }
-        public MessageDialogElements(IWebDriver driver): base(driver)
+        public MessageDialogElements(IWebDriver driver) : base(driver)
         {
             webDriver = driver;
         }
 
-        public By NewMailDialogsByHeaderLocator => By.XPath($"//h2[div[text()='Compose:'] and div/span[text()='New Message']]"); 
+        public By NewMailDialogsByHeaderLocator => By.XPath($"//h2[div[text()='Compose:'] and div/span[text()='New Message']]");
         public List<IWebElement> newMailDialogs => webDriver.GetElements(NewMailDialogsByHeaderLocator);
         public IWebElement NewMailDialog => webDriver.JsGetElement(NewMailDialogsByHeaderLocator);
 

@@ -5,7 +5,7 @@ using WebDriverTask.Utils.Exceptions;
 
 namespace WebDriverTask.Core.WebDriver
 {
-    public abstract class Driver: BrowserBuilder
+    public abstract class Driver : BrowserBuilder
     {
         private IWebDriver webDriver { get; set; }
 
@@ -22,8 +22,7 @@ namespace WebDriverTask.Core.WebDriver
 
         protected void SetUpDriver(BrowserType browserType, DriverOptions driverOptions)
         {
-            //if(webDriver==null)
-                webDriver = CreateBrowser(browserType, driverOptions);
+            webDriver = Build(browserType, driverOptions);
         }
 
         public bool isBuilt()
