@@ -7,8 +7,8 @@ namespace WebDriverTask.Core.Browser
 {
     public sealed class Chrome : IBrowser
     {
-        private IBrowser? _instance { get; set; } = null;
-        public IBrowser GetInstance => _instance ??= new Chrome();
+        private static IBrowser? _instance { get; set; } = null;
+        public static IBrowser GetInstance => _instance ??= new Chrome();
         private IWebDriver? driver { get; set; }
         private RemoteWebDriver _remoteWebDriver { get; set; }
         private ChromeOptions _chromeOptions { get; set; }
@@ -20,7 +20,7 @@ namespace WebDriverTask.Core.Browser
 
         public IWebDriver GetDriver()
         {
-            if (driver == null && driver?.GetType() == typeof(IWebDriver))
+            if (driver == null)
                 driver = new ChromeDriver(_chromeOptions);
             return driver;
         }

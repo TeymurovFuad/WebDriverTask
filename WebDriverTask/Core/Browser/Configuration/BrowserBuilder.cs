@@ -10,8 +10,7 @@ namespace WebDriverTask.Core.Browser.Configuration
 
         protected IWebDriver Build(BrowserType browserType, DriverOptions driverOptions)
         {
-            _webDriver = SetBrowser(browserType, driverOptions).GetDriverInstance();
-            return _webDriver;
+            return SetBrowser(browserType, driverOptions).GetDriverInstance();
         }
     }
 }
