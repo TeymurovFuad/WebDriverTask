@@ -1,11 +1,11 @@
-﻿using OpenQA.Selenium.Remote;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Remote;
 using WebDriverTask.Core.Browser.Configuration;
 
 namespace WebDriverTask.Core.Browser
 {
-    public sealed class Firefox: IBrowser
+    public sealed class Firefox : IBrowser
     {
         private IBrowser? _instance { get; set; } = null;
         public IBrowser GetInstance => _instance ??= new Firefox();

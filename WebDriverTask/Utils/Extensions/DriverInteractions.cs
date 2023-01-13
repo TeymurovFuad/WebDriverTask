@@ -1,5 +1,5 @@
-﻿using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using WebDriverTask.Core.Extensions;
 
 namespace WebDriverTask.Utils.Extensions
@@ -12,15 +12,15 @@ namespace WebDriverTask.Utils.Extensions
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(secondsToWait);
         }
 
-        private static WebDriverWait Wait(IWebDriver driver, int waitTimeInSeconds=5, params Type[]? exceptionTypesToIgnore)
+        private static WebDriverWait Wait(IWebDriver driver, int waitTimeInSeconds = 5, params Type[]? exceptionTypesToIgnore)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(waitTimeInSeconds));
-            if(exceptionTypesToIgnore?.Length>0)
+            if (exceptionTypesToIgnore?.Length > 0)
                 wait.IgnoreExceptionTypes(exceptionTypesToIgnore);
             return wait;
         }
 
-        public static (IWebElement element, IWebDriver driver, bool isDisplayed) 
+        public static (IWebElement element, IWebDriver driver, bool isDisplayed)
             WaitUntilElementDisplayed(this IWebDriver webDriver, IWebElement webElement, params Type[]? ignoreExceptions)
         {
             bool displayed = Wait(webDriver, exceptionTypesToIgnore: ignoreExceptions).Until(c => webElement.Displayed);
@@ -29,10 +29,10 @@ namespace WebDriverTask.Utils.Extensions
 
         public static (IWebElement? element, IWebDriver driver, bool isDisplayed) WaitUntilElementDisplayed(this IWebDriver webDriver, By locator)
         {
-            IWebElement? webElement=null;
+            IWebElement? webElement = null;
             bool displayed = Wait(webDriver).Until(c => c.GetElement(locator).Displayed);
-            if(displayed)
-                webElement= webDriver.FindElement(locator);
+            if (displayed)
+                webElement = webDriver.FindElement(locator);
             return (webElement, webDriver, displayed);
         }
 

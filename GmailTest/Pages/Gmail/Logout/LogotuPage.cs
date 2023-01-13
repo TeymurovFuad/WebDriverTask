@@ -4,11 +4,11 @@ using WebDriverTask.Core.Extensions;
 
 namespace GmailTest.Pages.Gmail.Logout
 {
-    public class LogoutPage: LogoutPageElements, IPage
+    public class LogoutPage : LogoutPageElements, IPage
     {
         IWebDriver webDriver { get; set; }
 
-        public LogoutPage(IWebDriver driver): base(driver)
+        public LogoutPage(IWebDriver driver) : base(driver)
         {
             webDriver = driver;
         }

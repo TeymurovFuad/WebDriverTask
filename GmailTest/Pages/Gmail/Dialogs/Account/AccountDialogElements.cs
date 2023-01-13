@@ -6,10 +6,10 @@ using WebDriverTask.Utils.Helpers;
 
 namespace GmailTest.Pages.Gmail.Dialogs.Account
 {
-    public class AccountDialogElements: BasePage
+    public class AccountDialogElements : BasePage
     {
         IWebDriver webDriver { get; set; }
-        public AccountDialogElements(IWebDriver driver): base(driver)
+        public AccountDialogElements(IWebDriver driver) : base(driver)
         {
             webDriver = driver;
         }

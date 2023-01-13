@@ -10,7 +10,7 @@ using WebDriverTask.Utils.Extensions;
 
 namespace GmailTest
 {
-    public abstract class Hooks: CommonHooks
+    public abstract class Hooks : CommonHooks
     {
         private BrowserType _browserType { get; set; }
         protected IWebDriver webDriver { get; set; }
@@ -26,7 +26,7 @@ namespace GmailTest
         protected DriverManager driverManager = new();
         protected DriverOptions driverOptions;
 
-        protected Hooks(): base()
+        protected Hooks() : base()
         {
         }
 

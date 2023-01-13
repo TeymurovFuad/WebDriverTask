@@ -6,10 +6,10 @@ using WebDriverTask.Utils.Helpers;
 
 namespace GmailTest.Pages.Gmail.Login
 {
-    public class LoginPageElements: BasePage
+    public class LoginPageElements : BasePage
     {
         IWebDriver webDriver { get; set; }
-        public LoginPageElements(IWebDriver driver): base(driver)
+        public LoginPageElements(IWebDriver driver) : base(driver)
         {
             webDriver = driver;
         }

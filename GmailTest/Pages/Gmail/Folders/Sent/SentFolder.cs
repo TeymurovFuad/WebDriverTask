@@ -24,7 +24,7 @@ namespace GmailTest.Pages.Gmail.Folders.Sent
 
         public IWebElement? FindSentMailBySubjectOrBody(string subjectOrBody)
         {
-            foreach(IWebElement sentMail in SentMails)
+            foreach (IWebElement sentMail in SentMails)
             {
                 if (sentMail.isContainsChild(By.XPath($"//span[text()='{subjectOrBody}']")))
                 {

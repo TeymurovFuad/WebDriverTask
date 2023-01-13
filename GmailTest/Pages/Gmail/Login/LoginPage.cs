@@ -1,14 +1,13 @@
 ﻿using OpenQA.Selenium;
 using WebDriverTask.Common.Pages;
-using WebDriverTask.Core.Extensions;
 using WebDriverTask.Utils.Extensions;
 
 namespace GmailTest.Pages.Gmail.Login
 {
-    public class LoginPage: LoginPageElements, IPage
+    public class LoginPage : LoginPageElements, IPage
     {
         IWebDriver webDriver { get; set; }
-        public LoginPage(IWebDriver driver): base(driver)
+        public LoginPage(IWebDriver driver) : base(driver)
         {
             webDriver = driver;
         }

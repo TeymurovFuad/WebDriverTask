@@ -8,9 +8,9 @@ namespace GmailTest.Pages.Gmail.Dialogs.Message
     public class MessageDialog : MessageDialogElements, IPage
     {
         IWebDriver webDriver { get; set; }
-        public MessageDialog(IWebDriver driver): base(driver)
+        public MessageDialog(IWebDriver driver) : base(driver)
         {
-            webDriver= driver;
+            webDriver = driver;
         }
 
         public void MailTo(params string[] addressTo)
@@ -48,7 +48,7 @@ namespace GmailTest.Pages.Gmail.Dialogs.Message
             {
                 webDriver.JsClick(SaveAndCloseButton(subject));
             }
-            catch(NoSuchElementException)
+            catch (NoSuchElementException)
             {
                 SaveAndCloseButton(subject).Click();
             }

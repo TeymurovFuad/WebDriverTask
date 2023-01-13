@@ -1,11 +1,11 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Remote;
 using WebDriverTask.Core.Browser.Configuration;
 
 namespace WebDriverTask.Core.Browser
 {
-    public sealed class Chrome: IBrowser
+    public sealed class Chrome : IBrowser
     {
         private IBrowser? _instance { get; set; } = null;
         public IBrowser GetInstance => _instance ??= new Chrome();
@@ -20,14 +20,14 @@ namespace WebDriverTask.Core.Browser
 
         public IWebDriver GetDriver()
         {
-            if(driver==null && driver?.GetType()==typeof(IWebDriver))
-                    driver = new ChromeDriver(_chromeOptions);
+            if (driver == null && driver?.GetType() == typeof(IWebDriver))
+                driver = new ChromeDriver(_chromeOptions);
             return driver;
         }
 
         public IWebDriver GetRemoteDriver()
         {
-            if(driver==null && driver?.GetType()==typeof(RemoteWebDriver))
+            if (driver == null && driver?.GetType() == typeof(RemoteWebDriver))
                 _remoteWebDriver = new RemoteWebDriver(new Uri("http://localhost:5566/wd/hub"), _chromeOptions.ToCapabilities());
             return _remoteWebDriver;
         }

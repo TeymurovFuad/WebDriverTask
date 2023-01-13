@@ -1,9 +1,9 @@
-﻿using NUnit.Framework;
-using WebDriverTask.Core.Browser;
-using GmailTest.Pages.Gmail;
+﻿using GmailTest.Pages.Gmail;
+using NUnit.Framework;
 using OpenQA.Selenium;
-using WebDriverTask.Core.Extensions;
 using OpenQA.Selenium.Chrome;
+using WebDriverTask.Core.Browser;
+using WebDriverTask.Core.Extensions;
 using WebDriverTask.Utils.Extensions;
 using WebDriverTask.Utils.Helpers;
 
