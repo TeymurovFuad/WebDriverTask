@@ -6,7 +6,7 @@ namespace WebDriverTask.Utils.Extensions
 {
     public static class DriverInteractions
     {
-        public static void WaitPageToLoad(this IWebDriver driver, int secondsToWait = 5, Action? exceptedAction = null)
+        public static void WaitPageToLoad(this IWebDriver driver, int secondsToWait = 5)
         {
             if (secondsToWait > 0 && driver != null)
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(secondsToWait);
