@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using WebDriverTask.Utils.Exceptions;
 using WebDriverTask.Utils.Extensions;
 
 namespace WebDriverTask.Common.Pages
@@ -15,15 +14,11 @@ namespace WebDriverTask.Common.Pages
             webDriver = driver;
         }
 
-        public void ClickElement(IWebElement element, bool condition = true)
+        public void ClickElement(By locator, bool condition = true)
         {
-            if (webDriver.WaitAndReturnUntilElementIsInteractable(element) != null)
+            if (webDriver.WaitUntilElementIsInteractable(locator))
             {
-                element.Click();
-            }
-            else
-            {
-                throw new ElementException("Not able to click an element");
+                webDriver.GetElement(locator).Click();
             }
         }
 

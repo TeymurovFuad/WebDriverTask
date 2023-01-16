@@ -37,12 +37,14 @@ namespace GmailTest.Pages.Gmail
 
         public void ClickMore()
         {
-            webDriver.WaitAndReturnUntilElementIsInteractable(MoreButton)?.Click();
+            webDriver.WaitUntilElementIsInteractable(MoreButtonLocator);
+            MoreButton.Click();
         }
 
         public void ClickLess()
         {
-            webDriver.WaitAndReturnUntilElementIsInteractable(LessButton)?.Click();
+            webDriver.WaitUntilElementIsInteractable(LessButtonLocator);
+            LessButton.Click();
         }
 
         public void ToggleMore()
@@ -71,9 +73,9 @@ namespace GmailTest.Pages.Gmail
             messageDialog.FillMailData(receiver: receiver, subject: subject, body: body);
         }
 
-        public void OpenFolder(IWebElement folder)
+        public void OpenFolder(By folderLocator)
         {
-            ClickElement(folder);
+            ClickElement(folderLocator);
         }
 
         public void OpenExistingMail(string bySubjectOrBody)

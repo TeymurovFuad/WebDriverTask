@@ -74,11 +74,12 @@ namespace WebDriverTask.Utils.Extensions
             return element;
         }
 
-        public static void WaitUntilElementIsInteractable(this IWebDriver driver, By locator)
+        public static bool WaitUntilElementIsInteractable(this IWebDriver driver, By locator)
         {
-            Wait(driver).Until(c =>
+            IWebElement element;
+            return Wait(driver).Until(c =>
             {
-                IWebElement element = c.GetElement(locator);
+                element = c.GetElement(locator);
                 return element.Displayed && element.Enabled;
             });
         }

@@ -30,7 +30,7 @@ namespace GmailTest.Pages.Gmail.Dialogs.Account
 
         public void ClickSignOut()
         {
-            ClickElement(SignOutButton);
+            ClickElement(SingOutButtonLocator);
         }
     }
 }

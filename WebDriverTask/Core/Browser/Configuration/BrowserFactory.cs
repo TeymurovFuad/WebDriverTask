@@ -1,6 +1,4 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
-using WebDriverTask.Core.WebDriver;
 using WebDriverTask.Utils.Exceptions;
 
 namespace WebDriverTask.Core.Browser.Configuration
