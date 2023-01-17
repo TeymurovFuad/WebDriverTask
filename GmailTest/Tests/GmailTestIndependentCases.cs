@@ -49,7 +49,7 @@ namespace GmailTest.Tests
             mainPage.loginPage.ToggleLanguageChooserDropDown();
             mainPage.loginPage.ChangeLanguage(page.Language);
             string actualLanguage = mainPage.loginPage.GetValueOfCurrentSelectedLanguage();
-            Assert.That(actualLanguage.Contains(page.Language, StringComparison.CurrentCultureIgnoreCase), Is.True);
+            Assert.IsTrue(actualLanguage.Contains(page.Language, StringComparison.CurrentCultureIgnoreCase));
         }
 
         [Test]
