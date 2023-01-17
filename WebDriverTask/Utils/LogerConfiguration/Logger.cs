@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using OpenQA.Selenium.DevTools;
+using System.IO;
 
 namespace WebDriverTask.Utils.LogerConfiguration
 {
@@ -6,23 +7,26 @@ namespace WebDriverTask.Utils.LogerConfiguration
     {
         protected readonly object lockObj = new object();
 
-        public string CurrentDirectory { get; set; }
-        public string LogFileName { get; set; }
-        public string LogFilePath { get; set; }
+        public string CurrentDirectory { get; protected set; }
+        public string LogFileName { get; protected set; }
+        public string LogFolderPath { get; protected set; }
+        public string LogFilePath { get; private set; }
 
         public Logger()
         {
             lockObj = new object();
             CurrentDirectory = Environment.CurrentDirectory;
             LogFileName = "Log.txt";
+            LogFolderPath = Path.Combine(CurrentDirectory, "Log");
             LogFilePath = Path.Combine(CurrentDirectory, "Log", LogFileName);
         }
 
-        public void Log(string message)
+        public virtual void Log(string message)
         {
             lock (lockObj)
             {
-                using (StreamWriter streamWriter = new StreamWriter(LogFilePath, true))
+                DirectoryInfo directoryInfo = Directory.CreateDirectory(LogFolderPath);
+                using (StreamWriter streamWriter = new StreamWriter(LogFilePath))
                 {
                     streamWriter.Write("\nLog entry: ");
                     streamWriter.WriteLine($"{DateTime.Now}");

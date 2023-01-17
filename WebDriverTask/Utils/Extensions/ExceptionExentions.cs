@@ -15,7 +15,19 @@
             return action;
         }
 
-        public static Action Try(this Action action)
+        public static void Try(this Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public static void Try(this Action action, Action<Exception> onError)
         {
             try
             {
@@ -23,9 +35,8 @@
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
+                onError(ex);
             }
-            return action;
         }
     }
 }
