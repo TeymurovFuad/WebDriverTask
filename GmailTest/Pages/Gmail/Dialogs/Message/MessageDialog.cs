@@ -2,6 +2,7 @@
 using WebDriverTask.Common.Pages;
 using WebDriverTask.Core.Extensions;
 using WebDriverTask.Utils.Extensions;
+using WebDriverTask.Utils.Helpers;
 
 namespace GmailTest.Pages.Gmail.Dialogs.Message
 {
@@ -51,6 +52,10 @@ namespace GmailTest.Pages.Gmail.Dialogs.Message
             catch (NoSuchElementException)
             {
                 SaveAndCloseButton(subject).Click();
+            }
+            catch(Exception e)
+            {
+                LoggerHelper.Error(e.Message);
             }
         }
 
