@@ -1,4 +1,6 @@
-﻿namespace WebDriverTask.Utils.Extensions
+﻿using WebDriverTask.Utils.LogerConfiguration;
+
+namespace WebDriverTask.Utils.Extensions
 {
     public static class ExceptionExentions
     {
@@ -27,7 +29,7 @@
             }
         }
 
-        public static void Try(this Action action, Action<Exception> onError)
+        public static void Try(this Action action, ErrorLogger logError)
         {
             try
             {
@@ -35,7 +37,7 @@
             }
             catch (Exception ex)
             {
-                onError(ex);
+                logError.LogError(ex);
             }
         }
     }
