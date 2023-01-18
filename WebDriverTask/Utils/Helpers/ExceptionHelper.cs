@@ -25,7 +25,7 @@ namespace WebDriverTask.Utils.Helpers
             }
             catch (Exception ex)
             {
-                ErrorLogger.Instance().LogError(ex);
+                ErrorLogger.Instance.LogMessage(ex);
                 throw;
             }
         }
@@ -38,7 +38,7 @@ namespace WebDriverTask.Utils.Helpers
             }
             catch (Exception ex)
             {
-                ErrorLogger.Instance().LogError(ex);
+                ErrorLogger.Instance.LogMessage(ex);
                 throw;
             }
         }
@@ -51,7 +51,7 @@ namespace WebDriverTask.Utils.Helpers
             }
             catch (Exception ex)
             {
-                ErrorLogger.Instance().LogError(ex);
+                ErrorLogger.Instance.LogMessage(ex);
                 throw;
             }
         }

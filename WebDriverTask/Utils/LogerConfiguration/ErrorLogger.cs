@@ -1,12 +1,15 @@
-﻿namespace WebDriverTask.Utils.LogerConfiguration
+﻿using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+
+namespace WebDriverTask.Utils.LogerConfiguration
 {
-    public sealed class ErrorLogger: Logger
+    public sealed class ErrorLogger: LoggerDecorator
     {
-        private static ErrorLogger? _instance { get; set; } = null;
+        private static ErrorLogger _instance = null;
+        public static ErrorLogger Instance { get { return GetInstance(); } }
 
-        private ErrorLogger() : base(fileName: "ErrorLog.txt") { }
+        public ErrorLogger() : base() { }
 
-        public static ErrorLogger Instance()
+        private static ErrorLogger GetInstance()
         {
             if (_instance == null)
             {
@@ -15,17 +18,17 @@
             return _instance;
         }
 
-        public void LogError(Exception e)
+        public override void LogMessage(string message)
         {
-            Log(e.Message);
+            Log($"[ERROR] {message}");
         }
 
-        public void LogError(string message)
+        public override void LogMessage(Exception exception)
         {
-            Log(message);
+            Log($"[ERROR] {exception.Message}");
         }
 
-        public void LogError(Action action)
+        public override void LogMessage(Action action)
         {
             try
             {
@@ -33,7 +36,7 @@
             }
             catch(Exception e)
             {
-                Log(e.Message);
+                Log($"[ERROR] {e.Message}");
             }
         }
     }

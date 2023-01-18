@@ -37,7 +37,7 @@ namespace WebDriverTask.Utils.Extensions
             }
             catch (Exception ex)
             {
-                logError.LogError(ex);
+                logError.LogMessage(ex);
             }
         }
     }

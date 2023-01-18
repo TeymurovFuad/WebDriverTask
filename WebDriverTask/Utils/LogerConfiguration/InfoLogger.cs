@@ -2,13 +2,14 @@
 
 namespace WebDriverTask.Utils.LogerConfiguration
 {
-    public sealed class InfoLogger: Logger
+    public sealed class InfoLogger: LoggerDecorator
     {
-        private static InfoLogger _instance { get; set; } = null;
+        private static InfoLogger _instance = null;
+        public static InfoLogger Instance { get { return GetInstance(); } }
 
-        private InfoLogger(): base(fileName: "InfoLogger.txt") { }
+        public InfoLogger() { }
 
-        public static InfoLogger Instance()
+        private static InfoLogger GetInstance()
         {
             if (_instance == null)
             {
@@ -17,7 +18,17 @@ namespace WebDriverTask.Utils.LogerConfiguration
             return _instance;
         }
 
-        public void LogInfo(Action action)
+        public override void LogMessage(string message)
+        {
+            Log($"[TEST] {message}");
+        }
+
+        public override void LogMessage(Exception exception)
+        {
+            Log($"[TEST] {exception.Message}");
+        }
+
+        public override void LogMessage(Action action)
         {
             var start = DateTime.Now;
             var stackTrace = new StackTrace();

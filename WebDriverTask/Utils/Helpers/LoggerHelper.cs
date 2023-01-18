@@ -8,12 +8,12 @@ namespace WebDriverTask.Utils.Helpers
 
         public static void Error(string message)
         {
-            ErrorLogger.Instance().LogError(message);
+            ErrorLogger.Instance.LogMessage(message);
         }
 
         public static void Info(Action action)
         {
-            InfoLogger.Instance().LogInfo(() => action());
+            InfoLogger.Instance.LogMessage(() => action());
         }
     }
 }

@@ -1,28 +1,41 @@
 ﻿namespace WebDriverTask.Utils.LogerConfiguration
 {
-    public sealed class TestLogger : Logger
+    public sealed class TestLogger : LoggerDecorator
     {
-        private static TestLogger _instance { get; set; }
+        private static TestLogger _instance = null;
+        public static TestLogger Instance { get { return GetInstance(); } }
 
-        public TestLogger() : base(fileName: "TestLogger.txt") { }
+        public TestLogger() { }
 
-        public static TestLogger Instance()
+        private static TestLogger GetInstance()
         {
-            if (_instance == null)
+            if(_instance == null)
             {
                 _instance = new TestLogger();
             }
             return _instance;
         }
 
-        public void OnTestEvent(string report)
+        public override void LogMessage(string message)
         {
-            Log(report);
+            Log($"[TEST] {message}");
         }
 
-        public void LogTest(string message)
+        public override void LogMessage(Exception exception)
         {
-            Log(message);
+            Log($"[TEST] {exception.Message}");
+        }
+
+        public override void LogMessage(Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception e)
+            {
+                Log($"[TEST] {e.Message}");
+            }
         }
     }
 }

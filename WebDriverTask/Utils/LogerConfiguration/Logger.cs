@@ -2,47 +2,55 @@
 
 namespace WebDriverTask.Utils.LogerConfiguration
 {
-    public abstract class Logger : ILogger
+    public abstract class Logger : BaseLogger
     {
-        protected readonly object lockObj = new object();
+        private readonly object lockObj = new object();
+        private string _logFileName { get; set; } = "Log.txt";
 
-        public string CurrentDirectory { get; private set; }
-        public string LogFileName { get; private set; }
-        public  string LogFolderPath { get; private set; }
-        public string LogFilePath { get; private set; }
-
-        protected Logger(string fileName)
+        public override string CurrentDirectory { get; protected set; }
+        public override string LogFolderPath { get; protected set; }
+        public override string LogFilePath { get; protected set; }
+        public override string LogFileName
         {
-            lockObj = new object();
+            get => _logFileName;
+            protected set => _logFileName = ValidateFileName(value);
+        }
+
+        protected Logger()
+        {
             CurrentDirectory = Environment.CurrentDirectory;
-            LogFileName = ValidateFileName(fileName);
             LogFolderPath = Path.Combine(CurrentDirectory, "Log");
-            LogFilePath = Path.Combine(CurrentDirectory, "Log", LogFileName);
         }
 
         private string ValidateFileName(string fileName)
         {
             string pattern = @"^[a-z0-9]{1,}\.txt";
             Match match = Regex.Match(input: fileName, pattern: pattern, RegexOptions.IgnoreCase);
-            if (!match.Success)
+            if (string.IsNullOrEmpty(fileName) || !match.Success)
             {
                 throw new ArgumentException($"Given filename ({fileName}) does not match pattern ({pattern})");
             }
             return fileName;
         }
 
-        protected void Log(string message)
+        public override void Log(string message)
         {
             lock (lockObj)
             {
-                DirectoryInfo directoryInfo = Directory.CreateDirectory(LogFolderPath);
+                CreateDirectory(LogFolderPath);
+                LogFilePath = Path.Combine(LogFolderPath, LogFileName);
                 using (StreamWriter streamWriter = File.AppendText(LogFilePath))
                 {
-                    streamWriter.Write("> Log entry: ");
-                    streamWriter.WriteLine($"{DateTime.Now}");
-                    streamWriter.WriteLine($"\t:{message}");
+                    streamWriter.Write($"> Log entry: {DateTime.Now}");
+                    streamWriter.WriteLine($" : LogType => {message}\n");
                 }
             }
+        }
+
+        private void CreateDirectory(string path)
+        {
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
         }
     }
 }
