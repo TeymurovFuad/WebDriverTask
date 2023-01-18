@@ -1,24 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebDriverTask.Utils.LogerConfiguration;
+﻿using WebDriverTask.Utils.LogerConfiguration;
 
 namespace WebDriverTask.Utils.Helpers
 {
     public class LoggerHelper
     {
-        private static ErrorLogger _errorLogger;
+        private LoggerHelper() { }
 
-        private LoggerHelper()
+        public static void Error(string message)
         {
-            _errorLogger = new ErrorLogger();
+            ErrorLogger.Instance().LogError(message);
         }
 
-        public static void Loging(string message)
+        public static void Info(Action action)
         {
-            _errorLogger.Log(message);
+            InfoLogger.Instance().LogInfo(() => action());
         }
     }
 }

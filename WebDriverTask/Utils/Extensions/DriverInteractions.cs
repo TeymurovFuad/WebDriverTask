@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using WebDriverTask.Core.Extensions;
+using WebDriverTask.Utils.Helpers;
 
 namespace WebDriverTask.Utils.Extensions
 {
@@ -106,7 +107,7 @@ namespace WebDriverTask.Utils.Extensions
 
         public static IWebElement GetElement(this IWebDriver driver, By locator)
         {
-            IWebElement element = driver.FindElement(locator);
+            IWebElement element = ExceptionHelper.Try(() => driver.FindElement(locator));
             return element;
         }
 
