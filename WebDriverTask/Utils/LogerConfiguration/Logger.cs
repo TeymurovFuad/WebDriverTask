@@ -2,7 +2,7 @@
 
 namespace WebDriverTask.Utils.LogerConfiguration
 {
-    public abstract class Logger : BaseLogger
+    public class Logger : BaseLogger
     {
         private readonly object lockObj = new object();
         private string _logFileName { get; set; } = "Log.txt";
@@ -20,6 +20,7 @@ namespace WebDriverTask.Utils.LogerConfiguration
         {
             CurrentDirectory = Environment.CurrentDirectory;
             LogFolderPath = Path.Combine(CurrentDirectory, "Log");
+            CreateDirectory(LogFolderPath);
         }
 
         private string ValidateFileName(string fileName)
@@ -33,18 +34,20 @@ namespace WebDriverTask.Utils.LogerConfiguration
             return fileName;
         }
 
-        public override void Log(string message)
+        public override async Task Log(string message)
         {
-            lock (lockObj)
+            await Task.Run(() =>
             {
-                CreateDirectory(LogFolderPath);
-                LogFilePath = Path.Combine(LogFolderPath, LogFileName);
-                using (StreamWriter streamWriter = File.AppendText(LogFilePath))
+                lock (lockObj)
                 {
-                    streamWriter.Write($"> Log entry: {DateTime.Now}");
-                    streamWriter.WriteLine($" : LogType => {message}\n");
+                    LogFilePath = Path.Combine(LogFolderPath, LogFileName);
+                    using (StreamWriter streamWriter = File.AppendText(LogFilePath))
+                    {
+                        streamWriter.Write($"> Log entry: {DateTime.Now}");
+                        streamWriter.WriteLine($" : LogType => {message}\n");
+                    }
                 }
-            }
+            });
         }
 
         private void CreateDirectory(string path)

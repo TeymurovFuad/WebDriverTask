@@ -7,7 +7,7 @@ namespace WebDriverTask.Utils.LogerConfiguration
         private static InfoLogger _instance = null;
         public static InfoLogger Instance { get { return GetInstance(); } }
 
-        public InfoLogger() { }
+        private InfoLogger() { }
 
         private static InfoLogger GetInstance()
         {

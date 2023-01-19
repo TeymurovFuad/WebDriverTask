@@ -5,7 +5,7 @@
         private static TestLogger _instance = null;
         public static TestLogger Instance { get { return GetInstance(); } }
 
-        public TestLogger() { }
+        private TestLogger() { }
 
         private static TestLogger GetInstance()
         {

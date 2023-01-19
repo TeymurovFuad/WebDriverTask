@@ -15,6 +15,6 @@ namespace WebDriverTask.Utils.LogerConfiguration
         public abstract string LogFolderPath { get; protected set; }
         public abstract string LogFilePath { get; protected set; }
 
-        public abstract void Log(string message);
+        public abstract Task Log(string message);
     }
 }

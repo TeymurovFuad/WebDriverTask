@@ -6,6 +6,6 @@
         string LogFileName { get; }
         string LogFolderPath { get; }
         string LogFilePath { get; }
-        void Log(string message);
+        Task Log(string message);
     }
 }

@@ -7,7 +7,7 @@ namespace WebDriverTask.Utils.LogerConfiguration
         private static ErrorLogger _instance = null;
         public static ErrorLogger Instance { get { return GetInstance(); } }
 
-        public ErrorLogger() : base() { }
+        private ErrorLogger() { }
 
         private static ErrorLogger GetInstance()
         {
