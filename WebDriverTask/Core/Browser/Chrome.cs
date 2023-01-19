@@ -20,8 +20,7 @@ namespace WebDriverTask.Core.Browser
 
         public IWebDriver GetDriver()
         {
-            if (driver == null)
-                driver = new ChromeDriver(_chromeOptions);
+            driver = new ChromeDriver(_chromeOptions);
             return driver;
         }
 

@@ -13,26 +13,19 @@ namespace WebDriverTask.Core.Browser.Configuration
 
         protected BrowserFactory SetBrowser(BrowserType browserType, DriverOptions? options = null)
         {
-            if (browser == null)
+            switch (browserType)
             {
-                if (browserType != this.browserType)
-                {
-                    switch (browserType)
-                    {
-                        case BrowserType.Chrome:
-                            browser = Chrome.GetInstance.SetOptions(options);
-                            break;
-                        case BrowserType.Firefox:
-                            browser = Firefox.GetInstance.SetOptions(options);
-                            break;
-                        default:
-                            throw new BrowserTypeException($"There is no implementation for a given browser: {browserType.ToString()}", new NotImplementedException());
-                    }
-                }
-                this.browserType = browserType;
-                return this;
+                case BrowserType.Chrome:
+                    browser = Chrome.GetInstance.SetOptions(options);
+                    break;
+                case BrowserType.Firefox:
+                    browser = Firefox.GetInstance.SetOptions(options);
+                    break;
+                default:
+                    throw new BrowserTypeException($"There is no implementation for a given browser: {browserType.ToString()}", new NotImplementedException());
             }
-            throw new BrowserTypeException("Browser type not defined", new NullReferenceException());
+            this.browserType = browserType;
+            return this;
         }
 
         internal IWebDriver GetDriverInstance()
