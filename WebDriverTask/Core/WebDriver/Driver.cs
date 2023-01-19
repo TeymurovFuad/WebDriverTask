@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 using WebDriverTask.Core.Browser;
-using WebDriverTask.Core.Browser.Configuration;
+using WebDriverTask.Core.Browser.Factory;
 using WebDriverTask.Utils.Exceptions;
 
 namespace WebDriverTask.Core.WebDriver

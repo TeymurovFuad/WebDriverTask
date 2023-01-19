@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 
-namespace WebDriverTask.Core.Browser.Configuration
+namespace WebDriverTask.Core.Browser.Factory
 {
     public abstract class BrowserBuilder : BrowserFactory
     {

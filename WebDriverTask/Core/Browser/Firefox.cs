@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Remote;
-using WebDriverTask.Core.Browser.Configuration;
+using WebDriverTask.Core.Browser.Factory;
 
 namespace WebDriverTask.Core.Browser
 {

@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using WebDriverTask.Utils.Exceptions;
 
-namespace WebDriverTask.Core.Browser.Configuration
+namespace WebDriverTask.Core.Browser.Factory
 {
     public abstract class BrowserFactory
     {
