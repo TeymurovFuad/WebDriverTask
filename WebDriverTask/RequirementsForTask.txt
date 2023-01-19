@@ -52,3 +52,33 @@ ACCEPTANCE CRITERIA
 2.	Business objects as dedicated C# classes and used/invoked during the test flow.
 3.	Utility classes are created according to the test flow needs.
 4.	BONUS TASK: Fully functional C# implementation of test scenario using some ready-made Selenium wrapper/framework (e.g. Selenide, Serenity, JDI, HtmlElements) is delivered to a mentor.
+
+
+
+
+MODULE 10: DESIGN PATTERNS IN TA FRAMEWORKS IMPLEMENTATION (.NET)
+HOME TASK
+1.	Implement the following design patterns in your solution from previous module*:
+a.	Singleton
+b.	Factory Method
+c.	Decorator
+You can use any area of you code to apply the pattern (any code layer – test, service or page object and their combinations). 
+You may consult with your mentor about the specific area of applying the pattern as well, but try to make a self-dependent final decision.
+2.	Revise your code to match S.O.L.I.D. principles. Fix Provide list of corrections to your mentor, e.g.:
+Class	Problem	Solution
+WebDriverManager	Class single responsibility is broken. Contains methods irrelevant to browser/WD management.	Dedicated class XYZ is created for utility methods, some are shifted to abstract PO class.
+HomePage	Open-closed principle is broken.
+Fields of the PO class are exposed (public), some redundant methods are present.	Fields of the PO class are set private, redundant/extra methods are eliminated from HomePage PO class and shifted to the class XYZ, which extends HomePage
+
+BONUS TASK
+Implement any extra pattern mentioned during the training session (for extra mark) or any other pattern instead of the list above. Exact pattern list should be discussed with your mentor.
+ACCEPTANCE CRITERIA
+1.	PATTERNS: All patterns from mandatory part (Singleton, Factory Method, Decorator, or other 3 confirmed) should be implemented.
+2.	PATTERNS: Classes which were modified/created during pattern implementation should be invoked during the test run. Just storing them in project packages is NOT enough.
+3.	S.O.L.I.D.: Code is revised to match S.O.L.I.D. principles. 
+4.	S.O.L.I.D.: at least 3 fixes are described within the table per example above and delivered to a mentor.
+5.	S.O.L.I.D.: fixes are implemented in code structure. 
+6.	BONUS TASK: extra patterns mentioned during the training session are implemented considering criteria from point #2 above.
+
+[*] discuss assignment specifics with your mentor or choose any other suitable 3 patterns 
+

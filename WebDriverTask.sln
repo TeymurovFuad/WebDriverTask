@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebDriverTask", "WebDriverTask\WebDriverTask.csproj", "{AA19A053-23F4-48A6-9967-2298B0244FA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmailTest", "GmailTest\GmailTest.csproj", "{B2FE78D3-4D0A-4826-B784-63848A67F147}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GmailTest", "GmailTest\GmailTest.csproj", "{B2FE78D3-4D0A-4826-B784-63848A67F147}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

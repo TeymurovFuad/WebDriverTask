@@ -1,18 +1,18 @@
-﻿using OpenQA.Selenium;
-using WebDriverTask.Core.Extensions;
-using GmailTest.Pages.Gmail.ContextMenu.Mail;
+﻿using GmailTest.Pages.Gmail.ContextMenu.Mail;
 using GmailTest.Pages.Gmail.Dialogs.Account;
 using GmailTest.Pages.Gmail.Dialogs.Message;
 using GmailTest.Pages.Gmail.Folders.Drafts;
 using GmailTest.Pages.Gmail.Folders.Sent;
 using GmailTest.Pages.Gmail.Login;
 using GmailTest.Pages.Gmail.Logout;
+using OpenQA.Selenium;
 using WebDriverTask.Common.Pages;
+using WebDriverTask.Core.Extensions;
 using WebDriverTask.Utils.Extensions;
 
 namespace GmailTest.Pages.Gmail
 {
-    public class MainPage: MainPageElements, IPage
+    public class MainPage : MainPageElements, IPage
     {
         IWebDriver webDriver { get; set; }
         public readonly DraftsFolder draftsFolder;
@@ -37,12 +37,14 @@ namespace GmailTest.Pages.Gmail
 
         public void ClickMore()
         {
-            webDriver.WaitAndReturnUntilElementIsInteractable(MoreButton)?.Click();
+            webDriver.WaitUntilElementIsInteractable(MoreButtonLocator);
+            MoreButton.Click();
         }
 
         public void ClickLess()
         {
-            webDriver.WaitAndReturnUntilElementIsInteractable(LessButton)?.Click();
+            webDriver.WaitUntilElementIsInteractable(LessButtonLocator);
+            LessButton.Click();
         }
 
         public void ToggleMore()
@@ -51,7 +53,7 @@ namespace GmailTest.Pages.Gmail
             {
                 ClickMore();
             }
-            catch(ElementNotInteractableException)
+            catch (ElementNotInteractableException)
             {
                 ClickLess();
             }
@@ -59,7 +61,7 @@ namespace GmailTest.Pages.Gmail
 
         public void ComposeNewMail()
         {
-            webDriver.WaitUntilElementIsInteractable(ComposeButtonLocator); 
+            webDriver.WaitUntilElementIsInteractable(ComposeButtonLocator);
             ComposeButton.Click();
             webDriver.WaitUntilElementDisplayed(messageDialog.NewMailDialogsByHeaderLocator);
         }
@@ -71,9 +73,9 @@ namespace GmailTest.Pages.Gmail
             messageDialog.FillMailData(receiver: receiver, subject: subject, body: body);
         }
 
-        public void OpenFolder(IWebElement folder)
+        public void OpenFolder(By folderLocator)
         {
-            ClickElement(folder);
+            ClickElement(folderLocator);
         }
 
         public void OpenExistingMail(string bySubjectOrBody)

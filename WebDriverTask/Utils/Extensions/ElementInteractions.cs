@@ -86,7 +86,7 @@ namespace WebDriverTask.Core.Extensions
         private static string[] StringifyLocator(By locator)
         {
             //{By.locatorType: locatoryValue}
-            return locator.ToString().Replace("By.", "").Split(new char[] {':'}, 2);
+            return locator.ToString().Replace("By.", "").Split(new char[] { ':' }, 2);
         }
 
         public static void ClickElement(this IWebElement element, IWebDriver driver)
@@ -141,11 +141,11 @@ namespace WebDriverTask.Core.Extensions
                     throw new NotImplementedException();
             }
             string locator = $"document.GetElementBy{locatoryType}({locatorValue})";
-            jsExecutor.ExecuteScript($"{xPath??locator}.click();");
+            jsExecutor.ExecuteScript($"{xPath ?? locator}.click();");
         }
 
 
-        public static ((int x, int y) position, (int width, int height) size, (int left, int right) leftRight, (int top, int bottom) topBottom) 
+        public static ((int x, int y) position, (int width, int height) size, (int left, int right) leftRight, (int top, int bottom) topBottom)
             JsGetElementOffset(this IWebDriver driver, IWebElement element)
         {
             int x, y, width, height, left, right, top, bottom;

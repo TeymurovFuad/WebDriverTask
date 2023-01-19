@@ -1,4 +1,6 @@
-﻿namespace WebDriverTask.Utils.Extensions
+﻿using WebDriverTask.Utils.LogerConfiguration;
+
+namespace WebDriverTask.Utils.Extensions
 {
     public static class ExceptionExentions
     {
@@ -15,7 +17,19 @@
             return action;
         }
 
-        public static Action Try(this Action action)
+        public static void Try(this Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public static void Try(this Action action, ErrorLogger logError)
         {
             try
             {
@@ -23,9 +37,8 @@
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
+                logError.LogMessage(ex);
             }
-            return action;
         }
     }
 }

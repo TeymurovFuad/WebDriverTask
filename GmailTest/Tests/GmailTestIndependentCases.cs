@@ -1,9 +1,9 @@
-﻿using NUnit.Framework;
-using WebDriverTask.Core.Browser;
-using GmailTest.Pages.Gmail;
+﻿using GmailTest.Pages.Gmail;
+using NUnit.Framework;
 using OpenQA.Selenium;
-using WebDriverTask.Core.Extensions;
 using OpenQA.Selenium.Chrome;
+using WebDriverTask.Core.Browser;
+using WebDriverTask.Core.Extensions;
 using WebDriverTask.Utils.Extensions;
 using WebDriverTask.Utils.Helpers;
 
@@ -49,7 +49,7 @@ namespace GmailTest.Tests
             mainPage.loginPage.ToggleLanguageChooserDropDown();
             mainPage.loginPage.ChangeLanguage(page.Language);
             string actualLanguage = mainPage.loginPage.GetValueOfCurrentSelectedLanguage();
-            Assert.That(actualLanguage.Contains(page.Language, StringComparison.CurrentCultureIgnoreCase), Is.True);
+            Assert.IsTrue(actualLanguage.Contains(page.Language, StringComparison.CurrentCultureIgnoreCase));
         }
 
         [Test]

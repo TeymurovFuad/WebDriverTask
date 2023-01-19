@@ -12,7 +12,7 @@
         {
             Name = name;
             Description = description;
-            Title= title;
+            Title = title;
             Url = url;
             Language = language;
         }

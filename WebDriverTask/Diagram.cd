@@ -1,338 +1,291 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="WebDriverTask.Core.Browser.Configuration.BrowserBuilder" Collapsed="true">
-    <Position X="0.75" Y="7.75" Width="1.5" />
+  <Class Name="WebDriverTask.Business.Page" Collapsed="true">
+    <Position X="16.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAACAAgAEAAAAAAAAQAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Business\Page.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebDriverTask.Business.User" Collapsed="true">
+    <Position X="16.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAg=</HashCode>
+      <FileName>Business\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebDriverTask.Common.Pages.BasePage" Collapsed="true">
+    <Position X="5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIQAAAAAAKAAAAAAAIAAAAAAAAAAAAAAgAAAgAAKAA=</HashCode>
+      <FileName>Common\Pages\BasePage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebDriverTask.Common.Pages.BasePageElements" Collapsed="true">
+    <Position X="5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAEAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Common\Pages\BasePageElements.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebDriverTask.Common.TestConfig.CommonHooks" Collapsed="true">
+    <Position X="15" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAgAAAAAAAAAUAAAAAAAAAAAAAAIAACAA=</HashCode>
+      <FileName>Common\TestConfig\CommonHooks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebDriverTask.Common.TestConfig.DataProvider" Collapsed="true">
+    <Position X="16.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\TestConfig\DataProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebDriverTask.Common.TestConfig.TestData" Collapsed="true">
+    <Position X="15" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAQAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Common\TestConfig\TestData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebDriverTask.Core.Browser.Configuration.BrowserBuilder" Collapsed="true">
+    <Position X="2" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAACA=</HashCode>
       <FileName>Core\Browser\Configuration\BrowserBuilder.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WebDriverTask.Core.Browser.Configuration.BrowserFactory" Collapsed="true">
-    <Position X="0.75" Y="6.5" Width="1.5" />
+    <Position X="2" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACBAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <HashCode>AAQAAAAAAAAgAAAAAgAAAACAAAAAAAAAAAAAAAAAQAA=</HashCode>
       <FileName>Core\Browser\Configuration\BrowserFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WebDriverTask.Core.Browser.Configuration.BrowserSetting" Collapsed="true">
-    <Position X="17.25" Y="1.5" Width="1.5" />
+    <Position X="18.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAABAAAAAAAAgAAQAAAAAAAAIAAAAAAAA=</HashCode>
       <FileName>Core\Browser\Configuration\BrowserSetting.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WebDriverTask.Core.Browser.BrowserDto" Collapsed="true">
-    <Position X="22.5" Y="0.5" Width="1.5" />
+    <Position X="15" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\Browser\BrowserDto.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WebDriverTask.Core.Browser.BrowserConfig" Collapsed="true">
-    <Position X="20.75" Y="0.5" Width="1.5" />
+    <Position X="13.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAABAAAA=</HashCode>
       <FileName>Core\Browser\BrowserDto.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WebDriverTask.Core.Browser.Option" Collapsed="true">
-    <Position X="24.25" Y="2.5" Width="1.5" />
+    <Position X="15" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
       <FileName>Core\Browser\BrowserDto.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WebDriverTask.Core.Browser.Setting" Collapsed="true">
-    <Position X="17.25" Y="3.5" Width="1.5" />
+    <Position X="18.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\Browser\BrowserDto.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WebDriverTask.Core.Browser.Chrome" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="20.75" Y="1.5" Width="1.5" />
+    <Position X="13.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAAAAAAAAAAAIAAAAAAAAACAADAAAAgAAAAAAAgAAAA=</HashCode>
+      <HashCode>BAAEAAAAAAAAAAAAAAAAAACABAAAAAAAAAAAAAgAAAA=</HashCode>
       <FileName>Core\Browser\Chrome.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
+    <Lollipop Position="0.185" Collapsed="true" />
   </Class>
   <Class Name="WebDriverTask.Core.Browser.Firefox" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="20.75" Y="2.5" Width="1.5" />
+    <Position X="11.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAAAAAAQAAAAIAAAAAAAAACAABAAAAgAAAAAAAgAAAA=</HashCode>
+      <HashCode>BAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAgAAAA=</HashCode>
       <FileName>Core\Browser\Firefox.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="WebDriverTask.Core.CustomExceptions.BrowserTypeException" Collapsed="true">
-    <Position X="19" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\CustomExceptions\BrowserTypeException.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Core.CustomExceptions.DriverException" Collapsed="true">
-    <Position X="22.5" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\CustomExceptions\DriverException.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Core.CustomExceptions.ElementException" Collapsed="true">
-    <Position X="17.25" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\CustomExceptions\ElementException.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Core.Extensions.ActionsExtensions" Collapsed="true">
-    <Position X="17.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAIAAAAEAEAAAAAAAAIAAAAAAAAAAgABCAA=</HashCode>
-      <FileName>Core\Extensions\ActionsExtensions.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Core.Extensions.BrowserInteractions" Collapsed="true">
-    <Position X="24.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAEAA=</HashCode>
-      <FileName>Core\Extensions\BrowserInteractions.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Core.Extensions.DriverInteractions" Collapsed="true">
-    <Position X="24.25" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>EAABAAAQAAAABBAAAAAAEBCAIAQBQAIAAAAAAAAIAAA=</HashCode>
-      <FileName>Core\Extensions\DriverInteractions.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Core.Extensions.BaseInteractions" Collapsed="true">
-    <Position X="19" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>CAAAAIBAgAIAAEgAAAAAAAAAIAAAAAACAAAAAAAAAIA=</HashCode>
-      <FileName>Core\Extensions\ElementInteractions.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Core.Extensions.ExceptionExentions" Collapsed="true">
-    <Position X="19" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
-      <FileName>Core\Extensions\ExceptionExentions.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Core.Extensions.StringExtension" Collapsed="true">
-    <Position X="19" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Extensions\StringExtension.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Core.Helpers.StringHelper" Collapsed="true">
-    <Position X="20.75" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAQIAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\Helpers\StringHelper.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="WebDriverTask.Core.WebDriver.Driver" Collapsed="true">
-    <Position X="0.75" Y="9.25" Width="1.5" />
+    <Position X="2" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAgACAA=</HashCode>
       <FileName>Core\WebDriver\Driver.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WebDriverTask.Core.WebDriver.DriverManager" Collapsed="true">
-    <Position X="0.75" Y="10.75" Width="1.5" />
+    <Position X="2" Y="9.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAIAAAIAAAIAAIAAAAAAAAAAAAACIA=</HashCode>
       <FileName>Core\WebDriver\DriverManager.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="WebDriverTask.Pages.Gmail.ContextMenu.Mail.MailContextMenu" Collapsed="true">
-    <Position X="10.25" Y="4.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAACAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
-      <FileName>Pages\Gmail\ContextMenu\Mail\MailContextMenu.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Pages.Gmail.ContextMenu.Mail.MailContextMenuElements" Collapsed="true">
-    <Position X="10.25" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAUAAAAAAAAIgAAAAAAAAAAAACAA=</HashCode>
-      <FileName>Pages\Gmail\ContextMenu\Mail\MailContextMenuElements.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Pages.Gmail.Dialogs.Account.AccountDialogElements" Collapsed="true">
-    <Position X="14.75" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAgAAABAAAAAAAABAACACAAAAAAAAAAAAAAQAACAA=</HashCode>
-      <FileName>Pages\Gmail\Dialogs\Account\AccountDialogElements.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Pages.Gmail.Dialogs.Account.AccoutDialog" Collapsed="true">
-    <Position X="14.75" Y="4.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAIAAAAAAAEAAAAAACAAAAAAAAAAAACAA=</HashCode>
-      <FileName>Pages\Gmail\Dialogs\Account\AccoutDialog.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Pages.Gmail.Dialogs.Message.MessageDialog" Collapsed="true">
-    <Position X="4.75" Y="4.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AEAAAAAAAAAAAAAAAEAAAAAAAAAAAAAIAAAQAABACAA=</HashCode>
-      <FileName>Pages\Gmail\Dialogs\Message\MessageDialog.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Pages.Gmail.Dialogs.Message.MessageDialogElements" Collapsed="true">
-    <Position X="4.75" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>BAAEAAAABACgAAAAAIEBAACAAIEIBABAAAAAAAAECCE=</HashCode>
-      <FileName>Pages\Gmail\Dialogs\Message\MessageDialogElements.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Pages.Gmail.Folders.Drafts.DraftsFolder" Collapsed="true">
-    <Position X="3.5" Y="7.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAQAAAAAEAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
-      <FileName>Pages\Gmail\Folders\Drafts\DraftsFolder.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Pages.Gmail.Folders.Drafts.DraftsFolderElements" Collapsed="true">
-    <Position X="3.5" Y="6.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAIAQAAABAIAAAAACAAAAAAAAAAAAgAABAAAAAEACAA=</HashCode>
-      <FileName>Pages\Gmail\Folders\Drafts\DraftsFolderElements.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Pages.Gmail.Folders.Sent.SentFolder" Collapsed="true">
-    <Position X="5.75" Y="7.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAASAAAAACAA=</HashCode>
-      <FileName>Pages\Gmail\Folders\Sent\SentFolder.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Pages.Gmail.Folders.Sent.SentFolderElements" Collapsed="true">
-    <Position X="5.75" Y="6.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAABAAAABIEAEAAAAAAAAAAAAAAAAgAAAAAAAAAECAA=</HashCode>
-      <FileName>Pages\Gmail\Folders\Sent\SentFolderElements.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Pages.Gmail.Login.LoginPage" Collapsed="true">
-    <Position X="1.25" Y="4.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAgAAAAACAAAAAQABgAAAAAAAAAAAAAAIAABEgAACAA=</HashCode>
-      <FileName>Pages\Gmail\Login\LoginPage.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Pages.Gmail.Login.LoginPageElements" Collapsed="true">
-    <Position X="1.25" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAEQAAQACAAAkACAAABAIEgEAAQAQEAAAQAAQAEGAA=</HashCode>
-      <FileName>Pages\Gmail\Login\LoginPageElements.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Pages.Gmail.Logout.LogoutPage" Collapsed="true">
-    <Position X="8" Y="4.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
-      <FileName>Pages\Gmail\Logout\LogotuPage.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Pages.Gmail.Logout.LogoutPageElements" Collapsed="true">
-    <Position X="8" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAIAAAAAAAAAAAAAACAA=</HashCode>
-      <FileName>Pages\Gmail\Logout\LogoutPageElements.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Pages.Gmail.MainPage" Collapsed="true">
-    <Position X="12.5" Y="4.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>ABAAACBIAAAAIAAQAAAggMAgAQAAAAAAAACAAFBACAA=</HashCode>
-      <FileName>Pages\Gmail\MainPage.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Pages.Gmail.MainPageElements" Collapsed="true">
-    <Position X="12.5" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AFAAAAAAQCAAAAQIAEAAAAAAQIAAIAAEQACAAYACGIA=</HashCode>
-      <FileName>Pages\Gmail\MainPageElements.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Pages.BasePage" Collapsed="true">
-    <Position X="8" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAIAAAAAAAKAAAAAAAIAAAAAAAAAAAAAAgAAAgAAICA=</HashCode>
-      <FileName>Pages\BasePage.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Pages.BasePageElements" Collapsed="true">
-    <Position X="8" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAACAEAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
-      <FileName>Pages\BasePageElements.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebDriverTask.Pages.IPage" Collapsed="true">
-    <Position X="22.5" Y="2.5" Width="1.5" />
+  <Class Name="WebDriverTask.Utils.Exceptions.BrowserTypeException" Collapsed="true">
+    <Position X="11.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Pages\IPage.cs</FileName>
+      <FileName>Utils\Exceptions\BrowserTypeException.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="WebDriverTask.Tests.TestConfig.Hooks" Collapsed="true">
-    <Position X="10" Y="6.5" Width="1.5" />
+  <Class Name="WebDriverTask.Utils.Exceptions.DriverException" Collapsed="true">
+    <Position X="18.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QCAAAAAEAAAAgAAAAAAAAA0AAAQAAAAAAAAAAYgACAA=</HashCode>
-      <FileName>Tests\TestConfig\Hooks.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utils\Exceptions\DriverException.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="WebDriverTask.Tests.TestConfig.TestClassDataProvider" Collapsed="true">
-    <Position X="22.5" Y="3.5" Width="1.5" />
+  <Class Name="WebDriverTask.Utils.Exceptions.ElementException" Collapsed="true">
+    <Position X="13.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Tests\TestConfig\TestClassDataProvider.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utils\Exceptions\ElementException.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="WebDriverTask.Tests.TestConfig.TestData" Collapsed="true">
-    <Position X="24.25" Y="3.5" Width="1.5" />
+  <Class Name="WebDriverTask.Core.Extensions.ActionsExtensions" Collapsed="true">
+    <Position X="11.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAABAAAAAAAAAAQAAAAAAAAAAAAAAAAAQAA=</HashCode>
-      <FileName>Tests\TestConfig\TestData.cs</FileName>
+      <HashCode>AAAAAAAAAAIAAAAEAEAAAAAAAAIIAAAAAAAAAgABCCA=</HashCode>
+      <FileName>Utils\Extensions\ActionsExtensions.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="WebDriverTask.Tests.GmailTest" Collapsed="true">
-    <Position X="8.75" Y="7.75" Width="1.5" />
+  <Class Name="WebDriverTask.Core.Extensions.ElementInteractions" Collapsed="true">
+    <Position X="15" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABAAIZAAAAAAAAAAAEAAAABAAYAAAAEAIAAAAAAIAA=</HashCode>
-      <FileName>Tests\GmailTest.cs</FileName>
+      <HashCode>CAAAAIBAgAIAAEgAAAAAAAAAAAAAAAICAAAAAAAAAIA=</HashCode>
+      <FileName>Utils\Extensions\ElementInteractions.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="WebDriverTask.Tests.GmailTestWithJsActions" Collapsed="true">
-    <Position X="11" Y="7.75" Width="1.5" />
+  <Class Name="WebDriverTask.Utils.Extensions.BrowserInteractions" Collapsed="true">
+    <Position X="16.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAIRAgAAAAAAAAAEAAAABAAYAAAAEAIAQAAAAIAA=</HashCode>
-      <FileName>Tests\GmailTestWithJsActions.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAEAA=</HashCode>
+      <FileName>Utils\Extensions\BrowserInteractions.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="WebDriverTask.Utils.Extensions.DriverInteractions" Collapsed="true">
+    <Position X="11.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAABAAIQAAAABFAAAAIAEBCAIAQBQAIgAAAAAAAICAA=</HashCode>
+      <FileName>Utils\Extensions\DriverInteractions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebDriverTask.Utils.Extensions.ExceptionExentions" Collapsed="true">
+    <Position X="16.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Utils\Extensions\ExceptionExentions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebDriverTask.Utils.Extensions.StringExtension" Collapsed="true">
+    <Position X="11.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utils\Extensions\StringExtension.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebDriverTask.Utils.Helpers.ExceptionHelper" Collapsed="true">
+    <Position X="18.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Utils\Helpers\ExceptionHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebDriverTask.Utils.Helpers.LoggerHelper" Collapsed="true">
+    <Position X="13.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Utils\Helpers\LoggerHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebDriverTask.Utils.Helpers.StringHelper" Collapsed="true">
+    <Position X="13.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQIAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utils\Helpers\StringHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebDriverTask.Utils.LogerConfiguration.BaseLogger" Collapsed="true">
+    <Position X="5.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAEAAAAAAAgAAAIAAAAACAAAAAA=</HashCode>
+      <FileName>Utils\LogerConfiguration\BaseLogger.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WebDriverTask.Utils.LogerConfiguration.ErrorLogger" Collapsed="true">
+    <Position X="2.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAQAAAAAAAAAAAAAAAAAABAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Utils\LogerConfiguration\ErrorLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebDriverTask.Utils.LogerConfiguration.InfoLogger" Collapsed="true">
+    <Position X="4.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAQAAAAAAAAAAAAAAAAAABAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Utils\LogerConfiguration\InfoLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebDriverTask.Utils.LogerConfiguration.Logger" Collapsed="true">
+    <Position X="9" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAEAAEQAAAAAAgAAAIAAAAACAIAAQA=</HashCode>
+      <FileName>Utils\LogerConfiguration\Logger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebDriverTask.Utils.LogerConfiguration.LoggerDecorator" Collapsed="true">
+    <Position X="4.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utils\LogerConfiguration\LoggerDecorator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WebDriverTask.Utils.LogerConfiguration.TestLogger" Collapsed="true">
+    <Position X="6.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAQAAAAAAAAAAAAAAAAAABAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Utils\LogerConfiguration\TestLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="WebDriverTask.Common.Pages.IPage" Collapsed="true">
+    <Position X="15" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Pages\IPage.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Interface Name="WebDriverTask.Core.Browser.Configuration.IBrowser" Collapsed="true">
-    <Position X="17.25" Y="4.75" Width="1.5" />
+    <Position X="11.5" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <HashCode>BAAAAAAIAAAAAAAAAAAAAAAABAAAAAAAAAAAAAgAAAA=</HashCode>
       <FileName>Core\Browser\Configuration\IBrowser.cs</FileName>
     </TypeIdentifier>
   </Interface>
+  <Interface Name="WebDriverTask.Utils.LogerConfiguration.ILogger" Collapsed="true">
+    <Position X="13.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAEAAAAAAAgAAAIAAAAACAAAAAA=</HashCode>
+      <FileName>Utils\LogerConfiguration\ILogger.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Enum Name="WebDriverTask.Core.Browser.BrowserOption" Collapsed="true">
-    <Position X="17.25" Y="5.75" Width="1.5" />
+    <Position X="11.5" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\Browser\BrowserOption.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="WebDriverTask.Core.Browser.BrowserType" Collapsed="true">
-    <Position X="19" Y="5.75" Width="1.5" />
+    <Position X="13.25" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAgQAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
       <FileName>Core\Browser\BrowserType.cs</FileName>

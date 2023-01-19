@@ -8,7 +8,7 @@ namespace GmailTest.Pages.Gmail.Dialogs.Account
     public class AccountDialog : AccountDialogElements, IPage
     {
         IWebDriver webDriver { get; set; }
-        public AccountDialog(IWebDriver driver): base(driver)
+        public AccountDialog(IWebDriver driver) : base(driver)
         {
             webDriver = driver;
         }
@@ -30,7 +30,7 @@ namespace GmailTest.Pages.Gmail.Dialogs.Account
 
         public void ClickSignOut()
         {
-            ClickElement(SignOutButton);
+            ClickElement(SingOutButtonLocator);
         }
     }
 }

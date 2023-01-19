@@ -2,7 +2,7 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 
-namespace WebDriverTask.Core.Browser.Configuration
+namespace WebDriverTask.Core.Browser.Factory
 {
     public sealed class BrowserSetting
     {
@@ -22,7 +22,7 @@ namespace WebDriverTask.Core.Browser.Configuration
         public void AddArguments(params string[] arguments)
         {
             if (arguments!.Length > 0)
-                {
+            {
                 switch (_browserType)
                 {
                     case BrowserType.Chrome:

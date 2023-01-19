@@ -1,11 +1,12 @@
 ﻿using OpenQA.Selenium;
 
-namespace WebDriverTask.Core.Browser.Configuration
+namespace WebDriverTask.Core.Browser.Factory
 {
     public interface IBrowser
     {
+        static IBrowser GetInstance { get; }
         IWebDriver GetDriver();
-        IBrowser ConfigureRemoteDriver();
+        IWebDriver GetRemoteDriver();
         IBrowser SetOptions(DriverOptions? options);
     }
 
