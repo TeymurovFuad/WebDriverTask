@@ -82,3 +82,15 @@ ACCEPTANCE CRITERIA
 
 [*] discuss assignment specifics with your mentor or choose any other suitable 3 patterns 
 
+
+
+Module 11: DBB FRAMEWORK
+Adopt the previous home task (WebDriver project with patterns implemented) to make possible test execution with Specflow. Follow relevant configuration steps for MsTest/Nunit depending on the existing project architecture.
+ACCEPTANCE CRITERIA
+1.	At least one test should use "Scenario Outline" keyword and “Examples:” section.
+2.	Apply “Background” keyword for preconditions/recurrent steps.
+3.	Use filtering/regular expressions in Gherkin step definitions for parametrization and flexibility.
+
+[*] discuss assignment specifics with your mentor
+[*] discuss any bonus task with your mentor (should be relevant to an assignment)
+
