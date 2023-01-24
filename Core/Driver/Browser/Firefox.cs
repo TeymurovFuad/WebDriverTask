@@ -38,6 +38,7 @@ namespace Core.Browser
             {
                 _firefoxOptions = (FirefoxOptions)options;
             }
+            _firefoxOptions.AddArgument("-private");
             return this;
         }
     }

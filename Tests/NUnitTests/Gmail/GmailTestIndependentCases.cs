@@ -7,7 +7,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
-namespace Tests.NUnit
+namespace Tests.NUnitTests.Gmail
 {
     //[TestFixtureSource(typeof(TestClassDataProvider), "TestCases")]
     //[Parallelizable(ParallelScope.Fixtures)]
@@ -109,7 +109,7 @@ namespace Tests.NUnit
             mainPage.GoToDrafts();
             mainPage.OpenExistingMail(mail.Subject);
             mainPage.messageDialog.SendButton.Click();
-            bool isDisplayed = webDriver.isElementDisplayed(mainPage.messageDialog.MailDialogsByHeaderLocator(base.mail.Subject));
+            bool isDisplayed = webDriver.isElementDisplayed(mainPage.messageDialog.MailDialogsByHeaderLocator(mail.Subject));
             Assert.IsFalse(isDisplayed);
         }
 
@@ -126,7 +126,7 @@ namespace Tests.NUnit
             mainPage.draftsFolder.GetDraftMailByValue(mail.Subject).Click();
             mainPage.messageDialog.SendButton.Click();
             mainPage.GoToSent();
-            IWebElement? sentMail = mainPage.sentFolder.GetSentMailBySubject(base.mail.Subject);
+            IWebElement? sentMail = mainPage.sentFolder.GetSentMailBySubject(mail.Subject);
             Assert.NotNull(sentMail);
         }
 
@@ -146,7 +146,7 @@ namespace Tests.NUnit
             mainPage.ToggleMore();
             webDriver.CreateActions().ContextClick(mainPage.sentFolder.GetSentMailBySubject(mail.Subject)).Perform();
             webDriver.CreateActions().Click(mainPage.mailContextMenu.DeleteItem).Perform();
-            bool isDisplayed = webDriver.isElementDisplayed(mainPage.sentFolder.MailDialogsByHeaderLocator(base.mail.Subject));
+            bool isDisplayed = webDriver.isElementDisplayed(mainPage.sentFolder.MailDialogsByHeaderLocator(mail.Subject));
             Assert.IsFalse(isDisplayed);
         }
 

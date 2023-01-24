@@ -1,4 +1,5 @@
-﻿using Business.Gmail;
+﻿using Business;
+using Business.Gmail;
 using Core.Browser;
 using Core.Business;
 using Core.Common.TestConfig;
@@ -8,7 +9,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 
-namespace Tests.NUnit
+namespace Tests.NUnitTests.Gmail
 {
     public abstract class GmailHooks : CommonHooks
     {

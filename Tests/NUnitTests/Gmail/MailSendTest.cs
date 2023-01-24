@@ -7,7 +7,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
-namespace Tests.NUnit
+namespace Tests.NUnitTests.Gmail
 {
     //[TestFixtureSource(typeof(TestClassDataProvider), "TestCases")]
     //[Parallelizable(ParallelScope.Fixtures)]
