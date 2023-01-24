@@ -1,5 +1,7 @@
 ﻿using Business.PageObjects.Gmail;
 using Core.Browser;
+using Core.Extensions;
+using Core.Utils.Extensions;
 using Core.Utils.Helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -10,7 +12,7 @@ namespace Tests.NUnit
     //[TestFixtureSource(typeof(TestClassDataProvider), "TestCases")]
     //[Parallelizable(ParallelScope.Fixtures)]
     [TestFixture]
-    public class GmailTestIndependentCases : Hooks
+    public class GmailTestIndependentCases : GmailHooks
     {
         protected MainPage mainPage;
 

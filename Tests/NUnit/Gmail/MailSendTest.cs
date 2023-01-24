@@ -1,9 +1,18 @@
-﻿namespace Tests.NUnit
+﻿using Business.PageObjects.Gmail;
+using Core.Browser;
+using Core.Extensions;
+using Core.Utils.Extensions;
+using Core.Utils.Helpers;
+using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+
+namespace Tests.NUnit
 {
     //[TestFixtureSource(typeof(TestClassDataProvider), "TestCases")]
     //[Parallelizable(ParallelScope.Fixtures)]
     [TestFixture]
-    public class MailSendTest : Hooks
+    public class MailSendTest : GmailHooks
     {
         protected MainPage mainPage;
         private static string _url = "https://mail.google.com/";
