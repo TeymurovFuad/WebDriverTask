@@ -1,9 +1,11 @@
 ﻿Feature: Login
-	Login to gmail using user credentials
+	As a use
+	I want to login to gmail using my credentials
+	So that, after login, inbox page will be visible
 
 @Gmail
 @Login
-Scenario Outline: User should be able to login to the GMail successfully
+Scenario Outline: User should be able to login to the Gmail successfully
 	Given user open gmail login page
 	| url                     | language | title |
 	| https://mail.google.com | english  | Gmail |
