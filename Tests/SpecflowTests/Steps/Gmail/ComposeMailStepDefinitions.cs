@@ -1,44 +1,46 @@
 using Business;
+using Business.PageObjects.Gmail;
 using Core.Business;
 using Core.Utils.Extensions;
+using Core.WebDriver;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using System;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
-namespace Tests.SpecflowTests.Gmail.Steps
+namespace Tests.SpecflowTests.Steps.Gmail
 {
     [Binding]
-    public class ComposeMailStepDefinitions: GmailHooks
+    public class ComposeMailStepDefinitions
     {
-        [Given(@"email and password and page details")]
-        public void GivenEmailAndPasswordAndPageDetails(Table table)
+        MainPage _mainPage;
+        DriverManager _driverManager;
+        private ComposeMailStepDefinitions(DriverManager driverManager)
         {
-            user = table.CreateInstance<User>();
-            page = table.CreateInstance<Page>();
-            LoginToGmail();
+            _driverManager = driverManager;
+            _mainPage = new(_driverManager.GetDriver());
         }
 
         [When(@"click compose button")]
         public void WhenClickComposeButton()
         {
-            mainPage.ComposeNewMail();
+            _mainPage.ComposeNewMail();
         }
 
         [Then(@"verify that new mail dialog opened")]
         public void ThenVerifyThatNewMailDialogOpened()
         {
-            IWebElement newMailDialog = mainPage.messageDialog.NewMailDialog;
+            IWebElement newMailDialog = _mainPage.messageDialog.NewMailDialog;
             Assert.IsTrue(newMailDialog.Displayed);
         }
 
         [Then(@"verify that all to, subject and body fields are empty")]
         public void ThenVerifyThatAllToSubjectAndBodyFieldsAreEmpty()
         {
-            IWebElement toField = mainPage.messageDialog.To;
-            IWebElement subjectField = mainPage.messageDialog.Subject;
-            IWebElement bodyField = mainPage.messageDialog.Body;
+            IWebElement toField = _mainPage.messageDialog.To;
+            IWebElement subjectField = _mainPage.messageDialog.Subject;
+            IWebElement bodyField = _mainPage.messageDialog.Body;
             Assert.Multiple(() =>
             {
                 Assert.IsEmpty(toField.Text);

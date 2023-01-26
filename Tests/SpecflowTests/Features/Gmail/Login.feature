@@ -5,6 +5,7 @@
 
 @Gmail
 @Login
+@UI
 Scenario Outline: User should be able to login to the Gmail successfully
 	Given user open gmail login page
 	| url                     | language | title |
@@ -21,5 +22,5 @@ Scenario Outline: User should be able to login to the Gmail successfully
 
 
 Examples:
-| username          | password     |
-| qy54313@gmail.com | Aa123456____ |
+| username          | password  |
+| qy54313@gmail.com | Aa123456_ |

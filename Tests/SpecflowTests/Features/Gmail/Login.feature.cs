@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Tests.SpecflowTests.Gmail.Features
+namespace Tests.SpecflowTests.Features.Gmail
 {
     using TechTalk.SpecFlow;
     using System;
@@ -20,23 +20,23 @@ namespace Tests.SpecflowTests.Gmail.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("ComposeMail")]
-    public partial class ComposeMailFeature
+    [NUnit.Framework.DescriptionAttribute("Login")]
+    public partial class LoginFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
         private static string[] featureTags = ((string[])(null));
         
-#line 1 "ComposeMail.feature"
+#line 1 "Login.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "SpecflowTests/Gmail/Features", "ComposeMail", "\tAs a user\r\n\tI want to be able to open compose new mail dialog\r\n\tSo that I will b" +
-                    "e able to see empty dialog opened", ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "SpecflowTests/Features/Gmail", "Login", "\tAs a use\r\n\tI want to login to gmail using my credentials\r\n\tSo that, after login," +
+                    " inbox page will be visible", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -75,18 +75,26 @@ namespace Tests.SpecflowTests.Gmail.Features
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify that new mail dialog openet after compose button clicked")]
+        [NUnit.Framework.DescriptionAttribute("User should be able to login to the Gmail successfully")]
         [NUnit.Framework.CategoryAttribute("Gmail")]
-        [NUnit.Framework.CategoryAttribute("Compose")]
-        [NUnit.Framework.CategoryAttribute("LoginRequired")]
-        public void VerifyThatNewMailDialogOpenetAfterComposeButtonClicked()
+        [NUnit.Framework.CategoryAttribute("Login")]
+        [NUnit.Framework.CategoryAttribute("UI")]
+        [NUnit.Framework.TestCaseAttribute("qy54313@gmail.com", "Aa123456_", null)]
+        public void UserShouldBeAbleToLoginToTheGmailSuccessfully(string username, string password, string[] exampleTags)
         {
-            string[] tagsOfScenario = new string[] {
+            string[] @__tags = new string[] {
                     "Gmail",
-                    "Compose",
-                    "LoginRequired"};
+                    "Login",
+                    "UI"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that new mail dialog openet after compose button clicked", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            argumentsOfScenario.Add("username", username);
+            argumentsOfScenario.Add("password", password);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User should be able to login to the Gmail successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 9
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -98,28 +106,42 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                            "email",
-                            "password",
                             "url",
                             "language",
                             "title"});
                 table1.AddRow(new string[] {
-                            "qy54313@gmail.com",
-                            "Aa123456____",
                             "https://mail.google.com",
                             "english",
                             "Gmail"});
 #line 10
- testRunner.Given("email and password and page details", ((string)(null)), table1, "Given ");
+ testRunner.Given("user open gmail login page", ((string)(null)), table1, "Given ");
 #line hidden
 #line 13
- testRunner.When("click compose button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+  testRunner.Then("verify that login page opened", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 14
- testRunner.Then("verify that new mail dialog opened", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("change page language", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 15
- testRunner.And("verify that all to, subject and body fields are empty", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+  testRunner.Then("verify that page language set correctly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 16
+ testRunner.When(string.Format("insert \'{0}\' into then email field", username), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 17
+ testRunner.And("click next button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 18
+  testRunner.Then("verify that page contains password field", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 19
+ testRunner.When(string.Format("insert \'{0}\' into then password field", password), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 20
+ testRunner.And("click next button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 21
+  testRunner.Then("verify that main page opened successfully and title contains \'inbox\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

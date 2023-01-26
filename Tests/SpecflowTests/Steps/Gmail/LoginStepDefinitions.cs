@@ -6,31 +6,35 @@ using OpenQA.Selenium;
 using System;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
-using Tests.SpecflowTests.Gmail;
 using Core.Utils.Extensions;
+using Core.Common.TestConfig;
+using Core.Business;
 
-namespace Tests.SpecflowTests.Gmail.Steps
+namespace Tests.SpecflowTests.Steps.Gmail
 {
     [Binding]
-    public class LoginStepDefinitions : GmailBDDHooks
+    public class LoginStepDefinitions
     {
-        private MainPage _mainPage;
-        public LoginStepDefinitions(ScenarioContext context) : base(context)
+        MainPage _mainPage;
+        DriverManager _driverManager;
+        Page _page;
+        public LoginStepDefinitions(ScenarioContext context, DriverManager driverManager)
         {
-            _mainPage = new MainPage(webDriver);
+            _driverManager = driverManager;
+            _mainPage = new(_driverManager.GetDriver());
         }
 
         [Given(@"user open gmail login page")]
         public void GivenUserOpenGmailLoginPage(Table table)
         {
-            page = table.CreateInstance<Page>();
-            driverManager.GetWebDriver().GoToUrl(page.Url);
+            _page = table.CreateInstance<Page>();
+            _driverManager.GetDriver().GoToUrl(_page.Url);
         }
 
         [Then(@"verify that login page opened")]
         public void ThenVerifyThatLoginPageOpened()
         {
-            bool pageOpened = webDriver.Title.Contains(page.Title, StringComparison.CurrentCultureIgnoreCase);
+            bool pageOpened = _driverManager.GetDriver().Title.Contains(_page.Title, StringComparison.CurrentCultureIgnoreCase);
             Assert.IsTrue(pageOpened);
         }
 
@@ -38,14 +42,14 @@ namespace Tests.SpecflowTests.Gmail.Steps
         public void WhenChangePageLanguage()
         {
             _mainPage.loginPage.ToggleLanguageChooserDropDown();
-            _mainPage.loginPage.ChangeLanguage(page.Language);
+            _mainPage.loginPage.ChangeLanguage(_page.Language);
         }
 
         [Then(@"verify that page language set correctly")]
         public void ThenVerifyThatPageLanguageSetCorrectly()
         {
             string actualLanguage = _mainPage.loginPage.GetValueOfCurrentSelectedLanguage();
-            Assert.IsTrue(actualLanguage.Contains(page.Language, StringComparison.CurrentCultureIgnoreCase));
+            Assert.IsTrue(actualLanguage.Contains(_page.Language, StringComparison.CurrentCultureIgnoreCase));
         }
 
         [When(@"insert '([^']*)' into then email field")]
@@ -63,7 +67,7 @@ namespace Tests.SpecflowTests.Gmail.Steps
         [Then(@"verify that page contains password field")]
         public void ThenVerifyThatPageContainsPasswordField()
         {
-            bool isPasswordFieldDisplayed = webDriver.WaitUntilElementDisplayed(_mainPage.loginPage.PasswordField).isDisplayed;
+            bool isPasswordFieldDisplayed = _driverManager.GetDriver().WaitUntilElementDisplayed(_mainPage.loginPage.PasswordField).isDisplayed;
             Assert.IsTrue(isPasswordFieldDisplayed);
         }
 
