@@ -24,7 +24,7 @@ namespace Tests.NUnitTests.Gmail
             StopOnFail = true;
             driverOptions = new ChromeOptions();
             mainPage = new MainPage(webDriver);
-            user = new(email: "qy54313@gmail.com", password: "Aa123456____");
+            user = new(email: "qy54313@gmail.com");
             mail = new(receiver: "someFakeMail@noSuchAddress.pl", subject: StringHelper.GenerateUUID(), body: "SomeTestBody");
             page = new(title: "Gmail", language: "English", url: "https://mail.google.com/");
         }

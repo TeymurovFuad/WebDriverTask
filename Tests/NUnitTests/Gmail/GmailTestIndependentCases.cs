@@ -19,7 +19,7 @@ namespace Tests.NUnitTests.Gmail
         public GmailTestIndependentCases() : base()
         {
             driverOptions = new ChromeOptions();
-            user = new(email: "qy54313@gmail.com", password: "Aa123456____");
+            user = new(email: "qy54313@gmail.com");
             mail = new(receiver: "someFakeMail@noSuchAddress.pl", subject: StringHelper.GenerateUUID(), body: "SomeTestBody");
             page = new(title: "Gmail", language: "English", url: "https://mail.google.com/");
             StopOnFail = false;

@@ -22,7 +22,7 @@ namespace Tests.SpecflowTests.Steps
             _driverManager = driverManager;
             _mainPage = new(_driverManager.GetDriver());
             _page = new(title: "Gmail", language: "English", url: "https://mail.google.com/");
-            _user = new(email: "qy54313@gmail.com", password: "Aa123456_");
+            _user = new(email: "qy54313@gmail.com");
             scenarioContext.Add("user", _user);
             scenarioContext.Add("page", _page);
         }
