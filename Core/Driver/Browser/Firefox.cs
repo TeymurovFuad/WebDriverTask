@@ -9,9 +9,9 @@ namespace Core.Browser
     {
         private static IBrowser? _instance { get; set; } = null;
         public static IBrowser GetInstance => _instance ??= new Firefox();
-        private IWebDriver? driver { get; set; }
-        private RemoteWebDriver _remoteWebDriver { get; set; }
-        private FirefoxOptions _firefoxOptions { get; set; }
+        IWebDriver? _driver { get; set; }
+        RemoteWebDriver _remoteWebDriver { get; set; }
+        FirefoxOptions _firefoxOptions { get; set; }
 
         private Firefox()
         {
@@ -20,14 +20,14 @@ namespace Core.Browser
 
         public IWebDriver GetDriver()
         {
-            if (driver == null)
-                driver = new FirefoxDriver(_firefoxOptions);
-            return driver;
+            _driver?.Dispose();
+            _driver = new FirefoxDriver(_firefoxOptions);
+            return _driver;
         }
 
         public IWebDriver GetRemoteDriver()
         {
-            if (driver == null && driver?.GetType() == typeof(RemoteWebDriver))
+            if (_driver == null && _driver?.GetType() == typeof(RemoteWebDriver))
                 _remoteWebDriver = new RemoteWebDriver(new Uri("http://localhost:5566/wd/hub"), _firefoxOptions.ToCapabilities());
             return _remoteWebDriver;
         }
