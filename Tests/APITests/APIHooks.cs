@@ -1,11 +1,11 @@
-﻿using Core.Common.TestConfig;
+﻿using Core.APIConfig.RestSharp;
+using Core.Common.TestConfig;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tests.APITests.RestSharpConfig;
 
 namespace Tests.APITests
 {
@@ -18,7 +18,7 @@ namespace Tests.APITests
         [OneTimeSetUp]
         public void ClassSetup()
         {
-            httpMethod = new ClientConfig();
+            httpMethod = new ClientConfig(@"https://jsonplaceholder.typicode.com/");
         }
     }
 }
