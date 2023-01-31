@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
-
-namespace Core.Utils.LogerConfiguration
+﻿namespace Core.Utils.LogerConfiguration
 {
     public sealed class ErrorLogger: LoggerDecorator
     {

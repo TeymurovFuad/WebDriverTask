@@ -1,12 +1,4 @@
-﻿using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-
-namespace Core.Utils.LogerConfiguration
+﻿namespace Core.Utils.LogerConfiguration
 {
     public abstract class BaseLogger : ILogger
     {

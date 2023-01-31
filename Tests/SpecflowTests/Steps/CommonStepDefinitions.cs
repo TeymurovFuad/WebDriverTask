@@ -3,8 +3,6 @@ using Business.PageObjects.Gmail;
 using Core.Business;
 using Core.Utils.Extensions;
 using Core.WebDriver;
-using OpenQA.Selenium;
-using System;
 using TechTalk.SpecFlow;
 
 namespace Tests.SpecflowTests.Steps

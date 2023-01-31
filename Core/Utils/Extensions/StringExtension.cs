@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace Core.Utils.Extensions
+﻿namespace Core.Utils.Extensions
 {
     public static class StringExtension
     {

@@ -1,13 +1,8 @@
-using Business;
 using Business.PageObjects.Gmail;
-using Core.Business;
-using Core.Utils.Extensions;
 using Core.WebDriver;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using System;
 using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
 
 namespace Tests.SpecflowTests.Steps.Gmail
 {

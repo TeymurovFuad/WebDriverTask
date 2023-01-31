@@ -1,17 +1,9 @@
-﻿using Business.Gmail;
-using Business;
-using Core.Browser;
-using Core.Business;
-using Core.Common.TestConfig;
+﻿using Core.Browser;
 using Core.WebDriver;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 using Business.PageObjects.Gmail;
-using Tests.SpecflowTests.Features;
-using Core.Utils.Extensions;
-using OpenQA.Selenium.Firefox;
 using BoDi;
-using NUnit.Framework;
 
 namespace Tests.SpecflowTests
 {
