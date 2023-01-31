@@ -13,7 +13,7 @@ ACCEPTANCE CRITERIA
 5.	Inner implementation of PO is hidden from tests.
 6.	Naming and Code Conventions should be followed.
 
-
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 MODULE 8: SELENIUM WD ADVANCED WITH .NET: ACTIONS, JAVASCRIPT EXECUTOR, SELENIUM SERVER + SELENIUM GRID
 HOME TASK
@@ -36,6 +36,7 @@ ACCEPTANCE CRITERIA
 5.	There is no code duplication at all.
 6.	Naming and Code Conventions should be followed.
 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 MODULE 9: TEST AUTOMATION FRAMEWORKS BASICS (.NET)
 HOME TASK
@@ -53,8 +54,7 @@ ACCEPTANCE CRITERIA
 3.	Utility classes are created according to the test flow needs.
 4.	BONUS TASK: Fully functional C# implementation of test scenario using some ready-made Selenium wrapper/framework (e.g. Selenide, Serenity, JDI, HtmlElements) is delivered to a mentor.
 
-
-
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 MODULE 10: DESIGN PATTERNS IN TA FRAMEWORKS IMPLEMENTATION (.NET)
 HOME TASK
@@ -82,7 +82,7 @@ ACCEPTANCE CRITERIA
 
 [*] discuss assignment specifics with your mentor or choose any other suitable 3 patterns 
 
-
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 Module 11: DBB FRAMEWORK
 Adopt the previous home task (WebDriver project with patterns implemented) to make possible test execution with Specflow. Follow relevant configuration steps for MsTest/Nunit depending on the existing project architecture.
@@ -94,3 +94,32 @@ ACCEPTANCE CRITERIA
 [*] discuss assignment specifics with your mentor
 [*] discuss any bonus task with your mentor (should be relevant to an assignment)
 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+MODULE 12: AUTOMATED TESTING OF WEB SERVICES WITH .NET
+HOME TASK
+if mentee's project has something to do with REST web-services, the tasks that are described below should be done using a mentee's REST web-service. Mentor is allowed to tailor given tasks to mentee’s REST web-service without losing a sense of the given tasks. Otherwise, it should be done using the provided REST web-service. 
+1.	Create a test to verify an http status code:
+o	Send the http request by using the GET method.
+o	The URL is https://jsonplaceholder.typicode.com/users
+o	Validation: status code of the obtained response is 200 OK
+2.	Create a test to verify an http response header:
+o	Send the http request by using the GET method. 
+o	The URL is https://jsonplaceholder.typicode.com/users
+o	Validation: - the content-type header exists in the obtained response
+                                    - the value of the content-type header is application/json; charset=utf-8
+3.	Create a test to verify an http response body:
+o	Send the http request by using the GET method:
+o	The URL is https://jsonplaceholder.typicode.com/users
+o	Validation: the content of the response body is the array of 10 users
+BONUS TASK
+•	Tests are created using any http client and serialization/deserialization libraries.
+•	Implemented additional tests (defined with your mentor) for the GitHub gist using REST API. The implemented tests should be done using the following http methods: post, put, delete and patch. The documentation of the API is located here.
+
+ACCEPTANCE CRITERIA
+1.	Tests should be created using Rest Based Template.
+2.	Tests have to include validations that are given.
+3.	Implemented tests should be readable.
+4.	Tests must be implemented so that they could be launched in parallel.
+5.	Naming and Code Conventions should be followed.
+6.	As for tests of the bonus task, they should be created to test CRUD operations of the given resource.
