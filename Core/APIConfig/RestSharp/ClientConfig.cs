@@ -6,9 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tests.APITests.Models;
 
-namespace Tests.APITests.RestSharpConfig
+namespace Core.APIConfig.RestSharp
 {
     public sealed class ClientConfig
     {
@@ -16,9 +15,9 @@ namespace Tests.APITests.RestSharpConfig
         private RestRequest _restRequest { get; set; }
         private CancellationToken _cancellationToken { get; set; }
 
-        public ClientConfig()
+        public ClientConfig(string baseUrl)
         {
-            _client = new RestClient(@"https://jsonplaceholder.typicode.com/");
+            _client = new RestClient(baseUrl);
             _cancellationToken = new CancellationToken();
         }
 
@@ -37,10 +36,10 @@ namespace Tests.APITests.RestSharpConfig
             return _restResponse;
         }
 
-        public async Task<RestResponse<T>?> PUT<T>(string target, string? body=null)
+        public async Task<RestResponse<T>?> PUT<T>(string target, string? body = null)
         {
             GetRestRequest(target, Method.Put);
-            if(body != null)
+            if (body != null)
             {
                 _restRequest.AddBody(body);
             }
@@ -70,7 +69,7 @@ namespace Tests.APITests.RestSharpConfig
 
         private string VerifyPath(string path)
         {
-            if(path.StartsWith("/"))
+            if (path.StartsWith("/"))
             {
                 path.Remove(0, 1);
             }
