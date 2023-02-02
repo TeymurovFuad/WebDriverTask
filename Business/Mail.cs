@@ -1,4 +1,4 @@
-﻿namespace Business.Gmail
+﻿namespace Business
 {
     public class Mail
     {
