@@ -1,4 +1,6 @@
-﻿using Core.Mobile.Device;
+﻿using Business.PageObjects.OnlinerMobileApp.Intro;
+using Core.Mobile.Device;
+using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -6,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.UITest;
+using Xamarin.UITest.Queries;
 
 namespace Tests.Mobile.Onliner
 {
@@ -21,7 +24,24 @@ namespace Tests.Mobile.Onliner
         [Test]
         public void OpenApp()
         {
-            app.Repl();
+            Assert.IsTrue(onliner.introPage.isOpened());
+        }
+
+        [TestCase("Электроника")]
+        public void OpenCategory(string categoryName)
+        {
+            onliner.introPage.SkipIntro();
+            onliner.catalogPage.ClickCatalogCategory(categoryName);
+            string headerValue = onliner.GetHeaderValue();
+            Assert.AreEqual(headerValue, categoryName, $"Header value ({headerValue}) not equal to category name ({categoryName})");
+        }
+
+        [TestCase("Электроника", "Смартфоны")]
+        public void VerifyCategoryContainsSubCategory(string category, string subCategory)
+        {
+            onliner.introPage.SkipIntro();
+            onliner.catalogPage.ClickCatalogCategory(category);
+            onliner.catalogPage.GetSubCategories().Should().Contain(sc => sc.Text == subCategory, because: $"given category {category} does not contain a subcategory {subCategory}");
         }
     }
 }

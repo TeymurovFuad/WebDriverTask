@@ -39,9 +39,9 @@ namespace Tests.SpecflowTests
         //public void LoginToGmail()
         //{
         //    driverManager.GetWebDriver().GoToUrl(_page.Url);
-        //    mainPage.loginPage.ToggleLanguageChooserDropDown();
-        //    mainPage.loginPage.ChangeLanguage(_page.Language);
-        //    mainPage.loginPage.Login(_user.Email, _user.Password);
+        //    onliner.loginPage.ToggleLanguageChooserDropDown();
+        //    onliner.loginPage.ChangeLanguage(_page.Language);
+        //    onliner.loginPage.Login(_user.Email, _user.Password);
         //}
 
         [BeforeFeature]
