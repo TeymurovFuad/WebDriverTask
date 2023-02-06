@@ -1,16 +1,9 @@
 ﻿using Core.Common.TestConfig;
 using Core.Mobile.Device;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.UITest;
-using Xamarin.UITest.Shared.iOS.Queries;
-using System.IO;
-using Business.PageObjects.OnlinerMobileApp.Intro;
 using Business.PageObjects.OnlinerMobileApp;
+using NUnit.Framework.Interfaces;
 
 namespace Tests.Mobile.Onliner
 {
@@ -35,5 +28,22 @@ namespace Tests.Mobile.Onliner
             onliner = new OnlinerMainPage(app);
         }
 
+        [TearDown]
+        public void MakeAScreenshotOnFail()
+        {
+            bool isFailed = TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed;
+            string logDirectory = Directory.GetCurrentDirectory() + "\\Log";
+            if (isFailed)
+            {
+                string className = TestContext.CurrentContext.Test.ClassName;
+                string methodName = TestContext.CurrentContext.Test.MethodName;
+                string arguments = String.Join("_", TestContext.CurrentContext.Test.Arguments);
+                string dateTimeNow = DateTimeOffset.Now.Ticks.ToString();
+                string fileName = $"{className}_{methodName}_{arguments}_{dateTimeNow}";
+                var screenShot = app.Screenshot("");
+                string imageFullPath = Path.Combine(logDirectory, fileName+screenShot.Extension);
+                screenShot.MoveTo(imageFullPath);
+            }
+        }
     }
 }
