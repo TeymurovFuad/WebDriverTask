@@ -12,10 +12,10 @@ namespace Core.Mobile.Device
             switch (platform)
             {
                 case Platform.Android:
-                    _app = ConfigureApp.Android.ApkFile(pathToApp).StartApp();
+                    _app = ConfigureApp.Android.EnableLocalScreenshots().ApkFile(pathToApp).StartApp();
                     break;
                 case Platform.iOS:
-                    _app = ConfigureApp.iOS.StartApp();
+                    _app = ConfigureApp.iOS.EnableLocalScreenshots().StartApp();
                     break;
                 default:
                     throw new NotImplementedException($"{platform} not implemented yet");
