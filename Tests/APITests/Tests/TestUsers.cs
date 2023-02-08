@@ -23,11 +23,11 @@ namespace Tests.APITests.Tests
         {
             var response = await httpMethod.GET<List<UserDTO>>("users");
             var header = response.ContentHeaders
-                .FirstOrDefault(h => h.Name.ToLower() == expectedHeaderName && h.Value.ToString().ToLower() == expectedHEaderValue.ToLower());
+                .FirstOrDefault(h => h.Name == expectedHeaderName && h.Value.ToString().ToLower() == expectedHEaderValue.ToLower());
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(expectedHEaderValue, header.Value);
+                Assert.AreEqual(expectedHEaderValue, header.Value.ToString());
                 Assert.AreEqual(expectedHeaderName, header.Name);
             });
         }
