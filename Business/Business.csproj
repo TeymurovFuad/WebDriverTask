@@ -18,6 +18,9 @@
     <None Update="PageObjects\OnlinerMobileApp\test.apk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="PageObjects\XamarinApk\base.apk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
