@@ -8,7 +8,6 @@ namespace Tests.APITests.Tests
     [TestFixture]
     public class TestUsers: APIHooks
     {
-        private UserDTO _user;
         private List<UserDTO> _users;
         public TestUsers() { }
 
@@ -23,15 +22,21 @@ namespace Tests.APITests.Tests
         public async Task VerifyHeader(string expectedHeaderName, string expectedHEaderValue)
         {
             var response = await httpMethod.GET<List<UserDTO>>("users");
-            response.ContentHeaders?.Should().Contain(header => 
-                header.Name.ToLower() == (expectedHeaderName.ToLower()) && header.Value.ToString().ToLower() == expectedHEaderValue.ToLower());
+            var header = response.ContentHeaders
+                .FirstOrDefault(h => h.Name.ToLower() == expectedHeaderName && h.Value.ToString().ToLower() == expectedHEaderValue.ToLower());
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(expectedHEaderValue, header.Value);
+                Assert.AreEqual(expectedHeaderName, header.Name);
+            });
         }
 
         [TestCase(10)]
         public async Task VerifyNumberOfUsers(int expectedNumberOfUsers)
         {
             var response = await httpMethod.GET<List<UserDTO>>("users");
-            _users = response.Data;
+            _users = response.Data!;
             _users?.Count.Should().Be(expectedNumberOfUsers);
         }
     }

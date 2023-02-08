@@ -123,3 +123,27 @@ ACCEPTANCE CRITERIA
 4.	Tests must be implemented so that they could be launched in parallel.
 5.	Naming and Code Conventions should be followed.
 6.	As for tests of the bonus task, they should be created to test CRUD operations of the given resource.
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+MODULE 13: AUTOMATED TESTING OF MOBILE APLICATIONS WITH .NET
+HOME TASK
+1.	Create new tests for the test app (test.apk is attached):
+1. Check that new comer's instruction is displayed for the first run
+2. Write one or more tests for the catalog
+
+2.	Xamarin test cloud task
+Run tests with xamarin test could
+1. Registration https://testcloud.xamarin.com/register 
+2. Validate your email
+3. Add new test run (it shows the test connection instructions while getting the new test run)
+4. Run your tests on any device (Please, take a look that you can choose iOS divecies too, for instance if you have IPA file for testing)
+5. Make some screens with logs of the run.
+BONUS TASK
+•	Appium task
+Write any simple test with appium 
+https://blogs.msdn.microsoft.com/ganesh/2016/03/13/browser-appium-visualstudio/
+
+NOTES
+•	A. Deliverables: Each Mentee must provide a MS Word report to Mentor upon task completion. This report should contain detailed explanation of each step according to points 1 and 2 above along with the screenshots.
+•	B. Evaluation: If only point 1 was done, maximum mark is 3.5, if Mentee has delivered detailed report for everything required at point 1 and 2, maximum mark is 4.5. If Mentee has delivered report also for Bonus Task, maximum mark can be 5.0. Evaluation process is dependent upon Mentor’s expertise, experience and common rules of home tasks evaluation.
