@@ -47,13 +47,13 @@ namespace Tests.SpecflowTests
         [BeforeFeature]
         public static void BeforeFeature() { }
 
-        [BeforeScenario(Order = 2)]
+        [BeforeScenario()]
         public void BeforeScenario() => StartBrowser();
 
-        [BeforeScenario("@UI", Order = 1)]
+        [BeforeScenario("@UI")]
         public void BeforeScenarioUI() { }
 
-        [BeforeScenario("@LoginRequired", Order = 1)]
+        [BeforeScenario("@LoginRequired")]
         public void BeforeScenarioLogin() { }
 
         [BeforeScenario]

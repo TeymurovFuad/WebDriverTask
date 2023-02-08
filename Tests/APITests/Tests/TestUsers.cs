@@ -22,8 +22,14 @@ namespace Tests.APITests.Tests
         public async Task VerifyHeader(string expectedHeaderName, string expectedHEaderValue)
         {
             var response = await httpMethod.GET<List<UserDTO>>("users");
-            response.ContentHeaders?.Should().Contain(header => 
-                (header.Name!.ToLower() == expectedHeaderName.ToLower()) && (header.Value.ToString().ToLower() == expectedHEaderValue.ToLower()));
+            var header = response.ContentHeaders
+                .FirstOrDefault(h => h.Name.ToLower() == expectedHeaderName && h.Value.ToString().ToLower() == expectedHEaderValue.ToLower());
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(expectedHEaderValue, header.Value);
+                Assert.AreEqual(expectedHeaderName, header.Name);
+            });
         }
 
         [TestCase(10)]
