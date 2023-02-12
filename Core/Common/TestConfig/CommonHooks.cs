@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using Core.Browser;
 using Core.Utils.LogerConfiguration;
+using Microsoft.Extensions.Configuration;
 
 namespace Core.Common.TestConfig
 {
@@ -9,12 +10,18 @@ namespace Core.Common.TestConfig
     {
         protected IWebDriver webDriver { get; private set; }
         public bool StopOnFail { private get; set; }
+        protected IConfiguration secrets { get; private set; }
+
+        private readonly Startup _startup = new Startup();
 
         protected CommonHooks() { }
         protected CommonHooks(BrowserType browserType) { }
 
         [OneTimeSetUp]
-        public void ClassSetUp() { }
+        public void ClassSetUp()
+        {
+            secrets = _startup.Configuration;
+        }
 
         [SetUp]
         public void TestSetup()

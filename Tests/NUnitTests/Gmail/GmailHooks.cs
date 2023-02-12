@@ -4,6 +4,7 @@ using Core.Business;
 using Core.Common.TestConfig;
 using Core.Utils.Extensions;
 using Core.WebDriver;
+using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
@@ -18,6 +19,7 @@ namespace Tests.NUnitTests.Gmail
         protected bool _isFailed;
         private string? _url { get; set; }
         public bool StopOnFail { private get; set; }
+        protected IConfiguration credentials { private set; get; }
 
         protected User user;
         protected Mail mail;
@@ -44,6 +46,7 @@ namespace Tests.NUnitTests.Gmail
             driverManager = new DriverManager();
             if (!string.IsNullOrEmpty(_url))
                 driverManager.GetWebDriver().GoToUrl(_url);
+            credentials = secrets;
         }
 
         [SetUp]

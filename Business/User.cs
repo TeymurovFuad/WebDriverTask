@@ -14,7 +14,7 @@ namespace Core.Business
         [JsonPropertyName("password")]
         public string? Password { get; set; }
 
-        public User(string? firstName = null, string? lastName = null, string? email = null, string? password = "Aa123456_")
+        public User(string? firstName = null, string? lastName = null, string? email = null, string? password = null)
         {
             FirstName = firstName;
             LastName = lastName;

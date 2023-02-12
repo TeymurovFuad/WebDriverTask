@@ -48,8 +48,8 @@ namespace Tests.SpecflowTests.Steps.Gmail
             Assert.IsTrue(actualLanguage.Contains(_page.Language, StringComparison.CurrentCultureIgnoreCase));
         }
 
-        [When(@"insert '([^']*)' into then email field")]
-        public void WhenInsertIntoThenEmailField(string username)
+        [When(@"insert '([^']*)' into the email field")]
+        public void WhenInsertIntoTheEmailField(string username)
         {
             _mainPage.loginPage.FillEmail(username);
         }
