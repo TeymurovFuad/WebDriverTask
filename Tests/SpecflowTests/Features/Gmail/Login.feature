@@ -13,7 +13,7 @@ Scenario Outline: User should be able to login to the Gmail successfully
 		Then verify that login page opened
 	When change page language
 		Then verify that page language set correctly
-	When insert '<username>' into then email field
+	When insert '<username>' into the email field
 	And click next button
 		Then verify that page contains password field
 	When insert '<password>' into then password field
