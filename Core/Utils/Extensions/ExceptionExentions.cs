@@ -1,4 +1,4 @@
-﻿using Core.Utils.LogerConfiguration;
+﻿using Serilog.Core;
 
 namespace Core.Utils.Extensions
 {
@@ -29,7 +29,7 @@ namespace Core.Utils.Extensions
             }
         }
 
-        public static void Try(this Action action, ErrorLogger logError)
+        public static void Try(this Action action, Logger logError)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace Core.Utils.Extensions
             }
             catch (Exception ex)
             {
-                logError.LogMessage(ex);
+                logError.Warning(ex.Message);
             }
         }
     }

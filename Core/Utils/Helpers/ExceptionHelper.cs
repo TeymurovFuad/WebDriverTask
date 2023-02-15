@@ -1,4 +1,4 @@
-﻿using Core.Utils.LogerConfiguration;
+﻿using Core.Utils.LogConfig;
 
 namespace Core.Utils.Helpers
 {
@@ -25,20 +25,7 @@ namespace Core.Utils.Helpers
             }
             catch (Exception ex)
             {
-                ErrorLogger.Instance.LogMessage(ex);
-                throw;
-            }
-        }
-
-        public static void Try(Action action, ErrorLogger logError)
-        {
-            try
-            {
-                action();
-            }
-            catch (Exception ex)
-            {
-                ErrorLogger.Instance.LogMessage(ex);
+                MessageLogger.GetLogger().Error(ex.Message);
                 throw;
             }
         }
@@ -51,7 +38,7 @@ namespace Core.Utils.Helpers
             }
             catch (Exception ex)
             {
-                ErrorLogger.Instance.LogMessage(ex);
+                MessageLogger.GetLogger().Error(ex.Message);
                 throw;
             }
         }
