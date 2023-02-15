@@ -2,6 +2,7 @@
 using Core.Extensions;
 using Core.Utils.Extensions;
 using Core.Utils.Helpers;
+using Core.Utils.LogConfig;
 using OpenQA.Selenium;
 
 namespace Business.PageObjects.Gmail.ContextMenu.Dialogs.Message
@@ -55,7 +56,7 @@ namespace Business.PageObjects.Gmail.ContextMenu.Dialogs.Message
             }
             catch (Exception e)
             {
-                LoggerHelper.Error(e.Message);
+                MessageLogger.GetLogger().Error(e.Message);
             }
         }
 
