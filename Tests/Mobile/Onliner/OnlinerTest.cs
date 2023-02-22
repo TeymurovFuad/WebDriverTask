@@ -1,14 +1,6 @@
-﻿using Business.PageObjects.OnlinerMobileApp.Intro;
-using Core.Mobile.Device;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.UITest;
-using Xamarin.UITest.Queries;
 
 namespace Tests.Mobile.Onliner
 {

@@ -4,8 +4,6 @@ using Core.Browser;
 using Core.Utils.LogConfig;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework.Interfaces;
-using NUnit.Framework.Internal;
-using Serilog;
 using ILogger = Serilog.ILogger;
 
 namespace Core.Common.TestConfig
@@ -40,20 +38,21 @@ namespace Core.Common.TestConfig
         {
             string testName = TestContext.CurrentContext.Test.Name;
             TestStatus testStatus = TestContext.CurrentContext.Result.Outcome.Status;
+            string logMsg = "Test finished " + testName + " with status " + testStatus;
             switch (testStatus)
             {
                 case TestStatus.Passed:
                 case TestStatus.Skipped:
-                    log.Information("Test finished: " + testName + " - Result: " + TestContext.CurrentContext.Result.Outcome);
+                    log.Information(logMsg);
                     break;
                 case TestStatus.Failed:
-                    log.Error("Test finished: " + testName + " - Result: " + TestContext.CurrentContext.Result.Outcome);
+                    log.Error(logMsg);
                     break;
                 case TestStatus.Warning:
-                    log.Warning("Test finished: " + testName + " - Result: " + TestContext.CurrentContext.Result.Outcome);
+                    log.Warning(logMsg);
                     break;
                 default:
-                    log.Debug("Test finished: " + testName + " - Result: " + TestContext.CurrentContext.Result.Outcome);
+                    log.Debug(logMsg);
                     break;
             }
         }

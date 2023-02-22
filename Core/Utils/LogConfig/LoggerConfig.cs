@@ -1,13 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
-using Serilog;
-using Serilog.Core;
+﻿using Serilog;
 using Serilog.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using ReportPortal.Serilog;
 
 namespace Core.Utils.LogConfig
 {
@@ -38,6 +32,7 @@ namespace Core.Utils.LogConfig
                 .MinimumLevel.Debug()
                 .WriteTo.File(path: logFilePath, outputTemplate: logOutputTemplate)
                 .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Information)
+                .WriteTo.ReportPortal()
                 .CreateLogger();
             return Log.Logger;
         }

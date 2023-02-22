@@ -6,8 +6,6 @@ using Business.PageObjects.Gmail;
 using BoDi;
 using ILogger = Serilog.ILogger;
 using Core.Utils.LogConfig;
-using System.Runtime.CompilerServices;
-using LivingDoc.SpecFlowPlugin.ResultBuilders;
 
 namespace Tests.SpecflowTests
 {

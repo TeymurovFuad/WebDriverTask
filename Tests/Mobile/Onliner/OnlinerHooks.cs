@@ -1,9 +1,6 @@
-﻿using Core.Common.TestConfig;
-using Core.Mobile.Device;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Xamarin.UITest;
 using Business.PageObjects.OnlinerMobileApp;
-using NUnit.Framework.Interfaces;
 
 namespace Tests.Mobile.Onliner
 {

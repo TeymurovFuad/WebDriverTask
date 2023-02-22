@@ -1,7 +1,6 @@
 ﻿using Core.Common.Pages;
 using Core.Extensions;
 using Core.Utils.Extensions;
-using Core.Utils.Helpers;
 using Core.Utils.LogConfig;
 using OpenQA.Selenium;
 
