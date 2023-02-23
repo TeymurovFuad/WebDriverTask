@@ -147,3 +147,29 @@ https://blogs.msdn.microsoft.com/ganesh/2016/03/13/browser-appium-visualstudio/
 NOTES
 •	A. Deliverables: Each Mentee must provide a MS Word report to Mentor upon task completion. This report should contain detailed explanation of each step according to points 1 and 2 above along with the screenshots.
 •	B. Evaluation: If only point 1 was done, maximum mark is 3.5, if Mentee has delivered detailed report for everything required at point 1 and 2, maximum mark is 4.5. If Mentee has delivered report also for Bonus Task, maximum mark can be 5.0. Evaluation process is dependent upon Mentor’s expertise, experience and common rules of home tasks evaluation.
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+MODULE 14: TEST REPORTING WITH .NET LIBS
+
+HOME TASK
+1.	Add logging of every step (with log4net or any similar lib) for your solution implemented based on previous modules.
+1.1	Configure logs format in informative way
+1.2	Demonstrate usage of different log levels (debug, action, error, etc)
+1.3	Configure ability to write logs in console and to save logs in a file (a new file should be created for each day)
+1.4	Make screenshots in case of tests failures and save them. 
+2.	Demonstrate ability to create test execution report with MS Test Result Viewer or other html reports (as it works in Tiver)
+BONUS TASK
+Configure Report Portal usage for your project (http://reportportal.io/#documentation/Test-framework-integration>nunit )
+Epam Portal: https://rp.epam.com
+
+FYI: more examples for nunit here - link
+https://www.youtube.com/watch?feature=player_embedded&v=BsU-DjBx-DQ 
+
+For MSTest: https://stackoverflow.com/questions/40670472/how-to-link-mstest-with-report-portal 
+ACCEPTANCE CRITERIA
+1.	Format of logs is informative (contains info about log level, time (e.g. YYYY-MM-DD hh:mm:ss,SSS), string of log, etc)
+2.	Different log levels are used (debug, info, action, warning, error)
+3.	By default logs are written in console and are stored in file (a file should be created automatically – a new one for a new date)
+4.	In case of tests are failing – there is ability to save screenshot of a failure in a directory. The log should have information about the saved screenshot in this case
+5.	Test execution report is created for each run (the sample of the report should be provided as an artifact to a mentor) 

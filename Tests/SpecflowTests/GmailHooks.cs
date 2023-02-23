@@ -4,6 +4,8 @@ using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 using Business.PageObjects.Gmail;
 using BoDi;
+using ILogger = Serilog.ILogger;
+using Core.Utils.LogConfig;
 
 namespace Tests.SpecflowTests
 {
@@ -13,8 +15,11 @@ namespace Tests.SpecflowTests
 
         private static BrowserType? _browserType { get; set; } = null;
         protected static IWebDriver webDriver { get; set; }
+        protected static ILogger log { get { return MessageLogger.GetLogger(); } }
 
         private readonly IObjectContainer _objectContainer;
+        private static ScenarioContext _scenarioContext;
+        private static FeatureContext _featureContext;
         //protected static User _user;
         //protected static Mail mail;
         //protected static Page _page;
@@ -45,24 +50,54 @@ namespace Tests.SpecflowTests
         //}
 
         [BeforeFeature]
-        public static void BeforeFeature() { }
+        public static void BeforeFeature(FeatureContext featureContext)
+        {
+            _featureContext ??= featureContext;
+            log.Information($"Starting feature\n" +
+                $"\tTitle: {_featureContext.FeatureInfo.Title}\n" +
+                $"\tDescription:{_featureContext.FeatureInfo.Description}\n" +
+                $"\tTags:{string.Join(",", _featureContext.FeatureInfo.Tags)}\n");
+        }
+
 
         [BeforeScenario()]
-        public void BeforeScenario() => StartBrowser();
-
-        [BeforeScenario("@UI")]
-        public void BeforeScenarioUI() { }
-
-        [BeforeScenario("@LoginRequired")]
-        public void BeforeScenarioLogin() { }
-
-        [BeforeScenario]
-        public void FirstBeforeScenario() { }
+        public void BeforeScenario(ScenarioContext scenarioContext)
+        {
+            _scenarioContext ??= scenarioContext;
+            StartBrowser();
+            log.Information($"Starting scenario\n" +
+                $"\nTitle: {_scenarioContext.ScenarioInfo.Title}\n" +
+                $"\tDescription:{_scenarioContext.ScenarioInfo.Description}\n" +
+                $"\tTags:{string.Join(",", _scenarioContext.ScenarioInfo.Tags)}\n");
+        }
 
         [AfterScenario]
-        public void AfterScenario() => driverManager.QuitDriver();
+        public void AfterScenario()
+        {
+            ScenarioExecutionStatus status = _scenarioContext.ScenarioExecutionStatus;
+            switch (status)
+            {
+                case ScenarioExecutionStatus.OK:
+                case ScenarioExecutionStatus.Skipped:
+                    log.Information($"End scenario with status => {status}");
+                    break;
+                case ScenarioExecutionStatus.TestError:
+                case ScenarioExecutionStatus.BindingError:
+                case ScenarioExecutionStatus.UndefinedStep:
+                    log.Information($"End scenario with status => {status}");
+                    break;
+                default:
+                    log.Information($"End scenario with status => {status}");
+                    break;
+
+            }
+            driverManager.QuitDriver();
+        }
 
         [AfterFeature]
-        public static void AfterFeature() { }
+        public static void AfterFeature()
+        {
+            log.Information($"End feature => {_featureContext.FeatureInfo.Title}");
+        }
     }
 }

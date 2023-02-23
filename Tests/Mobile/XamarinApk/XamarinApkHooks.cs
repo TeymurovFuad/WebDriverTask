@@ -1,10 +1,4 @@
-﻿using Business.PageObjects.OnlinerMobileApp;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NUnit.Framework;
 using Xamarin.UITest;
 
 namespace Tests.Mobile.XamarinApk

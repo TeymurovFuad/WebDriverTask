@@ -1,13 +1,6 @@
-﻿using Business.PageObjects.Gmail;
-using Business.PageObjects.OnlinerMobileApp.Catalog;
+﻿using Business.PageObjects.OnlinerMobileApp.Catalog;
 using Business.PageObjects.OnlinerMobileApp.Intro;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.UITest;
-using Xamarin.UITest.Queries;
 
 namespace Business.PageObjects.OnlinerMobileApp
 {
